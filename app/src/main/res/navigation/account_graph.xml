@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/account_graph"
+    app:startDestination="@id/account">
+
+    <fragment
+        android:id="@+id/account"
+        android:name="com.hwonchul.movie.presentation.view.account.AccountFragment"
+        tools:layout="@layout/fragment_account" >
+
+        <action
+            android:id="@+id/navigate_to_login_graph"
+            app:destination="@id/login_graph"
+            app:popUpTo="@id/list_graph"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/navigate_to_profile_edit"
+            app:destination="@id/profile_edit" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/profile_edit"
+        android:name="com.hwonchul.movie.presentation.view.account.profile.ProfileFragment"
+        tools:layout="@layout/fragment_profile" />
+</navigation>

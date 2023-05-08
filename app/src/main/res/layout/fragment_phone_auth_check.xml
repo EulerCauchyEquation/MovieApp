@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:theme="@style/LoginTheme">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stateListAnimator="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:theme="@style/LoginTheme.Toolbar" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_main_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_large_16dp"
+            android:text="문자로 받은 인증번호를 입력해주세요."
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_size_headline2_20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/appBarLayout" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_sub_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_median_8dp"
+            android:text="인증번호는 6자리 숫자입니다.  \n인증번호가 오지 않았다면 재요청 해보세요."
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_size_headline4_16sp"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/tv_main_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_main_title" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edit_sms_code"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_rect_stroke_blue_1dp_rounded_8dp"
+            android:foreground="@drawable/ripple_rectangle_radius_8dp"
+            android:hint="인증번호 6자리 숫자"
+            android:inputType="number"
+            android:maxLength="6"
+            android:maxLines="1"
+            android:paddingHorizontal="@dimen/space_s_large_12dp"
+            android:textColor="@android:color/black"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="@dimen/text_size_headline4_16sp"
+            app:layout_constraintBottom_toBottomOf="@id/btn_re_request"
+            app:layout_constraintEnd_toStartOf="@id/btn_re_request"
+            app:layout_constraintHorizontal_weight="2"
+            app:layout_constraintStart_toStartOf="@id/tv_main_title"
+            app:layout_constraintTop_toTopOf="@id/btn_re_request" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btn_sms_code_clear"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="@dimen/space_median_8dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_cancel"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/tv_timer"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@id/tv_timer"
+            app:layout_constraintTop_toTopOf="@id/tv_timer"
+            tools:visibility="visible" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/space_s_large_12dp"
+            android:background="@android:color/transparent"
+            android:text="00:00"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_size_headline4_16sp"
+            app:layout_constraintBottom_toBottomOf="@id/edit_sms_code"
+            app:layout_constraintEnd_toEndOf="@id/edit_sms_code"
+            app:layout_constraintTop_toTopOf="@id/edit_sms_code" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_re_request"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_median_8dp"
+            android:layout_marginTop="@dimen/space_x_large_32dp"
+            android:background="@drawable/bg_rect_blue_rounded_8dp"
+            android:foreground="@drawable/ripple_rectangle_radius_8dp"
+            android:text="다시 요청"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_headline4_16sp"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/edit_sms_code"
+            app:layout_constraintTop_toBottomOf="@id/tv_sub_title" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_verify"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_large_16dp"
+            android:background="@drawable/bg_rect_gray_rounded_8dp"
+            android:enabled="false"
+            android:foreground="@drawable/ripple_rectangle_radius_8dp"
+            android:text="인증하기"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_headline4_16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="@id/tv_main_title" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/space_large_16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/space_large_16dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

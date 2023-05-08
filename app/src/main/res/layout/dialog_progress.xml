@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/space_median_8dp"
+    tools:background="@android:color/darker_gray">
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:indeterminateDrawable="@drawable/progressbar_rotate_image"
+        app:layout_constraintBottom_toTopOf="@id/progress_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/progress_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Loading..."
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_headline3_18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progress_bar" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,103 @@
+<resources>
+    <string name="app_name">무비스타</string>
+    <string name="movie_list_title">영화 목록</string>
+    <string name="movie_detail_title">영화 상세</string>
+    <string name="review_add_title">한줄평 작성</string>
+    <string name="review_read_all_title">한줄평 목록</string>
+    <string name="summary">
+        군도, 백성을 구하라!\n양반과 탐관오리들의 착취가 극에 달했던 조선 철종 13년.힘 없는 백성의 편이 되어 세상을
+        바로잡고자 하는 의적떼인 군도(群盜), 지리산 추설이 있었다.\n\n쌍칼 도치 vs 백성의 적 조윤\n잦은 자연재해,
+        기근과 관의 횡포까지 겹쳐 백성들의 삶이 날로 피폐해 져 가는 사이, 나주 대부호의 서자로 조선
+        최고의 무관 출신인 조윤은 극악한 수법으로 양민들을 수탈, 삼남지방 최고의 대부호로 성장한다. 한편 소, 돼지를 잡아
+        근근이 살아가던 천한 백정 돌무치는 죽어도 잊지 못할 끔찍한 일을 당한 뒤 군도에 합류. 지리산 추설의 신 거성(新 巨星)
+        도치로 거듭난다.\n\n뭉치면 백성, 흩어지면 도적!\n망할 세상을 뒤집기 위해, 백성이 주인인 새 세상을 향해
+        도치를 필두로 한 군도는 백성의 적, 조윤과 한 판 승부를 시작하는데…
+    </string>
+    <string name="movie_name">군도</string>
+    <string name="movie_info">2014.07.23 개봉\n액션 / 137 분</string>
+    <string name="summary_word">줄거리</string>
+    <string name="reservation">예매하기</string>
+    <string name="write_review">작성하기</string>
+    <string name="review_all">모두 보기</string>
+    <string name="review">한줄평</string>
+    <string name="director">감독</string>
+    <string name="director_name">윤종빈</string>
+    <string name="cast_member">출연</string>
+    <string name="cast_member_name">하정우(도치), 강동원(조윤)</string>
+    <string name="director_cast_word">감독/출연</string>
+    <string name="ticket_sales">예매율</string>
+    <string name="ticket_sales_value">5위 1.8%</string>
+    <string name="grade">평점</string>
+    <string name="grade_value">8.2</string>
+    <string name="total_attendance">누적관객수</string>
+    <string name="total_attendance_value">839,399명</string>
+    <string name="user_id">유저 ID</string>
+    <string name="time">작성 시간</string>
+    <string name="user_review">한줄평</string>
+    <string name="recommend">추천</string>
+    <string name="report">신고하기</string>
+    <string name="number_default">0</string>
+    <string name="addReview_rating_explanation">평점을 입력해 주세요</string>
+    <string name="addReview_hint">100자 이내로 작성해주세요.</string>
+    <string name="all_add">저 장</string>
+    <string name="add_cancel">취 소</string>
+    <string name="all_show_detail">상세 보기</string>
+    <string name="all_user_settings">사용자 설정</string>
+    <string name="all_settings">설정</string>
+    <string name="movie_api">영화 API</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="all_empty_review_list">리뷰가 없습니다.\n 첫번째 리뷰를 남겨주세요.</string>
+    <string name="all_empty_photos">포토가 없습니다.</string>
+    <string name="all_empty_videos">무비 클립이 없습니다.</string>
+    <string name="all_movie_video">무비클립</string>
+    <string name="all_posters">실시간 인기 영화 랭킹</string>
+    <string name="all_movie_photo">포토</string>
+    <string name="all_text_more">자세히 보기</string>
+
+    <!-- 로직 결과 -->
+    <string name="all_network_connected">인터넷이 다시 연결됐습니다</string>
+    <string name="all_network_disconnected">네트워크 연결를 확인해주세요</string>
+    <string name="all_response_failed">네트워크 연결 상태가 좋지 않습니다</string>
+    <string name="all_auth_time_out">제한 시간이 초과하였습니다.  다시 재요청 해주세요.</string>
+    <string name="comment_save_success">한줄평을 저장하였습니다</string>
+    <string name="comment_invalid_content">한글자 이상 적어주세요</string>
+    <string name="recommend_save_success">추천 UP</string>
+    <string name="login_success">로그인 성공</string>
+    <string name="login_failure">로그인에 실패하였습니다.  다시 시도해 주세요.</string>
+    <string name="phone_auth_invalid_too_many">과도한 요청으로 일시적으로 제한됐습니다.  잠시 후에 다시 요청해 주세요.</string>
+    <string name="phone_auth_invalid">인증을 실패하였습니다. 다시 시도해 주세요.</string>
+    <string name="phone_number_invalid">전화번호 양식이 맞지 않아요!</string>
+    <string name="sms_code_invalid">인증번호 양식이 맞지 않아요! 총 6자리 숫자입니다.</string>
+    <string name="user_info_get_failed">내 정보를 가져오는데 실패하였습니다.</string>
+    <string name="user_withdrawal_success">회원탈퇴를 성공하였습니다.</string>
+    <string name="user_withdrawal_failed">회원탈퇴를 실패하였습니다. 다시 시도해 주세요</string>
+    <string name="user_logout_success">로그아웃하였습니다.</string>
+    <string name="user_refresh_failed">유저 정보를 갱신하지 못하였습니다. 다시 시도해 주세요</string>
+    <string name="nick_invalid">닉네임 양식이 맞지 않아요!</string>
+    <string name="nick_unique_invalid">중복된 닉네임이 존재합니다</string>
+    <string name="nick_connect_failed">서버 연결에 실패하였습니다.  다시 시도해 주세요</string>
+    <string name="profile_update_failed">프로필 변경 실패하였습니다.  다시 시도해 주세요</string>
+    <string name="profile_update_success">프로필 수정 완료</string>
+    <string name="profile_edit_form_error">3 ~ 14자 내, 띄어쓰기 없이 한글, 영문, 숫자</string>
+
+    <!-- format -->
+    <string name="movie_popularity_rate_format">%.0f</string>
+    <string name="movie_audience_rate_format">%.1f</string>
+    <string name="movie_grade_format">%d세 관람가</string>
+    <string name="movie_summary_format">%s %s %d</string>
+    <string name="movie_date_format">%s 개봉</string>
+    <string name="movie_genre_and_runtime_format">%s / %d 분</string>
+    <string name="movie_audience_format">%,3d명</string>
+    <string name="movie_reservation_format">%d위 %.1f%%</string>
+    <string name="comment_total_format">(%,3d명 참여)</string>
+    <string name="review_all_format">한줄평 %s개 모두 보기 ></string>
+    <string name="list_size_format">(%d)</string>
+
+    <!-- dialog -->
+    <string name="dialog_withdrawal_main_title">정말 회원탈퇴하시겠어요? </string>
+    <string name="dialog_withdrawal_sub_title">회원님의 정보가 모두 사라져요!</string>
+
+    <string name="dialog_profile_edit_main_title">프로필 수정을 정말 그만두시겠어요?</string>
+    <string name="dialog_profile_edit_sub_title">수정 중인 정보들은 모두 사라져요!</string>
+</resources>

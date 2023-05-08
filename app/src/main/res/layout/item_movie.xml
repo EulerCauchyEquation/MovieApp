@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="rank"
+            type="Integer" />
+
+        <variable
+            name="item"
+            type="com.hwonchul.movie.domain.model.Movie" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/layout_poster"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/colorPrimaryDark"
+        app:cardCornerRadius="@dimen/space_median_8dp"
+        app:cardElevation="8dp"
+        app:rippleColor="@color/BLACK_30percent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- 영화 포스터 -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_poster"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{item.poster.url}"
+                app:layout_constraintDimensionRatio="2:3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:placeholder="@{@drawable/img_empty}"
+                tools:src="@drawable/ic_movie_sample" />
+
+            <!-- 그라데이션 -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_gradient_transparent_to_black_angle_270"
+                app:layout_constraintBottom_toBottomOf="@id/iv_poster"
+                app:layout_constraintEnd_toEndOf="@id/iv_poster"
+                app:layout_constraintStart_toStartOf="@id/iv_poster"
+                app:layout_constraintTop_toTopOf="@id/tv_rank" />
+
+            <!-- 영화 순위 텍스트 -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_large_16dp"
+                android:text="@{Integer.toString(rank + 1)}"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/item_poster_rank_text"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/iv_poster"
+                app:layout_constraintStart_toStartOf="@id/iv_poster"
+                tools:text="10" />
+
+            <!-- 영화 제목 -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_movie_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/space_s_large_12dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:paddingHorizontal="@dimen/space_median_8dp"
+                android:text="@{item.title}"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_headline3_18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/iv_poster"
+                app:layout_constraintStart_toStartOf="@+id/iv_poster"
+                app:layout_constraintTop_toBottomOf="@+id/iv_poster"
+                tools:text="군 도" />
+
+            <!-- 평점 -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/space_large_16dp"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="@{@string/movie_audience_rate_format(item.rating)}"
+                android:textColor="@android:color/white"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintBaseline_toBaselineOf="@id/tv_rank"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="6.5" />
+
+            <!-- 평점 아이콘 -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="@dimen/space_median_8dp"
+                android:background="@drawable/ic_star_white"
+                app:layout_constraintBottom_toBottomOf="@id/tv_rating"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@id/tv_rating"
+                app:layout_constraintHeight_percent="0.035"
+                app:layout_constraintTop_toTopOf="@id/tv_rating" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

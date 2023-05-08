@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="currentPos"
+            type="Integer" />
+
+        <variable
+            name="viewModel"
+            type="com.hwonchul.movie.presentation.viewModel.details.MovieDetailViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/BLACK">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:fitsSystemWindows="true"
+            android:stateListAnimator="@null"
+            app:layout_constraintBottom_toTopOf="@+id/vp_poster"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/tb_poster"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="@style/Toolbar" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_poster"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:currentPos="@{currentPos}"
+            app:layout_constraintBottom_toTopOf="@id/tv_poster_page_no"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+            app:listItem="@{viewModel.movie.posters}" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_poster_page_no"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/photo_bottomView_height"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/vp_poster"
+            app:layout_constraintStart_toStartOf="@id/vp_poster"
+            app:layout_constraintTop_toBottomOf="@+id/vp_poster"
+            tools:text="1 / 10"
+            tools:textColor="@android:color/white" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

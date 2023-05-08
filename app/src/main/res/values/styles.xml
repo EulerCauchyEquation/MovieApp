@@ -1,0 +1,102 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="bottomSheetDialogTheme">@style/BottomSheetDialogTheme</item>
+    </style>
+
+    <style name="Toolbar" parent="AppTheme">
+        <!-- Toolbar title color -->
+        <item name="android:textColorPrimary">@color/WHITE</item>
+        <!-- Toolbar Up button color\ -->
+        <item name="android:textColorSecondary">@color/WHITE</item>
+    </style>
+
+    <style name="BottomSheetDialogTheme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/RoundedBackgroundBottomSheet</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:navigationBarColor">@color/WHITE</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+
+    <style name="RoundedBackgroundBottomSheet" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bg_rect_white_top_rounded_16dp</item>
+    </style>
+
+    <!-- 둥근 이미지 style -->
+    <style name="RoundedImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_large_16dp</item>
+    </style>
+
+    <!-- expanded bar text style-->
+    <style name="ExpandedBarTextStyle" parent="AppTheme">
+        <!-- 0sp 시 적용이 안 됨 -->
+        <item name="android:textSize">0.01sp</item>
+        <item name="android:textColor">@android:color/transparent</item>
+    </style>
+
+    <!-- 로그인 화면 테마 -->
+    <style name="LoginTheme">
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:navigationBarColor">@android:color/white</item>
+    </style>
+
+    <!-- 로그인 화면 테마 툴바 -->
+    <style name="LoginTheme.Toolbar" parent="LoginTheme">
+        <item name="android:background">@android:color/white</item>
+        <!-- Toolbar title color -->
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <!-- Toolbar Up button color\ -->
+        <item name="android:textColorSecondary">@android:color/black</item>
+    </style>
+
+    <!-- Home 화면 테마 -->
+    <style name="HomeTheme">
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+        <item name="android:navigationBarColor">@color/colorPrimary</item>
+    </style>
+
+    <!-- Home 화면 테마 툴바 -->
+    <style name="HomeTheme.Toolbar" parent="HomeTheme">
+        <!-- Toolbar title color -->
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <!-- Toolbar Up button color\ -->
+        <item name="android:textColorSecondary">@android:color/white</item>
+    </style>
+
+    <!-- 유저 정보 화면 테마 -->
+    <style name="AccountTheme" parent="LoginTheme" />
+
+    <!-- 유저 정보 테마 툴바 -->
+    <style name="AccountTheme.Toolbar" parent="LoginTheme.Toolbar" />
+
+    <!-- 툴바 Title 텍스트 스타일 -->
+    <style name="ToolbarTitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textSize">@dimen/text_size_headline3_18sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:typeface">sans</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- 영화목록 정렬 메뉴 아이템 -->
+    <style name="MovieListOrderPopupMenu" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:dropDownVerticalOffset">30dp</item>
+        <item name="android:popupElevation">0dp</item>
+        <!-- 팝업 창 open 시 애니메이션 효과 -->
+        <item name="android:popupEnterTransition">@transition/slide_down_transition</item>
+        <!-- 팝업 창 close 시 애니메이션 효과 -->
+        <item name="android:popupExitTransition">@transition/slide_down_transition</item>
+    </style>
+
+    <style name="ProgressDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="ConfirmDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+</resources>

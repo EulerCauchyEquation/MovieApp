@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/detail_graph"
+    app:startDestination="@id/movie_detail">
+
+    <fragment
+        android:id="@+id/movie_detail"
+        android:name="com.hwonchul.movie.presentation.view.details.MovieDetailFragment"
+        tools:layout="@layout/fragment_movie_detail">
+        <argument
+            android:name="movie"
+            app:argType="com.hwonchul.movie.domain.model.Movie" />
+        <action
+            android:id="@+id/navigate_to_poster"
+            app:destination="@id/poster" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/poster"
+        android:name="com.hwonchul.movie.presentation.view.poster.PosterFragment"
+        android:label=""
+        tools:layout="@layout/fragment_poster">
+
+        <argument
+            android:name="poster_current_pos"
+            app:argType="integer" />
+    </fragment>
+</navigation>

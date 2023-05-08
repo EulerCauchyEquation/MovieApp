@@ -1,0 +1,38 @@
+[
+    {
+      "iso_639_1": "ko",
+      "iso_3166_1": "KR",
+      "name": "[꾼] 메인 예고편",
+      "key": "eCOUzLZ_TPE",
+      "site": "YouTube",
+      "size": 1080,
+      "type": "Trailer",
+      "official": false,
+      "published_at": "2017-11-02T07:41:47.000Z",
+      "id": 478187
+    },
+    {
+      "iso_639_1": "ko",
+      "iso_3166_1": "KR",
+      "name": "[꾼] 티저 예고편",
+      "key": "_IhinFn7HdA",
+      "site": "YouTube",
+      "size": 1080,
+      "type": "Teaser",
+      "official": false,
+      "published_at": "2017-09-28T02:30:16.000Z",
+      "id": 478187
+    },
+    {
+      "iso_639_1": "ko",
+      "iso_3166_1": "KR",
+      "name": "[꾼] 티저 30초 예고편",
+      "key": "4S4w7Tw9ZT8",
+      "site": "YouTube",
+      "size": 1080,
+      "type": "Teaser",
+      "official": false,
+      "published_at": "2017-09-28T02:29:24.000Z",
+      "id": 478187
+    }
+]

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/AccountTheme">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stateListAnimator="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:theme="@style/AccountTheme.Toolbar"
+            app:title="프로필 수정"
+            app:titleTextAppearance="@style/ToolbarTitle">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_complete"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="end|center_vertical"
+                android:background="@android:color/transparent"
+                android:enabled="false"
+                android:foreground="@drawable/ripple_oval"
+                android:text="완료"
+                android:textColor="@color/BLANK_COLOR" />
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- 유저 프로필 사진 -->
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_user_image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/space_large_16dp"
+        android:src="@drawable/ic_user_default"
+        app:civ_border_color="@color/BLANK_COLOR"
+        app:civ_border_width="2dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+        app:layout_constraintWidth_percent="0.333" />
+
+    <!-- 닉네임 제목-->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_user_phone_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_s_large_12dp"
+        android:maxLines="1"
+        android:text="닉네임"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/text_size_headline4_16sp"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@id/iv_user_image" />
+
+    <!-- 닉네임 수정 -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_nickname_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_median_8dp"
+        app:boxStrokeColor="@color/blue"
+        app:counterEnabled="true"
+        app:counterMaxLength="14"
+        app:counterTextColor="@android:color/darker_gray"
+        app:endIconMode="clear_text"
+        app:helperText="@string/profile_edit_form_error"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@id/tv_user_phone_title">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLength="14" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/space_large_16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/space_large_16dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.hwonchul.movie.domain.model.Video" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_youtube"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:foreground="@drawable/ripple_rectangle_radius_8dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_youtube"
+            android:layout_width="300dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{item.thumbnailUrl}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="4:3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:placeholder="@{@color/BLANK_COLOR}"
+            app:shapeAppearanceOverlay="@style/RoundedImageView"
+            tools:background="@color/BLANK_COLOR" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_median_8dp"
+            android:background="@drawable/ic_play"
+            android:padding="@dimen/space_x_large_32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- 영상 제목 -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_large_16dp"
+            android:ellipsize="end"
+            android:letterSpacing="-0.05"
+            android:maxLines="1"
+            android:text="@{item.title}"
+            android:textColor="@color/WHITE"
+            android:textSize="@dimen/text_size_headline4_16sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_youtube"
+            app:layout_constraintEnd_toEndOf="@id/iv_youtube"
+            app:layout_constraintStart_toStartOf="@id/iv_youtube"
+            tools:text="[범죄도시] 메인 예고편" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

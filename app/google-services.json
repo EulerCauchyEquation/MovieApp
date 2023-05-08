@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "610256107210",
+    "project_id": "movienetapp",
+    "storage_bucket": "movienetapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:610256107210:android:2557ac7e96b49527a1e633",
+        "android_client_info": {
+          "package_name": "com.hwonchul.movie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "610256107210-ophq67h1oe0i0gabj449p34lokh5vfk1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hwonchul.movie",
+            "certificate_hash": "dfcab0de5487eb355f7570c6a8570b881e400f0b"
+          }
+        },
+        {
+          "client_id": "610256107210-ip33fuvp7plpc288fasrrf0kfmuvpi6c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgZo_TZFqKqpg-sFgEdHBLn0YehYGtTeQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "610256107210-ip33fuvp7plpc288fasrrf0kfmuvpi6c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

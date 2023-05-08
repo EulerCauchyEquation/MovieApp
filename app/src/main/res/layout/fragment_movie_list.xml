@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.hwonchul.movie.presentation.viewModel.listing.MovieListViewModel" />
+
+        <variable
+            name="listener"
+            type="com.hwonchul.movie.presentation.view.listing.MovieAdapter.OnMovieDetailListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:fitsSystemWindows="true"
+        android:theme="@style/HomeTheme">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:stateListAnimator="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- Toolbar -->
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/tb_movie_list"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:theme="@style/HomeTheme.Toolbar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:menu="@menu/fragment_movie_list_menu">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <!-- toolbar app icon -->
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_toolbar"
+                        android:layout_width="@dimen/toolbar_icon_size"
+                        android:layout_height="@dimen/toolbar_icon_size"
+                        android:src="@drawable/ic_app"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <!-- toolbar title -->
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_toolbar_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/space_s_large_12dp"
+                        android:letterSpacing="0.025"
+                        android:text="@string/app_name"
+                        android:textColor="@color/WHITE"
+                        android:textSize="@dimen/text_size_headline2_20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_toolbar"
+                        app:layout_constraintStart_toEndOf="@id/iv_toolbar"
+                        app:layout_constraintTop_toTopOf="@id/iv_toolbar" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.appbar.MaterialToolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <!-- 실시간 인기 영화 랭킹 title -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_poster_title"
+            style="@style/TextAppearance.MaterialComponents.Headline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_large_16dp"
+            android:text="@string/all_posters"
+            android:textColor="@color/WHITE"
+            android:textSize="@dimen/text_size_headline2_20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/appBarLayout" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_poster"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/space_large_16dp"
+            android:clipToPadding="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/tv_poster_title"
+            app:listItem="@{viewModel.movieList}"
+            app:onClick="@{listener}"
+            tools:itemCount="1"
+            tools:listitem="@layout/item_movie" />
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/colorAccent"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/space_large_16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/space_large_16dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

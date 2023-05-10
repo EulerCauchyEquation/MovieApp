@@ -161,3 +161,9 @@ fabric.properties
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.toptal.com/developers/gitignore/api/androidstudio,gradle
+
+# .idea 폴더 내 개인별 설정 파일 제외
+.idea/AndroidTestResultsUserPreferences.xml
+.idea/CodeInsightSettings.xml
+.idea/CodeStyleConfig.xml
+.idea/render.experimental.xml

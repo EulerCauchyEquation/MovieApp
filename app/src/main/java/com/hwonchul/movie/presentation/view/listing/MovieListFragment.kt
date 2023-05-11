@@ -18,10 +18,10 @@ import androidx.navigation.ui.setupWithNavController
 import com.hwonchul.movie.R
 import com.hwonchul.movie.databinding.FragmentMovieListBinding
 import com.hwonchul.movie.domain.model.Movie
-import com.hwonchul.movie.util.Result
 import com.hwonchul.movie.presentation.view.MainActivity
 import com.hwonchul.movie.presentation.view.listing.MovieAdapter.OnMovieDetailListener
 import com.hwonchul.movie.presentation.viewModel.listing.MovieListViewModel
+import com.hwonchul.movie.util.Result
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -51,8 +51,10 @@ class MovieListFragment : Fragment(), OnMenuItemClickListener {
         binding.tbMovieList.setOnMenuItemClickListener(this)
 
         binding.viewModel = viewModel
-        binding.listener = OnMovieDetailListener { movie ->
-            navigateToMovieDetail(movie)
+        binding.listener = object : OnMovieDetailListener {
+            override fun onClick(movie: Movie) {
+                navigateToMovieDetail(movie)
+            }
         }
         binding.lifecycleOwner = viewLifecycleOwner
 
@@ -76,6 +78,7 @@ class MovieListFragment : Fragment(), OnMenuItemClickListener {
                     val error = getString(result.error)
                     showSnackbarMessage(error)
                 }
+
                 is Result.Loading -> binding.progress.visibility = View.VISIBLE
             }
         }

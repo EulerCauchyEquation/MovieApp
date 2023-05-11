@@ -18,8 +18,7 @@ abstract class MovieModule {
     companion object {
         @Provides
         @Singleton
-        fun provideMovieMapper(): MovieMapper =
-            MovieMapperImpl()
+        fun provideMovieMapper(): MovieMapper = MovieMapperImpl()
     }
 
     @Binds

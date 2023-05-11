@@ -18,8 +18,7 @@ abstract class ImageModule {
     companion object {
         @Provides
         @Singleton
-        fun provideImageMapper(): ImageMapper =
-            ImageMapperImpl()
+        fun provideImageMapper(): ImageMapper =            ImageMapperImpl()
     }
 
     @Binds

@@ -14,9 +14,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.hwonchul.movie.R
 import com.hwonchul.movie.databinding.FragmentMovieDetailBinding
-import com.hwonchul.movie.util.Result
 import com.hwonchul.movie.presentation.view.MainActivity
 import com.hwonchul.movie.presentation.viewModel.details.MovieDetailViewModel
+import com.hwonchul.movie.util.Result
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,14 +42,17 @@ class MovieDetailFragment : Fragment() {
 
         binding.fragment = this
         binding.viewModel = viewModel
-        binding.videoListener = VideoAdapter.OnClickListener { url ->
-            val intent = Intent(Intent.ACTION_VIEW)
-                .setData(Uri.parse(url))
-            startActivity(intent)
+        binding.videoListener = object : VideoAdapter.OnClickListener {
+            override fun onClick(url: String) {
+                val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(url))
+                startActivity(intent)
+            }
         }
-        binding.posterThumbnailListener = PosterThumbnailAdapter.OnClickListener { pos ->
-            val navDirections = MovieDetailFragmentDirections.navigateToPoster(pos)
-            navController.navigate(navDirections)
+        binding.posterThumbnailListener = object : PosterThumbnailAdapter.OnClickListener {
+            override fun onClick(currentPos: Int) {
+                val navDirections = MovieDetailFragmentDirections.navigateToPoster(currentPos)
+                navController.navigate(navDirections)
+            }
         }
         // LiveData Lifecycleower 명시
         binding.lifecycleOwner = viewLifecycleOwner

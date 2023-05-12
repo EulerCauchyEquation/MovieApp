@@ -1,9 +1,8 @@
 package com.hwonchul.movie.data.local.dao
 
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Upsert
 import com.hwonchul.movie.data.local.model.VideoEntity
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Flowable
@@ -16,6 +15,6 @@ interface VideoDao {
     )
     fun findVideosByMovieId(movieId: Int): Flowable<List<VideoEntity>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(entities: List<VideoEntity>): Completable
+    @Upsert
+    fun upsert(entities: List<VideoEntity>): Completable
 }

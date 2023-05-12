@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import com.hwonchul.movie.domain.model.Image
 
 @Entity(
     tableName = ImageEntity.TABLE_NAME,
@@ -28,4 +29,12 @@ data class ImageEntity(
     enum class Type {
         Poster, Backdrop
     }
+}
+
+fun ImageEntity.toDomains(): Image {
+    return Image(path = path)
+}
+
+fun List<ImageEntity>.toDomains(): List<Image> {
+    return this.map { it.toDomains() }
 }

@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="com.hwonchul.movie.presentation.viewModel.details.MovieDetailViewModel" />
+            type="com.hwonchul.movie.presentation.details.MovieDetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

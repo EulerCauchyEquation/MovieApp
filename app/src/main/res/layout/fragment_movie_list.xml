@@ -7,11 +7,11 @@
 
         <variable
             name="viewModel"
-            type="com.hwonchul.movie.presentation.viewModel.listing.MovieListViewModel" />
+            type="com.hwonchul.movie.presentation.listing.MovieListViewModel" />
 
         <variable
             name="listener"
-            type="com.hwonchul.movie.presentation.view.listing.MovieAdapter.OnMovieDetailListener" />
+            type="com.hwonchul.movie.presentation.listing.MovieAdapter.OnMovieDetailListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

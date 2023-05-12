@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/movie_list"
-        android:name="com.hwonchul.movie.presentation.view.listing.MovieListFragment"
+        android:name="com.hwonchul.movie.presentation.listing.MovieListFragment"
         tools:layout="@layout/fragment_movie_list">
         <action
             android:id="@+id/navigate_to_detail_graph"

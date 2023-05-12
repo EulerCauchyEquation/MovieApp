@@ -9,26 +9,26 @@
 
         <variable
             name="fragment"
-            type="com.hwonchul.movie.presentation.view.details.MovieDetailFragment" />
+            type="com.hwonchul.movie.presentation.details.MovieDetailFragment" />
 
         <variable
             name="viewModel"
-            type="com.hwonchul.movie.presentation.viewModel.details.MovieDetailViewModel" />
+            type="com.hwonchul.movie.presentation.details.MovieDetailViewModel" />
 
         <variable
             name="videoListener"
-            type="com.hwonchul.movie.presentation.view.details.VideoAdapter.OnClickListener" />
+            type="com.hwonchul.movie.presentation.details.VideoAdapter.OnClickListener" />
 
         <variable
             name="posterThumbnailListener"
-            type="com.hwonchul.movie.presentation.view.details.PosterThumbnailAdapter.OnClickListener" />
+            type="com.hwonchul.movie.presentation.details.PosterThumbnailAdapter.OnClickListener" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.view.details.MovieDetailFragment">
+        tools:context=".presentation.details.MovieDetailFragment">
 
         <!-- appbar layout-->
         <com.google.android.material.appbar.AppBarLayout

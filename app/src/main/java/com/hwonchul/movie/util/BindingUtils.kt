@@ -12,11 +12,11 @@ import com.hwonchul.movie.R
 import com.hwonchul.movie.domain.model.Image
 import com.hwonchul.movie.domain.model.Movie
 import com.hwonchul.movie.domain.model.Video
-import com.hwonchul.movie.presentation.view.details.PosterThumbnailAdapter
-import com.hwonchul.movie.presentation.view.details.VideoAdapter
-import com.hwonchul.movie.presentation.view.listing.MovieAdapter
-import com.hwonchul.movie.presentation.view.listing.MovieAdapter.OnMovieDetailListener
-import com.hwonchul.movie.presentation.view.poster.PosterAdapter
+import com.hwonchul.movie.presentation.details.PosterThumbnailAdapter
+import com.hwonchul.movie.presentation.details.VideoAdapter
+import com.hwonchul.movie.presentation.listing.MovieAdapter
+import com.hwonchul.movie.presentation.listing.MovieAdapter.OnMovieDetailListener
+import com.hwonchul.movie.presentation.poster.PosterAdapter
 import timber.log.Timber
 import java.time.LocalDate
 

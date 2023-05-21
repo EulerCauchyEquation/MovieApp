@@ -1,4 +1,4 @@
-package com.hwonchul.movie.presentation.poster
+package com.hwonchul.movie.presentation.details.poster
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

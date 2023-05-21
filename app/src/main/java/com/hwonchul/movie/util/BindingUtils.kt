@@ -16,7 +16,7 @@ import com.hwonchul.movie.presentation.details.PosterThumbnailAdapter
 import com.hwonchul.movie.presentation.details.VideoAdapter
 import com.hwonchul.movie.presentation.listing.MovieAdapter
 import com.hwonchul.movie.presentation.listing.MovieAdapter.OnMovieDetailListener
-import com.hwonchul.movie.presentation.poster.PosterAdapter
+import com.hwonchul.movie.presentation.details.poster.PosterAdapter
 import timber.log.Timber
 import java.time.LocalDate
 

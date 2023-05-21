@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/poster"
-        android:name="com.hwonchul.movie.presentation.poster.PosterFragment"
+        android:name="com.hwonchul.movie.presentation.details.poster.PosterFragment"
         android:label=""
         tools:layout="@layout/fragment_poster">
 

@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.hwonchul.movie.presentation.account.AccountViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -53,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_large_16dp"
             android:maxLines="1"
-            android:text="이름없음"
+            android:text="@{viewModel.uiData.user.nickname}"
             android:textColor="@android:color/black"
             android:textSize="26sp"
             android:textStyle="bold"
@@ -96,6 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_median_8dp"
+            android:text="@{viewModel.uiData.user.phone}"
             android:maxLines="1"
             android:textColor="@android:color/darker_gray"
             android:textSize="@dimen/text_size_headline4_16sp"

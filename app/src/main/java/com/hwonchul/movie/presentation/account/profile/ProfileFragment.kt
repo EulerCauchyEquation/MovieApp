@@ -19,6 +19,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.Snackbar
 import com.hwonchul.movie.R
 import com.hwonchul.movie.databinding.FragmentProfileBinding
+import com.hwonchul.movie.presentation.account.profile.ProfileContract.ProfileState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -51,7 +52,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         setCompleteClickListener()
 
         observeNickNameFormState()
-        observeProfileResult()
+        observeState()
     }
 
     private fun setCompleteClickListener() {
@@ -84,45 +85,51 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     }
 
     private fun observeNickNameFormState() {
-        viewModel.nickNameFormState.observe(viewLifecycleOwner) { smsCodeFormState ->
-            if (smsCodeFormState.isDataValid) {
-                binding.btnComplete.isEnabled = true
-                binding.btnComplete.setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.BLACK
+        viewModel.uiData.observe(viewLifecycleOwner) { uiData ->
+            when (uiData.nickNameFormState.isDataValid) {
+                true -> {
+                    binding.btnComplete.isEnabled = true
+                    binding.btnComplete.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.BLACK
+                        )
                     )
-                )
-                binding.editNicknameLayout.isErrorEnabled = false
-                binding.editNicknameLayout.error = null
-            } else {
-                binding.btnComplete.isEnabled = false
-                binding.btnComplete.setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.BLANK_COLOR
+                    binding.editNicknameLayout.isErrorEnabled = false
+                    binding.editNicknameLayout.error = null
+                }
+
+                false -> {
+                    binding.btnComplete.isEnabled = false
+                    binding.btnComplete.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.BLANK_COLOR
+                        )
                     )
-                )
-                binding.editNicknameLayout.error = getString(R.string.profile_edit_form_error)
-                binding.editNicknameLayout.isErrorEnabled = true
+                    binding.editNicknameLayout.error = getString(R.string.profile_edit_form_error)
+                    binding.editNicknameLayout.isErrorEnabled = true
+                }
             }
         }
     }
 
-    private fun observeProfileResult() {
-        viewModel.profileResult.observe(viewLifecycleOwner) { state ->
+    private fun observeState() {
+        viewModel.uiState.observe(viewLifecycleOwner) { state ->
             if (state !is ProfileState.Loading) {
                 // 로딩 아닐 때는 progress bar 해제
                 progressDialog.dismiss()
             }
 
             when (state) {
-                is ProfileState.Success -> {
+                is ProfileState.Loading -> progressDialog.show()
+                is ProfileState.Idle -> {}
+                is ProfileState.EditSuccess -> {
                     navController.navigateUp()
                     showSnackBarMessage(getString(R.string.profile_update_success))
                 }
-                is ProfileState.Failure -> showSnackBarMessage(getString(state.message))
-                is ProfileState.Loading -> progressDialog.show()
+
+                is ProfileState.Error -> showSnackBarMessage(getString(state.message))
             }
         }
     }

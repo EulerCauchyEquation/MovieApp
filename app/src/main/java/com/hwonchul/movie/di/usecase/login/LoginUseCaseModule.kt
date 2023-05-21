@@ -29,5 +29,5 @@ abstract class LoginUseCaseModule {
 
     @ViewModelScoped
     @Binds
-    abstract fun bindValidateUniqueNickNameUseCase(useCase: ValidateUniqueNickNameUseCaseImpl): ValidateUniqueNickNameUseCase
+    abstract fun bindValidateUniqueNickNameUseCase(useCase: CheckDuplicateNickNameUseCaseImpl): CheckDuplicateNickNameUseCase
 }

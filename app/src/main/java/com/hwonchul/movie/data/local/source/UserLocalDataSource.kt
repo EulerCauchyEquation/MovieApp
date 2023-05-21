@@ -1,15 +1,15 @@
 package com.hwonchul.movie.data.local.source
 
 import com.hwonchul.movie.domain.model.User
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.core.Single
+import kotlinx.coroutines.flow.Flow
 
 interface UserLocalDataSource {
 
-    fun getUser(): Flowable<User>
+    suspend fun getUser(): Flow<User>
 
-    fun insertOrUpdate(user: User): Single<User>
+    // SharedPreferences는 Edit 작업은 main thread에서 블로킹되는 작업
+    // 을 수행하지는 않지만, 일관성을 위해 suspend를 붙임
+    suspend fun insertOrUpdate(user: User)
 
-    fun deleteUser(): Completable
+    suspend fun deleteUser()
 }

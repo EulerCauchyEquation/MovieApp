@@ -15,6 +15,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.hwonchul.movie.R
 import com.hwonchul.movie.databinding.DialogConfirmBinding
 import com.hwonchul.movie.databinding.FragmentAccountBinding
+import com.hwonchul.movie.presentation.account.AccountContract.AccountState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -41,17 +42,17 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
 
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         setProgressDialog()
+        setWithdrawalConfirmDialog()
 
         setLogoutClickListener()
         setUserWithdrawalClickListener()
-        setWithdrawalConfirmDialog()
         setProfileEditClickListener()
 
-        observeUserInfo()
-        observeLogoutResult()
-        observeWithdrawalResult()
+        observeUiState()
     }
 
     private fun setProgressDialog() {
@@ -94,61 +95,29 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
         }
     }
 
-    private fun observeUserInfo() {
-        viewModel.userInfo.observe(viewLifecycleOwner) { state ->
-            if (state !is AccountState.Loading) {
+    private fun observeUiState() {
+        viewModel.uiState.observe(viewLifecycleOwner) { uiState ->
+            if (uiState !is AccountState.Loading) {
                 progressDialog.dismiss()
-                binding.layout.visibility = View.VISIBLE
             }
 
-            when (state) {
+            when (uiState) {
                 is AccountState.Loading -> {
                     progressDialog.show()
-                    binding.layout.visibility = View.INVISIBLE
                 }
 
-                is AccountState.Success -> {
-                    binding.tvUserPhone.text = state.user?.phone
-                    binding.tvUserNick.text = state.user?.nickname
-                }
-
-                is AccountState.Failure -> showSnackBarMessage(getString(state.message))
-            }
-        }
-    }
-
-    private fun observeLogoutResult() {
-        viewModel.logoutResult.observe(viewLifecycleOwner) { state ->
-            if (state !is AccountState.Loading) {
-                progressDialog.dismiss()
-            }
-
-            when (state) {
-                is AccountState.Loading -> progressDialog.show()
-                is AccountState.Success -> {
+                is AccountState.LogoutSuccess -> {
                     showSnackBarMessage(getString(R.string.user_logout_success))
                     navController.navigate(AccountFragmentDirections.navigateToLoginGraph())
                 }
 
-                is AccountState.Failure -> showSnackBarMessage(getString(state.message))
-            }
-        }
-    }
-
-    private fun observeWithdrawalResult() {
-        viewModel.withdrawalResult.observe(viewLifecycleOwner) { state ->
-            if (state !is AccountState.Loading) {
-                progressDialog.dismiss()
-            }
-
-            when (state) {
-                is AccountState.Loading -> progressDialog.show()
-                is AccountState.Success -> {
+                is AccountState.WithdrawalSuccess -> {
                     showSnackBarMessage(getString(R.string.user_withdrawal_success))
                     navController.navigate(AccountFragmentDirections.navigateToLoginGraph())
                 }
 
-                is AccountState.Failure -> showSnackBarMessage(getString(state.message))
+                is AccountState.Idle -> {}
+                is AccountState.Error -> showSnackBarMessage(getString(uiState.message))
             }
         }
     }

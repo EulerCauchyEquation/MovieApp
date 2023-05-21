@@ -18,7 +18,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.Snackbar
 import com.hwonchul.movie.R
 import com.hwonchul.movie.databinding.FragmentInputNickBinding
-import com.hwonchul.movie.presentation.login.LoginState
+import com.hwonchul.movie.presentation.login.LoginContract.LoginState
 import com.hwonchul.movie.presentation.login.LoginViewModel
 
 class InputNickFragment : Fragment(R.layout.fragment_input_nick) {
@@ -50,7 +50,7 @@ class InputNickFragment : Fragment(R.layout.fragment_input_nick) {
         setSmsCodeClearClickListener()
         setEditNickNameAddTextChangedListener()
 
-        observeLoginResult()
+        observeState()
         observeNickNameFormState()
     }
 
@@ -89,16 +89,16 @@ class InputNickFragment : Fragment(R.layout.fragment_input_nick) {
         })
     }
 
-    private fun observeLoginResult() {
-        viewModel.loginResult.observe(viewLifecycleOwner) { result ->
-            if (result !is LoginState.Loading) {
+    private fun observeState() {
+        viewModel.uiState.observe(viewLifecycleOwner) { state ->
+            if (state !is LoginState.Loading) {
                 // 로딩 아닐 때는 progress bar 해제
                 progressDialog.dismiss()
             }
 
-            when (result) {
+            when (state) {
                 is LoginState.LoginSuccess -> navController.navigate(InputNickFragmentDirections.navigateToMain())
-                is LoginState.Failure -> showSnackBarMessage(getString(result.message))
+                is LoginState.Error -> showSnackBarMessage(getString(state.message))
                 is LoginState.Loading -> progressDialog.show()
                 else -> {}
             }
@@ -106,13 +106,17 @@ class InputNickFragment : Fragment(R.layout.fragment_input_nick) {
     }
 
     private fun observeNickNameFormState() {
-        viewModel.nickNameFormState.observe(viewLifecycleOwner) { nickNameFormState ->
-            if (nickNameFormState.isDataValid) {
-                binding.btnComplete.isEnabled = true
-                binding.btnComplete.setBackgroundResource(R.drawable.bg_rect_blue_rounded_8dp)
-            } else {
-                binding.btnComplete.isEnabled = false
-                binding.btnComplete.setBackgroundResource(R.drawable.bg_rect_gray_rounded_8dp)
+        viewModel.uiData.observe(viewLifecycleOwner) { data ->
+            when (data.nickNameFormState.isDataValid) {
+                true -> {
+                    binding.btnComplete.isEnabled = true
+                    binding.btnComplete.setBackgroundResource(R.drawable.bg_rect_blue_rounded_8dp)
+                }
+
+                false -> {
+                    binding.btnComplete.isEnabled = false
+                    binding.btnComplete.setBackgroundResource(R.drawable.bg_rect_gray_rounded_8dp)
+                }
             }
         }
     }

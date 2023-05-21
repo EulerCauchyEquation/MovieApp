@@ -18,9 +18,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.Snackbar
 import com.hwonchul.movie.R
 import com.hwonchul.movie.databinding.FragmentPhoneAuthCheckBinding
-import com.hwonchul.movie.presentation.login.LoginState
+import com.hwonchul.movie.presentation.login.LoginContract.LoginState
 import com.hwonchul.movie.presentation.login.LoginViewModel
-import com.hwonchul.movie.util.StringUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -46,6 +45,8 @@ class PhoneAuthCheckFragment : Fragment(R.layout.fragment_phone_auth_check) {
 
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         setProgressDialog()
 
@@ -54,10 +55,8 @@ class PhoneAuthCheckFragment : Fragment(R.layout.fragment_phone_auth_check) {
         setEditSmsCodeAddTextChangedListener()
         setVerifyClickListener()
 
-        observeVerificationResult()
-        observeLoginResult()
+        observeState()
         observeSmsCodeFormState()
-        observeTimeRemaining()
     }
 
     private fun setProgressDialog() {
@@ -104,34 +103,26 @@ class PhoneAuthCheckFragment : Fragment(R.layout.fragment_phone_auth_check) {
         }
     }
 
-    private fun observeVerificationResult() {
-        viewModel.verificationResult.observe(viewLifecycleOwner) { result ->
-            if (result !is PhoneAuthState.Loading) {
+    private fun observeState() {
+        viewModel.uiState.observe(viewLifecycleOwner) { state ->
+            if (state !is LoginState.Loading) {
                 // 로딩 아닐 때는 progress bar 해제
                 progressDialog.dismiss()
             }
 
-            when (result) {
-                is PhoneAuthState.VerificationCompleted -> {
-                    hideKeyboard()
-                    binding.editSmsCode.setText(result.smsCode)
+            when (state) {
+                is LoginState.Loading -> progressDialog.show()
+                is LoginState.PhoneAuth -> {
+                    when (state.phoneAuthState) {
+                        is PhoneAuthState.VerificationCompleted -> {
+                            hideKeyboard()
+                            binding.editSmsCode.setText(state.phoneAuthState.smsCode)
+                        }
+
+                        else -> {}
+                    }
                 }
 
-                is PhoneAuthState.VerificationFailed -> showSnackBarMessage(getString(result.message))
-                is PhoneAuthState.Loading -> progressDialog.show()
-                else -> {}
-            }
-        }
-    }
-
-    private fun observeLoginResult() {
-        viewModel.loginResult.observe(viewLifecycleOwner) { result ->
-            if (result !is LoginState.Loading) {
-                // 로딩 아닐 때는 progress bar 해제
-                progressDialog.dismiss()
-            }
-
-            when (result) {
                 is LoginState.LoginSuccess -> navController.navigate(
                     PhoneAuthCheckFragmentDirections.navigateToMain()
                 )
@@ -140,27 +131,21 @@ class PhoneAuthCheckFragment : Fragment(R.layout.fragment_phone_auth_check) {
                     PhoneAuthCheckFragmentDirections.navigateToNick()
                 )
 
-                is LoginState.Failure -> showSnackBarMessage(getString(result.message))
-                is LoginState.Loading -> progressDialog.show()
+                is LoginState.Error -> showSnackBarMessage(getString(state.message))
+                else -> {}
             }
         }
     }
 
     private fun observeSmsCodeFormState() {
-        viewModel.smsCodeFormState.observe(viewLifecycleOwner) { smsCodeFormState ->
-            if (smsCodeFormState.isDataValid) {
+        viewModel.uiData.observe(viewLifecycleOwner) { data ->
+            if (data.smsCodeFormState.isDataValid) {
                 binding.btnVerify.isEnabled = true
                 binding.btnVerify.setBackgroundResource(R.drawable.bg_rect_blue_rounded_8dp)
             } else {
                 binding.btnVerify.isEnabled = false
                 binding.btnVerify.setBackgroundResource(R.drawable.bg_rect_gray_rounded_8dp)
             }
-        }
-    }
-
-    private fun observeTimeRemaining() {
-        viewModel.timeRemaining.observe(viewLifecycleOwner) { time ->
-            binding.tvTimer.text = StringUtil.formatCountTime(time)
         }
     }
 

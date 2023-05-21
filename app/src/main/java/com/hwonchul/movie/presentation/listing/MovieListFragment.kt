@@ -20,7 +20,7 @@ import com.hwonchul.movie.databinding.FragmentMovieListBinding
 import com.hwonchul.movie.domain.model.Movie
 import com.hwonchul.movie.presentation.MainActivity
 import com.hwonchul.movie.presentation.listing.MovieAdapter.OnMovieDetailListener
-import com.hwonchul.movie.util.Result
+import com.hwonchul.movie.presentation.listing.MovieListContract.MovieListState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -57,7 +57,7 @@ class MovieListFragment : Fragment(), OnMenuItemClickListener {
         }
         binding.lifecycleOwner = viewLifecycleOwner
 
-        observeLoadPostersResult()
+        observeState()
     }
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {
@@ -69,16 +69,21 @@ class MovieListFragment : Fragment(), OnMenuItemClickListener {
         return false
     }
 
-    private fun observeLoadPostersResult() {
-        viewModel.loadMovieListResult.observe(viewLifecycleOwner) { result ->
-            when (result) {
-                is Result.Success -> binding.progress.visibility = View.GONE
-                is Result.Error -> {
-                    val error = getString(result.error)
+    private fun observeState() {
+        viewModel.uiState.observe(viewLifecycleOwner) { state ->
+            if (state !is MovieListState.Loading) {
+                // 로딩 아닐 때는 progress bar 해제
+                binding.progress.visibility = View.GONE
+            }
+
+            when (state) {
+                is MovieListState.Idle -> {}
+                is MovieListState.Error -> {
+                    val error = getString(state.message)
                     showSnackbarMessage(error)
                 }
 
-                is Result.Loading -> binding.progress.visibility = View.VISIBLE
+                is MovieListState.Loading -> binding.progress.visibility = View.VISIBLE
             }
         }
     }

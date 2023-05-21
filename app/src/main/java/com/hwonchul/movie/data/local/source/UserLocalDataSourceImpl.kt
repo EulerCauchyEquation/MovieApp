@@ -7,7 +7,9 @@ import com.google.gson.Gson
 import com.hwonchul.movie.domain.model.User
 import com.hwonchul.movie.exception.UserNotFoundException
 import dagger.hilt.android.qualifiers.ApplicationContext
-import io.reactivex.rxjava3.core.*
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -17,61 +19,58 @@ class UserLocalDataSourceImpl @Inject constructor(
     private val sharedPreferences = context.getSharedPreferences(NAME, Context.MODE_PRIVATE)
     private val gson = Gson()
 
-    override fun getUser(): Flowable<User> {
-        return Flowable.create({ emitter ->
-            val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-                if (key == USER_KEY) {
-                    getUserInternal(emitter)
+    override suspend fun getUser(): Flow<User> = callbackFlow {
+        // 일반 비동기 API를 Flow 스타일로 변환 시 callbackFlow가 유용
+        // 콜백 해제할 때도 유용
+        val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+            if (key == USER_KEY) {
+                try {
+                    trySend(getUserInternal())
+                } catch (e: NullPointerException) {
+                    val errorMsg = "local 에 사용자 정보가 없습니다. "
+                    Timber.d(errorMsg)
+                    close(UserNotFoundException(errorMsg))
                 }
             }
+        }
 
-            // 최초 한 번은 실행
-            getUserInternal(emitter)
+        // 실시간 데이터 감지 리스너 등록
+        sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
 
-            // 실시간 데이터 감지 리스너 등록
-            sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
-
-            emitter.setCancellable {
-                sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener)
-            }
-        }, BackpressureStrategy.LATEST)
-    }
-
-    private fun getUserInternal(emitter: FlowableEmitter<User>) {
-        sharedPreferences.getString(USER_KEY, null)?.let { jsonString ->
-            val user = gson.fromJson(jsonString, User::class.java)
-            Timber.d("사용자 정보를 가져왔습니다. : [user=${user.uid}]")
-            emitter.onNext(user)
-        } ?: run {
+        // 최초 한 번은 실행
+        try {
+            trySend(getUserInternal())
+        } catch (e: NullPointerException) {
             val errorMsg = "local 에 사용자 정보가 없습니다. "
             Timber.d(errorMsg)
-            if (!emitter.isCancelled) {
-                emitter.onError(UserNotFoundException(errorMsg))
-            }
+            close(UserNotFoundException(errorMsg))
         }
+
+        // Flow 중단 시 리스너 해제
+        awaitClose { sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener) }
     }
 
-    override fun insertOrUpdate(user: User): Single<User> {
-        return Single.create { emitter ->
-            val jsonString = gson.toJson(user)
-            sharedPreferences.edit {
-                putString(USER_KEY, jsonString)
-                apply()
-            }
-            Timber.d("local 에 사용자 정보를 업데이트 하였습니다. ")
-            emitter.onSuccess(user)
-        }
+    private fun getUserInternal(): User {
+        val jsonString = sharedPreferences.getString(USER_KEY, null)
+        return gson.fromJson(jsonString, User::class.java)
+            .also { Timber.d("사용자 정보를 가져왔습니다. : [user=${it.uid}]") }
     }
 
-    override fun deleteUser(): Completable {
-        return Completable.create { emitter ->
-            sharedPreferences.edit {
-                remove(USER_KEY)
-                apply()
-            }
-            Timber.d("local 에 사용자 정보를 초기화 하였습니다. ")
-            emitter.onComplete()
+    override suspend fun insertOrUpdate(user: User) {
+        val jsonString = gson.toJson(user)
+        sharedPreferences.edit {
+            putString(USER_KEY, jsonString)
+            apply()
         }
+        Timber.d("local 에 사용자 정보를 업데이트 하였습니다. ")
+    }
+
+    override suspend fun deleteUser() {
+        sharedPreferences.edit {
+            remove(USER_KEY)
+            apply()
+        }
+        Timber.d("local 에 사용자 정보를 초기화 하였습니다. ")
     }
 
     companion object {

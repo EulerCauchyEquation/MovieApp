@@ -1,10 +1,10 @@
 package com.hwonchul.movie.domain.usecase.auth
 
-import io.reactivex.rxjava3.core.Flowable
+import kotlinx.coroutines.flow.Flow
 
 interface TimerUseCase {
 
-    fun start(timeOutMillis: Long): Flowable<Long>
+    suspend fun start(timeOutMillis: Long): Flow<Result<Long>>
 
     fun stop()
 }

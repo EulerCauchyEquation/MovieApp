@@ -12,6 +12,7 @@ object StringUtil {
             ?: "yyyy.MM.dd"
     }
 
+    @JvmStatic
     fun formatCountTime(timeMillis: Long): String {
         // 밀리초 단위를 00:00 으로 환산. ex) 1800000L -> 02:00
         val seconds = timeMillis / 1000 % 60

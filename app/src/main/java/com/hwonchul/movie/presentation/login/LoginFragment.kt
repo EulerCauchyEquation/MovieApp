@@ -12,6 +12,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.snackbar.Snackbar
 import com.hwonchul.movie.R
 import com.hwonchul.movie.databinding.FragmentLoginBinding
+import com.hwonchul.movie.presentation.login.LoginContract.LoginState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,7 +38,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         setProgressDialog()
         setStartClickListener()
-        observeLoginResult()
+        observeState()
     }
 
     private fun setProgressDialog() {
@@ -54,17 +55,16 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
     }
 
-    private fun observeLoginResult() {
-        viewModel.loginResult.observe(viewLifecycleOwner) { result ->
-            if (result !is LoginState.Loading) {
+    private fun observeState() {
+        viewModel.uiState.observe(viewLifecycleOwner) { state ->
+            if (state !is LoginState.Loading) {
                 // 로딩 아닐 때는 progress bar 해제
                 progressDialog.dismiss()
             }
 
-            when (result) {
-                is LoginState.LoginSuccess -> navController.navigate(LoginFragmentDirections.navigateToMain())
-                is LoginState.Failure -> showSnackBarMessage(getString(result.message))
+            when (state) {
                 is LoginState.Loading -> progressDialog.show()
+                is LoginState.Error -> showSnackBarMessage(getString(state.message))
                 else -> {}
             }
         }

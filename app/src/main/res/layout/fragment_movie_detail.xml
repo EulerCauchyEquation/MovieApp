@@ -47,7 +47,7 @@
                 app:contentScrim="?attr/colorPrimaryDark"
                 app:expandedTitleTextAppearance="@style/ExpandedBarTextStyle"
                 app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
-                app:title="@{viewModel.movie.title}">
+                app:title="@{viewModel.uiData.movieDetail.title}">
 
                 <!-- appbar background -->
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -62,7 +62,7 @@
                         android:layout_height="300dp"
                         android:adjustViewBounds="true"
                         android:scaleType="centerCrop"
-                        app:imageUrl="@{viewModel.movie.mainBackdrop.url}"
+                        app:imageUrl="@{viewModel.uiData.movieDetail.mainBackdrop.url}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -96,7 +96,7 @@
                             android:layout_height="match_parent"
                             android:adjustViewBounds="true"
                             android:scaleType="centerCrop"
-                            app:imageUrl="@{viewModel.movie.mainPoster.url}"
+                            app:imageUrl="@{viewModel.uiData.movieDetail.mainPoster.url}"
                             app:placeholder="@{@color/light_gray}"
                             tools:src="@drawable/ic_movie_sample" />
                     </com.google.android.material.card.MaterialCardView>
@@ -109,7 +109,7 @@
                         android:layout_marginStart="@dimen/space_large_16dp"
                         android:layout_marginBottom="@dimen/space_large_16dp"
                         android:gravity="start"
-                        android:text="@{viewModel.movie.title}"
+                        android:text="@{viewModel.uiData.movieDetail.title}"
                         android:textColor="@color/WHITE"
                         android:textSize="@dimen/text_size_headline2_20sp"
                         android:textStyle="bold"
@@ -127,7 +127,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/space_x_small_2dp"
-                        android:text="@{@string/movie_date_format(StringUtil.formatDate(viewModel.movie.releaseDate))}"
+                        android:text="@{@string/movie_date_format(StringUtil.formatDate(viewModel.uiData.movieDetail.releaseDate))}"
                         android:textColor="@color/WHITE"
                         android:textSize="@dimen/text_size_headline6_14sp"
                         app:layout_constraintBottom_toTopOf="@id/tv_top_movie_genre_and_runtime"
@@ -140,7 +140,7 @@
                         android:id="@+id/tv_top_movie_genre_and_runtime"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@{@string/movie_genre_and_runtime_format(viewModel.movie.genres, viewModel.movie.runtime)}"
+                        android:text="@{@string/movie_genre_and_runtime_format(viewModel.uiData.movieDetail.genres, viewModel.uiData.movieDetail.runtime)}"
                         android:textColor="@color/WHITE"
                         android:textSize="@dimen/text_size_headline6_14sp"
                         app:layout_constraintBottom_toBottomOf="@id/guideline_appbar_bottom"
@@ -219,7 +219,7 @@
                     app:layout_constraintEnd_toEndOf="@id/tv_status_title"
                     app:layout_constraintStart_toStartOf="@id/tv_status_title"
                     app:layout_constraintTop_toBottomOf="@id/tv_status_title"
-                    app:status="@{viewModel.movie.status}"
+                    app:status="@{viewModel.uiData.movieDetail.status}"
                     tools:src="@drawable/ic_released" />
 
                 <!-- 평점 title -->
@@ -260,7 +260,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/space_x_small_2dp"
-                    android:text="@{@string/movie_audience_rate_format(viewModel.movie.audienceRating)}"
+                    android:text="@{@string/movie_audience_rate_format(viewModel.uiData.movieDetail.audienceRating)}"
                     android:textColor="@color/BLACK"
                     android:textSize="19sp"
                     android:textStyle="bold"
@@ -289,7 +289,7 @@
                     android:id="@+id/tv_popularity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{@string/movie_popularity_rate_format(viewModel.movie.popularity)}"
+                    android:text="@{@string/movie_popularity_rate_format(viewModel.uiData.movieDetail.popularity)}"
                     android:textColor="@color/BLACK"
                     android:textSize="19sp"
                     android:textStyle="bold"
@@ -329,7 +329,7 @@
                     android:layout_marginTop="@dimen/space_median_8dp"
                     android:ellipsize="end"
                     android:maxLines="10"
-                    android:text="@{viewModel.movie.overview}"
+                    android:text="@{viewModel.uiData.movieDetail.overview}"
                     android:textColor="@color/BLACK"
                     android:textSize="@dimen/text_size_headline4_16sp"
                     app:layout_constraintEnd_toStartOf="@id/guideline_right"
@@ -383,7 +383,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_median_8dp"
-                    android:text="@{viewModel.movie.genres}"
+                    android:text="@{viewModel.uiData.movieDetail.genres}"
                     android:textColor="@color/BLACK"
                     android:textSize="@dimen/text_size_headline4_16sp"
                     app:layout_constraintStart_toEndOf="@id/guideline_left"
@@ -423,7 +423,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/space_small_4dp"
                         android:layout_marginTop="@dimen/space_large_16dp"
-                        android:text="@{@string/list_size_format(viewModel.movie.posters.size())}"
+                        android:text="@{@string/list_size_format(viewModel.uiData.movieDetail.posters.size())}"
                         android:textColor="@color/WHITE"
                         android:textSize="@dimen/text_size_headline5_15sp"
                         android:textStyle="bold"
@@ -443,7 +443,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_movie_poster_title"
-                        app:listItem="@{viewModel.movie.posters}"
+                        app:listItem="@{viewModel.uiData.movieDetail.posters}"
                         app:listener="@{posterThumbnailListener}"
                         tools:itemCount="1"
                         tools:listitem="@layout/item_poster_thumbnail" />
@@ -469,7 +469,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/space_small_4dp"
                         android:layout_marginTop="@dimen/space_large_16dp"
-                        android:text="@{@string/list_size_format(viewModel.movie.videos.size())}"
+                        android:text="@{@string/list_size_format(viewModel.uiData.movieDetail.videos.size())}"
                         android:textColor="@color/WHITE"
                         android:textSize="@dimen/text_size_headline5_15sp"
                         android:textStyle="bold"
@@ -490,7 +490,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_movie_video_title"
-                        app:listItem="@{viewModel.movie.videos}"
+                        app:listItem="@{viewModel.uiData.movieDetail.videos}"
                         app:listener="@{videoListener}"
                         tools:itemCount="1"
                         tools:listitem="@layout/item_video" />

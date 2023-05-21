@@ -15,7 +15,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.hwonchul.movie.R
 import com.hwonchul.movie.databinding.FragmentMovieDetailBinding
 import com.hwonchul.movie.presentation.MainActivity
-import com.hwonchul.movie.util.Result
+import com.hwonchul.movie.presentation.details.MovieDetailContract.MovieDetailState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -56,20 +56,15 @@ class MovieDetailFragment : Fragment() {
         // LiveData Lifecycleower 명시
         binding.lifecycleOwner = viewLifecycleOwner
 
-        observeLoadMovieResult()
+        observeState()
     }
 
-    private fun observeLoadMovieResult() {
-        // 영화 불러오기 observe
-        viewModel.loadMovieResult.observe(viewLifecycleOwner) { result ->
-            when (result) {
-                is Result.Success -> showMainUI()
-                is Result.Error -> {
-                    val error = getString(result.error)
-                    showSnackBarMessage(error)
-                }
-
-                is Result.Loading -> showLoading()
+    private fun observeState() {
+        viewModel.uiState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is MovieDetailState.Idle -> showMainUI()
+                is MovieDetailState.Error -> showError(getString(state.message))
+                is MovieDetailState.Loading -> showLoading()
             }
         }
     }
@@ -93,6 +88,14 @@ class MovieDetailFragment : Fragment() {
         } else {
             binding.btnOverviewTextMore.visibility = View.GONE
         }
+    }
+
+    private fun showError(message: String) {
+        showSnackBarMessage(message)
+        binding.progress.visibility = View.GONE
+        binding.layoutLoading.visibility = View.GONE
+        binding.appBarLayout.visibility = View.VISIBLE
+        binding.layoutMain.visibility = View.VISIBLE
     }
 
     private fun showLoading() {

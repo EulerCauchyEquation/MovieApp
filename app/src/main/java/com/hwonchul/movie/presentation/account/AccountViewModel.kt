@@ -1,17 +1,18 @@
 package com.hwonchul.movie.presentation.account
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.hwonchul.movie.R
+import com.hwonchul.movie.base.view.BaseViewModel
 import com.hwonchul.movie.domain.usecase.account.GetCurrentUserInfoUseCase
 import com.hwonchul.movie.domain.usecase.account.LogOutUseCase
 import com.hwonchul.movie.domain.usecase.account.WithdrawalUseCase
-import com.hwonchul.movie.util.SingleLiveEvent
+import com.hwonchul.movie.presentation.account.AccountContract.AccountData
+import com.hwonchul.movie.presentation.account.AccountContract.AccountState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,65 +20,47 @@ class AccountViewModel @Inject constructor(
     private val getCurrentUserInfoUseCase: GetCurrentUserInfoUseCase,
     private val logOutUseCase: LogOutUseCase,
     private val withdrawalUseCase: WithdrawalUseCase,
-) : ViewModel() {
-
-    private val _userInfo = MutableLiveData<AccountState>()
-    val userInfo: LiveData<AccountState> = _userInfo
-
-    private val _logoutResult = SingleLiveEvent<AccountState>()
-    val logoutResult: LiveData<AccountState> = _logoutResult
-
-    private val _withdrawalResult = SingleLiveEvent<AccountState>()
-    val withdrawalResult: LiveData<AccountState> = _withdrawalResult
-
-    private val compositeDisposable = CompositeDisposable()
+) : BaseViewModel<AccountData, AccountState>(AccountData(), AccountState.Idle) {
 
     init {
-        getCurrentUser()
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                getCurrentUser()
+            }
+        }
     }
 
-    private fun getCurrentUser() {
-        _userInfo.value = AccountState.Loading
-        val disposable = getCurrentUserInfoUseCase()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                // 현재 내정보 가져오기
-                { user -> _userInfo.value = AccountState.Success(user) },
-                // 실패
-                { _userInfo.value = AccountState.Failure(R.string.user_info_get_failed) }
-            )
-        compositeDisposable.add(disposable)
+    private suspend fun getCurrentUser() {
+        setState { AccountState.Loading }
+        getCurrentUserInfoUseCase().collectLatest { result ->
+            result
+                .onSuccess { user ->
+                    setData { copy(user = user) }
+                    setState { AccountState.Idle }
+                }
+                .onFailure { setState { AccountState.Error(R.string.user_info_get_failed) } }
+        }
     }
 
     fun logOut() {
-        _withdrawalResult.value = AccountState.Loading
-        val disposable = logOutUseCase()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { _logoutResult.value = AccountState.Success() }
-        compositeDisposable.add(disposable)
+        viewModelScope.launch {
+            setState { AccountState.Loading }
+            withContext(Dispatchers.IO) {
+                logOutUseCase()
+                    .onSuccess { setState { AccountState.LogoutSuccess } }
+                    .onFailure { setState { AccountState.Error(R.string.logout_failure) } }
+            }
+        }
     }
 
     fun withdrawal() {
-        _withdrawalResult.value = AccountState.Loading
-        val disposable = withdrawalUseCase()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                // 회원탈퇴 성공
-                { _withdrawalResult.value = AccountState.Success() },
-                // 회원탈퇴 실패
-                {
-                    _withdrawalResult.value =
-                        AccountState.Failure(R.string.user_withdrawal_failed)
-                }
-            )
-        compositeDisposable.add(disposable)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.clear()
+        viewModelScope.launch {
+            setState { AccountState.Loading }
+            withContext(Dispatchers.IO) {
+                withdrawalUseCase()
+                    .onSuccess { setState { AccountState.WithdrawalSuccess } }
+                    .onFailure { setState { AccountState.Error(R.string.user_withdrawal_failed) } }
+            }
+        }
     }
 }

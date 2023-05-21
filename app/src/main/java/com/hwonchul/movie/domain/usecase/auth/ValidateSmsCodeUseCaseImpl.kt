@@ -1,18 +1,15 @@
 package com.hwonchul.movie.domain.usecase.auth
 
 import com.hwonchul.movie.exception.InvalidFormatException
-import io.reactivex.rxjava3.core.Completable
 import javax.inject.Inject
 
 class ValidateSmsCodeUseCaseImpl @Inject constructor() : ValidateSmsCodeUseCase {
 
-    override operator fun invoke(smsCode: String): Completable {
-        return Completable.create { emitter ->
-            if (isValidSmsCode(smsCode)) {
-                emitter.onComplete()
-            } else {
-                emitter.onError(InvalidFormatException("올바르지 않는 smsCode 입니다. : $smsCode"))
-            }
+    override operator fun invoke(smsCode: String): Result<Unit> {
+        return if (isValidSmsCode(smsCode)) {
+            Result.success(Unit)
+        } else {
+            Result.failure(InvalidFormatException("올바르지 않는 smsCode 입니다. : $smsCode"))
         }
     }
 

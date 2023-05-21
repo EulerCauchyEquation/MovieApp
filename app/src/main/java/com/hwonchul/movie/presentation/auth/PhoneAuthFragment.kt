@@ -18,6 +18,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.Snackbar
 import com.hwonchul.movie.R
 import com.hwonchul.movie.databinding.FragmentPhoneAuthBinding
+import com.hwonchul.movie.presentation.login.LoginContract.LoginState
 import com.hwonchul.movie.presentation.login.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -52,7 +53,7 @@ class PhoneAuthFragment : Fragment(R.layout.fragment_phone_auth) {
         setRequestClickListener()
 
         observePhoneNumberFormState()
-        observeVerificationResult()
+        observeState()
     }
 
     private fun setProgressDialog() {
@@ -97,8 +98,8 @@ class PhoneAuthFragment : Fragment(R.layout.fragment_phone_auth) {
     }
 
     private fun observePhoneNumberFormState() {
-        viewModel.phoneNumberFormState.observe(viewLifecycleOwner) { phoneFormState ->
-            if (phoneFormState.isDataValid) {
+        viewModel.uiData.observe(viewLifecycleOwner) { data ->
+            if (data.phoneNumberFormState.isDataValid) {
                 binding.btnRequest.isEnabled = true
                 binding.btnRequest.setBackgroundResource(R.drawable.bg_rect_blue_rounded_8dp)
             } else {
@@ -108,17 +109,26 @@ class PhoneAuthFragment : Fragment(R.layout.fragment_phone_auth) {
         }
     }
 
-    private fun observeVerificationResult() {
-        viewModel.verificationResult.observe(viewLifecycleOwner) { result ->
-            if (result !is PhoneAuthState.Loading) {
+    private fun observeState() {
+        viewModel.uiState.observe(viewLifecycleOwner) { state ->
+            if (state !is LoginState.Loading) {
                 // 로딩 아닐 때는 progress bar 해제
                 progressDialog.dismiss()
             }
 
-            when (result) {
-                is PhoneAuthState.VerificationFailed -> showSnackBarMessage(getString(result.message))
-                is PhoneAuthState.Loading -> progressDialog.show()
-                is PhoneAuthState.SmsCodeSent -> navController.navigate(PhoneAuthFragmentDirections.navigateToPhoneAuthCheck())
+            when (state) {
+                is LoginState.Loading -> progressDialog.show()
+                is LoginState.PhoneAuth -> {
+                    when (state.phoneAuthState) {
+                        is PhoneAuthState.SmsCodeSent -> navController.navigate(
+                            PhoneAuthFragmentDirections.navigateToPhoneAuthCheck()
+                        )
+
+                        else -> {}
+                    }
+                }
+
+                is LoginState.Error -> showSnackBarMessage(getString(state.message))
                 else -> {}
             }
         }

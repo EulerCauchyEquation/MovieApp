@@ -21,7 +21,7 @@ buildscript {
 
         // network
         retrofit_version = '2.9.0'
-        logging_interceptor_version = '4.9.3'
+        logging_interceptor_version = '4.11.0'
         gson_version = '2.9.0'
         firebase_bom_version = '31.3.0'
         integrity_version = '1.1.0'
@@ -41,6 +41,9 @@ buildscript {
 
         // DI
         hil_navigation_fragment_version = '1.0.0'
+
+        // coroutines
+        coroutinues_version = '1.6.4'
 
         // --- test ----
         junit_version = '4.13.2'

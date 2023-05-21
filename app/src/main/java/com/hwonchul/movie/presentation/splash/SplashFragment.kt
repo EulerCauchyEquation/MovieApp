@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.hwonchul.movie.R
+import com.hwonchul.movie.presentation.splash.SplashContract.SplashState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,15 +32,16 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         navController = findNavController()
 
-        observeUserInfo()
+        observeState()
     }
 
-    private fun observeUserInfo() {
-        viewModel.loggedInUser.observe(viewLifecycleOwner) { state ->
+    private fun observeState() {
+        viewModel.uiState.observe(viewLifecycleOwner) { state ->
             when (state) {
-                is SplashState.Success -> navController.navigate(SplashFragmentDirections.navigateToMain())
-                is SplashState.Failure -> navigateToLogin()
-                else -> {}
+                is SplashState.Loading -> {}
+                is SplashState.UserAvailable -> navController.navigate(SplashFragmentDirections.navigateToMain())
+                is SplashState.NoUser -> navigateToLogin()
+                is SplashState.Error -> setErrorDialog(getString(state.message))
             }
         }
     }
@@ -48,6 +51,16 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
             delay(DELAY)
             navController.navigate(SplashFragmentDirections.navigateToLogin())
         }
+    }
+
+    private fun setErrorDialog(msg: String) {
+        AlertDialog.Builder(requireContext())
+            .apply {
+                setMessage(msg)
+                setPositiveButton("확인") { _, _ -> requireActivity().finish() }
+            }
+            .create()
+            .show()
     }
 
     companion object {

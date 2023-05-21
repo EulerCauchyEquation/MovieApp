@@ -1,8 +1,10 @@
 package com.hwonchul.movie.domain.usecase.auth
 
 import android.os.CountDownTimer
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Flowable
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.catch
 import javax.inject.Inject
 
 class TimerUseCaseImpl @Inject constructor() : TimerUseCase {
@@ -10,27 +12,32 @@ class TimerUseCaseImpl @Inject constructor() : TimerUseCase {
     // CountDownTimer 는 main thread 에서만 작동하니 처리 시 주의
     private var timer: CountDownTimer? = null
 
-    override fun start(timeOutMillis: Long): Flowable<Long> {
-        return Flowable.create<Long>({ emitter ->
-            timer?.cancel()
-            timer = object : CountDownTimer(timeOutMillis, 1000) {
-                override fun onTick(millisUntilFinished: Long) {
-                    if (emitter.isCancelled) {
-                        // 구독이 취소됐다면 타이머도 취소
-                        timer?.cancel()
-                    } else {
-                        emitter.onNext(millisUntilFinished)
+    override suspend fun start(timeOutMillis: Long): Flow<Result<Long>> =
+        callbackFlow {
+            timer?.cancel()  /* 남은 시간 초기화 */
+            try {
+                timer = object : CountDownTimer(timeOutMillis, TIME) {
+                    override fun onTick(millisUntilFinished: Long) {
+                        trySend(Result.success(millisUntilFinished))
                     }
-                }
 
-                override fun onFinish() {
-                    emitter.onComplete()
-                }
-            }.start()
-        }, BackpressureStrategy.BUFFER)
-    }
+                    override fun onFinish() {
+                        close()
+                    }
+                }.start()
+
+                awaitClose { timer?.cancel() }
+            } catch (e : Exception) {
+                trySend(Result.failure(e))
+                close(e)
+            }
+        }
 
     override fun stop() {
         timer?.cancel()
+    }
+
+    companion object {
+        private const val TIME = 1000L
     }
 }

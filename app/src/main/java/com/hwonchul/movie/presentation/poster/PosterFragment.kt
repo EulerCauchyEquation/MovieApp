@@ -49,9 +49,9 @@ class PosterFragment : Fragment(R.layout.fragment_poster) {
             }
         }
         binding.vpPoster.registerOnPageChangeCallback(callback)
-        viewModel.movie.observe(viewLifecycleOwner) { movie ->
+        viewModel.uiData.observe(viewLifecycleOwner) { data ->
             binding.tvPosterPageNo.text =
-                "${binding.vpPoster.currentItem + 1} / ${movie.posters?.size}"
+                "${binding.vpPoster.currentItem + 1} / ${data.movieDetail.posters?.size}"
         }
     }
 

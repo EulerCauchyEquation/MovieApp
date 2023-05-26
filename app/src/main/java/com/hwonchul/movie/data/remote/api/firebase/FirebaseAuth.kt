@@ -24,7 +24,7 @@ class FirebaseAuth @Inject constructor() {
     // 이미 검증 됐다면 로그인 과정 호출 방지
     private var hasVerifiedPhoneNumber: Boolean = false
 
-    suspend fun verifyPhoneNumber(
+    fun verifyPhoneNumber(
         phoneNumber: String,
         activity: Activity,
         timeOutMillis: Long,

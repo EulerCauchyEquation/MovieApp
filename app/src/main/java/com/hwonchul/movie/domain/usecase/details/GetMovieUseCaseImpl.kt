@@ -11,7 +11,7 @@ class GetMovieUseCaseImpl @Inject constructor(
     private val repository: MovieRepository
 ) : GetMovieUseCase {
 
-    override suspend fun invoke(movieId: Int): Flow<Result<MovieDetail>> {
+    override fun invoke(movieId: Int): Flow<Result<MovieDetail>> {
         return repository.getMovieDetailById(movieId)
             .map { Result.success(it) }
             .catch { emit(Result.failure(it)) }

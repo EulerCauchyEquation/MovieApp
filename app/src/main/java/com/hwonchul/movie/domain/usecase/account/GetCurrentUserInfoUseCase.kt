@@ -5,5 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface GetCurrentUserInfoUseCase {
 
-    suspend operator fun invoke(): Flow<Result<User>>
+    operator fun invoke(): Flow<Result<User>>
 }

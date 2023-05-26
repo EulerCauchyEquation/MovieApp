@@ -12,7 +12,7 @@ class AuthRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ) : AuthRepository {
 
-    override suspend fun verifyPhoneNumber(
+    override fun verifyPhoneNumber(
         phoneNumber: String,
         activity: Activity,
         timeOutMillis: Long,

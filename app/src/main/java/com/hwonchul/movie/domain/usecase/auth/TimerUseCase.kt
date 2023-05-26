@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface TimerUseCase {
 
-    suspend fun start(timeOutMillis: Long): Flow<Result<Long>>
+    fun start(timeOutMillis: Long): Flow<Result<Long>>
 
     fun stop()
 }

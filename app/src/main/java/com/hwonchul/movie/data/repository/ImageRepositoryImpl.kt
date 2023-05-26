@@ -15,7 +15,7 @@ class ImageRepositoryImpl @Inject constructor(
     private val imageDao: ImageDao,
 ) : ImageRepository {
 
-    override suspend fun getAllPhotosByMovieId(movieId: Int): Flow<List<Image>> {
+    override fun getAllPhotosByMovieId(movieId: Int): Flow<List<Image>> {
         return imageDao.findImagesByMovieId(movieId).map { it.toDomains() }
     }
 

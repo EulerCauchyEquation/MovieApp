@@ -9,10 +9,10 @@ import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
     // 영화 상세 가져오기
-    suspend fun getMovieDetailById(movieId: Int): Flow<MovieDetail>
+    fun getMovieDetailById(movieId: Int): Flow<MovieDetail>
 
     // 영화 리스트 가져오기
-    suspend fun getAllMoviesByListType(listType: MovieListType): Flow<List<Movie>>
+    fun getAllMoviesByListType(listType: MovieListType): Flow<List<Movie>>
 
     // 영화 리스트를 최신 데이터로
     suspend fun refreshForMovieList(listType: MovieListType)

@@ -11,7 +11,7 @@ class GetImageListUseCaseImpl @Inject constructor(
     private val repository: ImageRepository
 ) : GetImageListUseCase {
 
-    override suspend fun invoke(movieId: Int): Flow<Result<List<Image>>> =
+    override fun invoke(movieId: Int): Flow<Result<List<Image>>> =
         repository.getAllPhotosByMovieId(movieId)
             .map { Result.success(it) }
             .catch { emit(Result.failure(it)) }

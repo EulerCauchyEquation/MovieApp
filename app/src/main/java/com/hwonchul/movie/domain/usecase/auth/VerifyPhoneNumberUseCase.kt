@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface VerifyPhoneNumberUseCase {
 
-    suspend operator fun invoke(
+    operator fun invoke(
         phoneNumber: String,
         activity: Activity,
         timeOutMillis: Long,

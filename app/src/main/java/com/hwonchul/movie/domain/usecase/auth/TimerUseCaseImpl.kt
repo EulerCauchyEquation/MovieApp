@@ -12,7 +12,7 @@ class TimerUseCaseImpl @Inject constructor() : TimerUseCase {
     // CountDownTimer 는 main thread 에서만 작동하니 처리 시 주의
     private var timer: CountDownTimer? = null
 
-    override suspend fun start(timeOutMillis: Long): Flow<Result<Long>> =
+    override fun start(timeOutMillis: Long): Flow<Result<Long>> =
         callbackFlow {
             timer?.cancel()  /* 남은 시간 초기화 */
             try {

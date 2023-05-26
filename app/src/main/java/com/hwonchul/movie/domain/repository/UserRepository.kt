@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
 
-    suspend fun getUserInfo(): Flow<User>
+    fun getUserInfo(): Flow<User>
 
     suspend fun refreshUserInfo(phoneNumber: String? = null)
 

@@ -11,7 +11,7 @@ class GetVideoListUseCaseImpl @Inject constructor(
     private val repository: VideoRepository
 ) : GetVideoListUseCase {
 
-    override suspend fun invoke(movieId: Int): Flow<Result<List<Video>>> {
+    override fun invoke(movieId: Int): Flow<Result<List<Video>>> {
         return repository.getAllVideosByMovieId(movieId)
             .map { Result.success(it) }
             .catch { emit(Result.failure(it)) }

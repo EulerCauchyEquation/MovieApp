@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {
 
-    suspend fun verifyPhoneNumber(
+    fun verifyPhoneNumber(
         phoneNumber: String,
         activity: Activity,
         timeOutMillis: Long,

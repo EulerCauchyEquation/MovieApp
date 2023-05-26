@@ -8,5 +8,5 @@ import kotlinx.coroutines.flow.Flow
  */
 interface GetImageListUseCase {
 
-    suspend operator fun invoke(movieId: Int): Flow<Result<List<Image>>>
+    operator fun invoke(movieId: Int): Flow<Result<List<Image>>>
 }

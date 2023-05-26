@@ -11,7 +11,7 @@ class GetCurrentUserInfoUseCaseImpl @Inject constructor(
     private val userRepository: UserRepository,
 ) : GetCurrentUserInfoUseCase {
 
-    override suspend fun invoke(): Flow<Result<User>> =
+    override fun invoke(): Flow<Result<User>> =
         userRepository.getUserInfo()
             .map { user -> Result.success(user) }
             .catch { e -> emit(Result.failure(e)) }

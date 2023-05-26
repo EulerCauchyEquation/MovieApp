@@ -15,7 +15,7 @@ class VideoRepositoryImpl @Inject constructor(
     private val videoDao: VideoDao,
 ) : VideoRepository {
 
-    override suspend fun getAllVideosByMovieId(movieId: Int): Flow<List<Video>> {
+    override fun getAllVideosByMovieId(movieId: Int): Flow<List<Video>> {
         return videoDao.findVideosByMovieId(movieId).map { it.toDomains() }
     }
 

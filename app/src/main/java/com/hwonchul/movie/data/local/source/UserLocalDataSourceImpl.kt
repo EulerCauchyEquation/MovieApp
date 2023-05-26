@@ -19,7 +19,7 @@ class UserLocalDataSourceImpl @Inject constructor(
     private val sharedPreferences = context.getSharedPreferences(NAME, Context.MODE_PRIVATE)
     private val gson = Gson()
 
-    override suspend fun getUser(): Flow<User> = callbackFlow {
+    override fun getUser(): Flow<User> = callbackFlow {
         // 일반 비동기 API를 Flow 스타일로 변환 시 callbackFlow가 유용
         // 콜백 해제할 때도 유용
         val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->

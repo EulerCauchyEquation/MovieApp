@@ -13,7 +13,7 @@ class VerifyPhoneNumberUseCaseImpl @Inject constructor(
     private val authRepository: AuthRepository,
 ) : VerifyPhoneNumberUseCase {
 
-    override suspend operator fun invoke(
+    override operator fun invoke(
         phoneNumber: String,
         activity: Activity,
         timeOutMillis: Long,

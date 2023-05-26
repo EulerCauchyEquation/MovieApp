@@ -7,7 +7,7 @@ interface VideoRepository {
     /**
      * 영화클립 가져오기
      */
-    suspend fun getAllVideosByMovieId(movieId: Int): Flow<List<Video>>
+    fun getAllVideosByMovieId(movieId: Int): Flow<List<Video>>
 
     /**
      * API 에 최신 데이터를 요청

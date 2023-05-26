@@ -10,8 +10,6 @@ class MovieDetailContract {
 
     data class MovieDetailData(
         val movieDetail: MovieDetail = MovieDetail.EMPTY,
-        val videos: List<Video> = listOf(),
-        val images: List<Image> = listOf(),
     ) : UiData
 
     sealed class MovieDetailState : UiState {

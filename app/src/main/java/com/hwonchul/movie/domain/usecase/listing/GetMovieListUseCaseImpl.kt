@@ -12,7 +12,7 @@ class GetMovieListUseCaseImpl @Inject constructor(
     private val repository: MovieRepository
 ) : GetMovieListUseCase {
 
-    override suspend fun invoke(listType: MovieListType): Flow<Result<List<Movie>>> {
+    override fun invoke(listType: MovieListType): Flow<Result<List<Movie>>> {
         return repository.getAllMoviesByListType(listType)
             .map { Result.success(it) }
             .catch { emit(Result.failure(it)) }

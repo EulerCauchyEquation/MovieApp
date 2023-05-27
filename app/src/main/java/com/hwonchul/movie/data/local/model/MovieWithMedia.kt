@@ -14,21 +14,12 @@ data class MovieWithMedia(
         parentColumn = "id",
         entityColumn = "movie_id",
     )
-    // 세로 포스터 리스트
-    val posters: List<ImageEntity>?,
+    val images: List<ImageEntity>?,
 
     @Relation(
         parentColumn = "id",
         entityColumn = "movie_id",
     )
-    // 가로 포스터 리스트
-    val backdrops: List<ImageEntity>?,
-
-    @Relation(
-        parentColumn = "id",
-        entityColumn = "movie_id",
-    )
-    // 영화 클립 리스트
     val videos: List<VideoEntity>?,
 )
 
@@ -45,8 +36,8 @@ fun MovieWithMedia.toDomain(): MovieDetail {
         overview = movie.overview,
         mainBackdrop = Image(movie.mainBackdropPath ?: ""),
         mainPoster = Image(movie.mainPosterPath ?: ""),
-        backdrops = backdrops?.toDomains(),
-        posters = posters?.toDomains(),
+        backdrops = images?.filter { it.imageType == ImageEntity.Type.Backdrop }?.toDomains(),
+        posters = images?.filter { it.imageType == ImageEntity.Type.Poster }?.toDomains(),
         videos = videos?.toDomains(),
     )
 }

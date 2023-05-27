@@ -162,6 +162,12 @@ dependencies {
     testImplementation "io.kotest:kotest-runner-junit5:$kotest_version"
     testImplementation "io.kotest:kotest-assertions-core:$kotest_version"
 
+    // mockWebServer
+    testImplementation "com.squareup.okhttp3:mockwebserver:$mockwebserver_version"
+
+    // room-test
+    testImplementation "androidx.room:room-testing:$room_version"
+
     // unit test mockk
     testImplementation "io.mockk:mockk:$mockk_version"
     testImplementation "io.mockk:mockk-agent-jvm:$mockk_version"

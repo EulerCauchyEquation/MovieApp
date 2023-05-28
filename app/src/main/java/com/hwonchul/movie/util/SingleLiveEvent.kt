@@ -7,7 +7,7 @@ import androidx.lifecycle.Observer
 import timber.log.Timber
 import java.util.concurrent.atomic.AtomicBoolean
 
-class SingleLiveEvent<T> : MutableLiveData<T>() {
+class SingleLiveEvent<T>(value: T) : MutableLiveData<T>(value) {
     // 이미 Event가 발생했는지 판단하는 boolean
     private val mPending = AtomicBoolean(false)
 

@@ -21,7 +21,7 @@ buildscript {
 
         // network
         retrofit_version = '2.9.0'
-        logging_interceptor_version = '4.9.3'
+        logging_interceptor_version = '4.11.0'
         gson_version = '2.9.0'
         firebase_bom_version = '31.3.0'
         integrity_version = '1.1.0'
@@ -34,7 +34,7 @@ buildscript {
         rx_java_version = '3.0.7'
 
         // room
-        room_version = '2.5.0'
+        room_version = '2.5.1'
 
         // log
         timber_version = '4.7.1'
@@ -42,17 +42,22 @@ buildscript {
         // DI
         hil_navigation_fragment_version = '1.0.0'
 
+        // coroutines
+        coroutinues_version = '1.6.4'
+
         // --- test ----
         junit_version = '4.13.2'
-        robolectric_version = '4.9'
-        androidX_test_version = '1.3.0'
+        robolectric_version = '4.10.3'
+        androidX_test_version = '1.5.0'
         androidX_ext_version = '1.1.3'
-        androidX_core_testing_version = '2.1.0'
+        androidX_core_testing_version = '2.2.0'
         androidX_espresso_version = '3.3.0'
 
         kotest_version = '5.3.2'
 
         mockk_version = '1.13.2'
+
+        mockwebserver_version = '4.9.0'
 
         fragment_testing_version = '1.5.4'
 

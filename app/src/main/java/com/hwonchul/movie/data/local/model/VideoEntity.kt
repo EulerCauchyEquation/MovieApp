@@ -6,6 +6,7 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.hwonchul.movie.data.local.converter.LocalDateConverter
+import com.hwonchul.movie.domain.model.Video
 import java.time.LocalDate
 
 @Entity(
@@ -30,4 +31,12 @@ data class VideoEntity(
     companion object {
         const val TABLE_NAME = "video"
     }
+}
+
+fun VideoEntity.toDomain(): Video {
+    return Video(id = id, title = title ?: "")
+}
+
+fun List<VideoEntity>.toDomains(): List<Video> {
+    return this.map { it.toDomain() }
 }

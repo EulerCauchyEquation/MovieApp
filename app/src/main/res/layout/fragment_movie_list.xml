@@ -7,11 +7,11 @@
 
         <variable
             name="viewModel"
-            type="com.hwonchul.movie.presentation.viewModel.listing.MovieListViewModel" />
+            type="com.hwonchul.movie.presentation.listing.MovieListViewModel" />
 
         <variable
             name="listener"
-            type="com.hwonchul.movie.presentation.view.listing.MovieAdapter.OnMovieDetailListener" />
+            type="com.hwonchul.movie.presentation.listing.MovieAdapter.OnMovieDetailListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -99,7 +99,7 @@
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintTop_toBottomOf="@id/tv_poster_title"
-            app:listItem="@{viewModel.movieList}"
+            app:listItem="@{viewModel.uiData.movieList}"
             app:onClick="@{listener}"
             tools:itemCount="1"
             tools:listitem="@layout/item_movie" />

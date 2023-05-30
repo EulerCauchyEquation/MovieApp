@@ -20,6 +20,10 @@ data class User(
     }
 
     companion object {
+        val EMPTY: User = User(
+            phone = "0000000000"
+        )
+
         private const val TEMP_UID = "temp"
 
         const val FIELD_PHONE_NUMBER = "phoneNumber"

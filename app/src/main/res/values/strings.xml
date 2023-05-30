@@ -65,11 +65,12 @@
     <string name="recommend_save_success">추천 UP</string>
     <string name="login_success">로그인 성공</string>
     <string name="login_failure">로그인에 실패하였습니다.  다시 시도해 주세요.</string>
+    <string name="logout_failure">로그아웃을 실패하였습니다.</string>
     <string name="phone_auth_invalid_too_many">과도한 요청으로 일시적으로 제한됐습니다.  잠시 후에 다시 요청해 주세요.</string>
-    <string name="phone_auth_invalid">인증을 실패하였습니다. 다시 시도해 주세요.</string>
+    <string name="phone_auth_failed">인증을 실패하였습니다. 다시 시도해 주세요.</string>
     <string name="phone_number_invalid">전화번호 양식이 맞지 않아요!</string>
     <string name="sms_code_invalid">인증번호 양식이 맞지 않아요! 총 6자리 숫자입니다.</string>
-    <string name="user_info_get_failed">내 정보를 가져오는데 실패하였습니다.</string>
+    <string name="user_info_get_failed">내 정보를 가져오는데 실패하였습니다. \n네트워크 연결 확인 후 다시 앱을 실행해 주세요</string>
     <string name="user_withdrawal_success">회원탈퇴를 성공하였습니다.</string>
     <string name="user_withdrawal_failed">회원탈퇴를 실패하였습니다. 다시 시도해 주세요</string>
     <string name="user_logout_success">로그아웃하였습니다.</string>
@@ -80,6 +81,7 @@
     <string name="profile_update_failed">프로필 변경 실패하였습니다.  다시 시도해 주세요</string>
     <string name="profile_update_success">프로필 수정 완료</string>
     <string name="profile_edit_form_error">3 ~ 14자 내, 띄어쓰기 없이 한글, 영문, 숫자</string>
+    <string name="check_user_registration_failure">유저 등록 정보를 검색에 실패하였습니다.</string>
 
     <!-- format -->
     <string name="movie_popularity_rate_format">%.0f</string>

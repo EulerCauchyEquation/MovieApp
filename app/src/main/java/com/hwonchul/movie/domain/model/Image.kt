@@ -9,5 +9,9 @@ data class Image(
 ) : Parcelable {
     val url: String
         get() = "https://image.tmdb.org/t/p/original$path"
+
+    companion object {
+        val EMPTY = Image(path = "")
+    }
 }
 

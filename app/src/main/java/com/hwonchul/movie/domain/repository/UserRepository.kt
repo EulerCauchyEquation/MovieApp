@@ -2,19 +2,19 @@ package com.hwonchul.movie.domain.repository
 
 import com.hwonchul.movie.domain.model.User
 import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Flowable
+import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
 
-    fun getUserInfo(): Flowable<User>
+    fun getUserInfo(): Flow<User>
 
-    fun refreshUserInfo(phoneNumber: String? = null): Completable
+    suspend fun refreshUserInfo(phoneNumber: String? = null)
 
-    fun insertOrUpdate(user: User): Completable
+    suspend fun insertOrUpdate(user: User)
 
-    fun deleteUser(): Completable
+    suspend fun deleteUser()
 
-    fun hasUserAlreadyRegisteredWithPhone(phoneNumber: String): Completable
+    suspend fun hasUserAlreadyRegisteredWithPhone(phoneNumber: String) : Boolean
 
-    fun doesNicknameExist(nickname: String): Completable
+    suspend fun doesNicknameExist(nickname: String) : Boolean
 }

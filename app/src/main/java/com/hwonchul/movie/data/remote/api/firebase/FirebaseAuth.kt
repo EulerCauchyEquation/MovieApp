@@ -8,12 +8,15 @@ import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.hwonchul.movie.domain.model.PhoneAuthResult
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Flowable
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.suspendCancellableCoroutine
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 
 class FirebaseAuth @Inject constructor() {
     private val auth = Firebase.auth
@@ -26,8 +29,8 @@ class FirebaseAuth @Inject constructor() {
         activity: Activity,
         timeOutMillis: Long,
         resendingToken: PhoneAuthProvider.ForceResendingToken?
-    ): Flowable<PhoneAuthResult> {
-        return Flowable.create<PhoneAuthResult>({ emitter ->
+    ): Flow<PhoneAuthResult> =
+        callbackFlow {
             hasVerifiedPhoneNumber = false
             val builder = PhoneAuthOptions.newBuilder(auth)
 
@@ -45,15 +48,15 @@ class FirebaseAuth @Inject constructor() {
                         Timber.d("Phone Auth onVerificationCompleted (번호인증 완료) : [smsCode : ${credential.smsCode}]")
                         if (!hasVerifiedPhoneNumber) {
                             hasVerifiedPhoneNumber = true
-                            emitter.onNext(PhoneAuthResult.VerificationCompleted(credential))
-                            emitter.onComplete()
+                            trySend(PhoneAuthResult.VerificationCompleted(credential))
+                            close()  /* Flow 종료 */
                         }
                     }
 
                     override fun onVerificationFailed(e: FirebaseException) {
                         // 인증 실패  (case : 네트워크 연결 이슈, 잘못된 전화번호, 전화번호 누락, 인증번호 락걸림 등등)
                         Timber.d("Phone Auth onVerificationFailed : $e")
-                        emitter.onError(e)
+                        close(e)
                     }
 
                     override fun onCodeSent(
@@ -61,63 +64,59 @@ class FirebaseAuth @Inject constructor() {
                     ) {
                         // 인증코드가 전송됐을 때 핸들링
                         Timber.d("Phone Auth onCodeSent (인증코드 전송 완료) : [verification id : $verificationId], [token : $token]")
-                        emitter.onNext(PhoneAuthResult.CodeSent(verificationId, token))
+                        trySend(PhoneAuthResult.CodeSent(verificationId, token))
                     }
 
                     override fun onCodeAutoRetrievalTimeOut(verificationId: String) {
                         // 인증번호 시간 초과
                         Timber.d("Phone Auth onCodeAutoRetrievalTimeOut (인증번호 시간 초과)")
-                        emitter.onNext(PhoneAuthResult.CodeAutoRetrievalTimeOut(verificationId))
-                        emitter.onComplete()
+                        trySend(PhoneAuthResult.CodeAutoRetrievalTimeOut(verificationId))
+                        close()
                     }
                 }).build()
             PhoneAuthProvider.verifyPhoneNumber(options)
-        }, BackpressureStrategy.BUFFER)
-    }
 
-    fun signInWithPhoneAuth(credential: PhoneAuthCredential): Completable {
-        return Completable.create { emitter ->
+            awaitClose { }
+        }
+
+    suspend fun signInWithPhoneAuth(credential: PhoneAuthCredential) =
+        suspendCancellableCoroutine { continuation ->
             auth.signInWithCredential(credential)  /* 로그인 처리 */
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         Timber.d("로그인 성공 : ${task.result.user?.phoneNumber}")
-                        emitter.onComplete()
+                        continuation.resume(Unit)
                     } else {
                         // Sign in failed, display a message and update the UI
                         // case. 인증 과요청, 인증 토큰 만료, 인증 코드 오류
                         Timber.d("로그인 실패 : ${task.exception}")
-                        emitter.onError(task.exception!!)
+                        continuation.resumeWithException(task.exception!!)
                     }
                 }
         }
+
+    fun signOutWithPhoneAuth() {
+        auth.signOut()
+        Timber.d("로그아웃 하였습니다.")
     }
 
-    fun signOutWithPhoneAuth(): Completable {
-        return Completable.create { emitter ->
-            auth.signOut()
-            Timber.d("로그아웃 하였습니다.")
-            emitter.onComplete()
-        }
-    }
-
-    fun deletePhoneAuthAccount(): Completable {
-        return Completable.create { emitter ->
+    suspend fun deletePhoneAuthAccount() =
+        suspendCancellableCoroutine { continuation ->
             auth.currentUser?.let {
                 it.delete().addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         Timber.d("계정 삭제 상공하였습니다.")
-                        emitter.onComplete()
+                        continuation.resume(Unit)
                     } else {
                         Timber.d("계정 삭제 실패하였습니다. : ${task.exception}")
-                        emitter.onError(task.exception!!)
+                        continuation.resumeWithException(task.exception!!)
                     }
                 }
             } ?: run {
                 val errorMsg = "로그인 계정이 없어서 삭제할 수 없습니다."
                 Timber.d(errorMsg)
-                emitter.onError(Exception(errorMsg))
+                continuation.resumeWithException(Exception(errorMsg))
             }
         }
-    }
 }

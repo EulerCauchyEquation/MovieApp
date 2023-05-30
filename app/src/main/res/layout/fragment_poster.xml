@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="com.hwonchul.movie.presentation.viewModel.details.MovieDetailViewModel" />
+            type="com.hwonchul.movie.presentation.details.MovieDetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,7 +49,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/appBarLayout"
-            app:listItem="@{viewModel.movie.posters}" />
+            app:listItem="@{viewModel.uiData.movieDetail.posters}" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_poster_page_no"

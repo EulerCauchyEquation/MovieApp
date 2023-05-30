@@ -1,6 +1,9 @@
 package com.hwonchul.movie.data.remote.model
 
 import com.google.gson.annotations.SerializedName
+import com.hwonchul.movie.data.local.model.MovieEntity
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 data class MovieDto(
     @SerializedName("adult") val adult: Boolean,
@@ -26,3 +29,23 @@ data class MovieDto(
     @SerializedName("vote_average") val voteAverage: Double,
     @SerializedName("vote_count") val voteCount: Int,
 )
+
+fun MovieDto.toEntity(): MovieEntity {
+    return MovieEntity(
+        id = id,
+        title = title,
+        originalTitle = originalTitle,
+        releaseDate = releaseDate?.let { dateFormat(it) },
+        voteAverage = voteAverage,
+        popularity = popularity,
+        mainPosterPath = posterPath,
+        mainBackdropPath = backdropPath,
+        runtime = runtime,
+        overview = overview,
+        status = status,
+        genres = genres?.map(GenreDto::name)?.joinToString(","),
+    )
+}
+
+private fun dateFormat(it: String) =
+    LocalDate.parse(it, DateTimeFormatter.ofPattern("yyyy-MM-dd"))

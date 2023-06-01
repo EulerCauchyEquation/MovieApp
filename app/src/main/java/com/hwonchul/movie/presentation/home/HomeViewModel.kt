@@ -3,6 +3,7 @@ package com.hwonchul.movie.presentation.home
 import androidx.lifecycle.viewModelScope
 import com.hwonchul.movie.R
 import com.hwonchul.movie.base.view.BaseViewModel
+import com.hwonchul.movie.domain.model.Movie
 import com.hwonchul.movie.domain.model.MovieListType
 import com.hwonchul.movie.domain.usecase.listing.GetMovieListUseCase
 import com.hwonchul.movie.domain.usecase.listing.RefreshMovieListUseCase
@@ -27,11 +28,13 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun loadData() {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                refreshMovieList(MovieListType.NowPlaying)
-                loadMovieListByListType(MovieListType.NowPlaying)
-           }
+        MovieListType.values().forEach { type ->
+            viewModelScope.launch {
+                withContext(Dispatchers.IO) {
+                    refreshMovieList(type)
+                    loadMovieListByListType(type)
+                }
+            }
         }
     }
 
@@ -42,7 +45,7 @@ class HomeViewModel @Inject constructor(
                 result
                     .onSuccess {
                         setState { HomeState.Idle }
-                        setData { copy(popularMovieList = it) }
+                        setData { setHomeData(listType, it) }
                     }
                     .onFailure {
                         setState { HomeState.Error(R.string.all_response_failed) }
@@ -60,4 +63,12 @@ class HomeViewModel @Inject constructor(
                 Timber.d(it)
             }
     }
+}
+
+private fun HomeData.setHomeData(
+    listType: MovieListType,
+    it: List<Movie>
+) = when (listType) {
+    MovieListType.NowPlaying -> copy(popularMovieList = it)
+    MovieListType.UpComing -> copy(upComingMovieList = it)
 }

@@ -38,7 +38,7 @@ object TestDataGenerator {
                 id = UUID.randomUUID().hashCode(),
                 title = "Title",
                 originalTitle = "Title",
-                releaseDate = LocalDate.now(),
+                releaseDate = createDate(),
                 voteAverage = 0.0,
                 popularity = Random.nextDouble(1000.0, 9999.0),
                 mainPosterPath = "",
@@ -46,6 +46,11 @@ object TestDataGenerator {
                 listType = listType,
             )
         }
+    }
+
+    private fun createDate(): LocalDate {
+        val randomDays = Random.nextInt(21) - 10  // 현재 날짜에서 -10일부터 +10일 사이의 임의의 일수를 선택
+        return LocalDate.now().plusDays(randomDays.toLong())
     }
 
     fun createImageEntities(size: Int, movieId: Int) =

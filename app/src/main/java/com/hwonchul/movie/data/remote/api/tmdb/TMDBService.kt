@@ -18,6 +18,13 @@ interface TMDBService {
         @Query(QUERY_REGION) region: String = REGION_KR,
     ): List<MovieDto>
 
+    @GET(URI_GET_UPCOMING_LIST)
+    suspend fun getUpComingList(
+        @Query(QUERY_API_KEY) key: String = API_KEY,
+        @Query(QUERY_LANGUAGE) language: String = LANGUAGE_KO,
+        @Query(QUERY_REGION) region: String = REGION_KR,
+    ): List<MovieDto>
+
     @GET(URI_GET_MOVIE)
     suspend fun getMovie(
         @Path(PATH_MOVIE_ID) movieId: Int,
@@ -42,6 +49,7 @@ interface TMDBService {
         const val URL = "https://api.themoviedb.org"
 
         private const val URI_GET_NOW_PLAYING_LIST = "/3/movie/now_playing"
+        private const val URI_GET_UPCOMING_LIST = "/3/movie/upcoming"
         private const val URI_GET_MOVIE = "/3/movie/{movie_id}"
         private const val URI_GET_VIDEOS = "/3/movie/{movie_id}/videos"
         private const val URI_GET_IMAGES = "/3/movie/{movie_id}/images"

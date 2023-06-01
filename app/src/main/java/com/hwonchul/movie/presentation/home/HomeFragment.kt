@@ -19,8 +19,8 @@ import com.hwonchul.movie.R
 import com.hwonchul.movie.databinding.FragmentHomeBinding
 import com.hwonchul.movie.domain.model.Movie
 import com.hwonchul.movie.presentation.MainActivity
-import com.hwonchul.movie.presentation.home.MovieAdapter.OnMovieDetailListener
 import com.hwonchul.movie.presentation.home.HomeContract.HomeState
+import com.hwonchul.movie.presentation.home.MovieAdapter.OnMovieDetailListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -74,6 +74,7 @@ class HomeFragment : Fragment(), OnMenuItemClickListener {
             if (state !is HomeState.Loading) {
                 // 로딩 아닐 때는 progress bar 해제
                 binding.progress.visibility = View.GONE
+                binding.layout.visibility = View.VISIBLE
             }
 
             when (state) {
@@ -83,7 +84,10 @@ class HomeFragment : Fragment(), OnMenuItemClickListener {
                     showSnackbarMessage(error)
                 }
 
-                is HomeState.Loading -> binding.progress.visibility = View.VISIBLE
+                is HomeState.Loading -> {
+                    binding.progress.visibility = View.VISIBLE
+                    binding.layout.visibility = View.GONE
+                }
             }
         }
     }

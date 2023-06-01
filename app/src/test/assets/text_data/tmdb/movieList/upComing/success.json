@@ -1,0 +1,393 @@
+{
+  "dates": {
+    "maximum": "2023-06-28",
+    "minimum": "2023-06-07"
+  },
+  "page": 1,
+  "results": [
+    {
+      "adult": false,
+      "backdrop_path": "/2I5eBh98Q4aPq8WdQrHdTC8ARhY.jpg",
+      "genre_ids": [
+        28,
+        12,
+        16,
+        878
+      ],
+      "id": 569094,
+      "original_language": "en",
+      "original_title": "Spider-Man: Across the Spider-Verse",
+      "overview": "새로운 스파이더맨 마일스 모랄레스(샤메익 무어)가 수많은 스파이더맨들과 함께 멀티버스 세계 속 다중 우주의 질서를 잡기 위해 빌런과 대결하는 이야기",
+      "popularity": 715.463,
+      "poster_path": "/p2l6hOlyx1ZP6jt9wagthliVg9h.jpg",
+      "release_date": "2023-06-21",
+      "title": "스파이더맨: 어크로스 더 유니버스",
+      "video": false,
+      "vote_average": 8,
+      "vote_count": 40
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/7Yuf6j6N76SfqRWqT0I0ZUjICc2.jpg",
+      "genre_ids": [
+        16,
+        35,
+        10751,
+        14,
+        10749
+      ],
+      "id": 976573,
+      "original_language": "en",
+      "original_title": "Elemental",
+      "overview": "불, 물, 공기, 흙 4개의 원소들이 살고 있는 엘리멘트 시티. 재치 있고 불처럼 열정 넘치는 앰버는 어느 날 우연히 유쾌하고 감성적이며 물 흐르듯 사는 웨이드를 만나 특별한 우정을 쌓으며, 지금껏 믿어온 모든 것들이 흔들리는 새로운 경험을 하게 되는데...",
+      "popularity": 85.87,
+      "poster_path": "/1YYL1OcgjPLjAGi6n0iZe1gdl9i.jpg",
+      "release_date": "2023-06-14",
+      "title": "엘리멘탈",
+      "video": false,
+      "vote_average": 0,
+      "vote_count": 0
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/xH1fADDlEQMXreGClUCxA0XrJPC.jpg",
+      "genre_ids": [
+        35,
+        10749
+      ],
+      "id": 982271,
+      "original_language": "en",
+      "original_title": "Book Club: The Next Chapter",
+      "overview": "한동안 세상이 멈추면서 만나지 못했던 북 클럽 4인방. 오랜만에 다시 모인 자리에서 비비안이 약혼 소식을 전하고 그런 비비안을 위한 싱글파티의 일환으로 이탈리아 여행을 계획한다. 로마부터 베니스까지, 불타는 청춘 못지 않게 여행하던 이들은 비비안이 주인공인 중요한 일정을 위해 마지막 여행지인 토스카나로 향한다. 그러나 이들 앞에 예상치 못한 일이 벌어지면서 발이 묶이는 위기에 처하는데…",
+      "popularity": 55.556,
+      "poster_path": "/mKjr1fRB6hjVi2XISVEmp5SVRIy.jpg",
+      "release_date": "2023-06-07",
+      "title": "북 클럽: 넥스트 챕터",
+      "video": false,
+      "vote_average": 7.4,
+      "vote_count": 25
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/iloUOSs3Rcq3aMr04CrGRWVVBkq.jpg",
+      "genre_ids": [
+        35,
+        18,
+        10749,
+        878
+      ],
+      "id": 747188,
+      "original_language": "en",
+      "original_title": "Asteroid City",
+      "overview": "1955년 가상의 사막 도시이자 운석이 떨어진 도시 ‘애스터로이드 시티’ 매년 운석이 떨어진 것을 기념하는 ‘소행성의 날’ 행사에 모인 사람들은\r 예상치 못한 사건으로 인해 그 곳에 옴짝달싹도 못한 채 갇히게 되고 계속해서 생각지도 못한 예측불허 상황들이 펼쳐지는데… 어쩌면 삶에는 의미가 있을지도 몰라요",
+      "popularity": 45.025,
+      "poster_path": "/dMHcUxEyERnInZpqrNzLb8ZxxBI.jpg",
+      "release_date": "2023-06-28",
+      "title": "애스터로이드 시티",
+      "video": false,
+      "vote_average": 0,
+      "vote_count": 0
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/fRrpOILyXuWaWLmqF7kXeMVwITQ.jpg",
+      "genre_ids": [
+        27,
+        28,
+        12
+      ],
+      "id": 522444,
+      "original_language": "en",
+      "original_title": "Black Water: Abyss",
+      "overview": "호주의 깊은 숲 속. 외딴 동굴 탐험에 나선 제니퍼와 에릭, 그리고 친구들은 폭풍우로 인해 불어난 물로 동굴에 갇히게 된다.  제한된 식량과 시간 속에서 탈출구를 찾던 그들에게 불길한 그림자가 서서히 드리우는데...  미로처럼 뻗어 나가는 동굴 속  그들은 과연 살아서 동굴을 탈출할 수 있을까?",
+      "popularity": 44.697,
+      "poster_path": "/8nYyl8WJE9BXPaBsjZglzJo36FP.jpg",
+      "release_date": "2023-06-14",
+      "title": "블랙 워터: 어비스",
+      "video": false,
+      "vote_average": 5.2,
+      "vote_count": 383
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/kpzDQtFbw3dWoFxabydK9tlvWJm.jpg",
+      "genre_ids": [
+        16,
+        10751
+      ],
+      "id": 778810,
+      "original_language": "en",
+      "original_title": "Fireheart",
+      "overview": "1932년 뉴욕, 브로드웨이 극장가를 노리는 연쇄 방화 사건 발생! 800명의 소방관이 실종되는 전대미문의 사건으로 혼란에 빠진 뉴욕의 ‘지미 시장’은 은퇴한 소방관 ‘숀’을 다시 불러 긴급 소방팀을 꾸린다. 어릴 때부터 아버지 ‘숀’처럼 멋진 소방관이 되고 싶은 꿈을 가진 ‘조지아’는 초보 소방관 ‘조’로 감쪽같이 변장해 긴급 소방팀에 몰래 합류하는 데 성공하는데… 방화범을 잡기 위한 소방 대작전 개시! 의욕은 충만! 실전 경험 전무! 과연 조지아와 초보 소방팀은 최악의 위기에 처한 뉴욕시를 구할 수 있을 것인가..!",
+      "popularity": 39.215,
+      "poster_path": "/1VQHNwsuLdCiXgPpWqPz0yKUyB4.jpg",
+      "release_date": "2023-06-28",
+      "title": "파이어하트",
+      "video": false,
+      "vote_average": 7.4,
+      "vote_count": 208
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/bnXGwFBomUseQIc9Xqiymy9p8qP.jpg",
+      "genre_ids": [
+        27,
+        14
+      ],
+      "id": 517302,
+      "original_language": "fi",
+      "original_title": "Pahanhautoja",
+      "overview": "행복한 가족들과의 일상을 블로그에 공유하는 엄마. 티니아는 겉모습에 집착하는 엄마를 만족시키기 위해 매사에 필사적이다. 어느 날 티니아는 숲에서 다친 새를 발견하고, 기이하게 생긴 새알을 집으로 가져온다. 엄마의 꿈을 위해 매일같이 체조 연습에 매달리는 그녀는, 가져온 알을 침대에 소중히 모셔놓고 힘들거나 슬픈 일이 있을 때마다 위안을 얻는다. 어머니의 욕심이 커져갈수록 티니아가 마음을 터 놓을 수 있는 존재는 알뿐이다.  좀처럼 맘대로 되지 않는 일상에 속상함을 털어놓던 밤, 알이 부화하고 티니아 가족 근처에서 연신 사고가 일어나기 시작하는데···.",
+      "popularity": 21.23,
+      "poster_path": "/xzXYo7uDTHwJsKLyUwqtEgpS1iE.jpg",
+      "release_date": "2023-06-15",
+      "title": "부화",
+      "video": false,
+      "vote_average": 6.3,
+      "vote_count": 268
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/sGdyKVuMcjuohy14OwFLt2TdcTz.jpg",
+      "genre_ids": [
+        28
+      ],
+      "id": 751391,
+      "original_language": "zh",
+      "original_title": "少年叶问之危机时刻",
+      "overview": "1917년, 영춘권 후계자인 17세의 엽문은 홍콩의 덕립 서원으로 공부하러 가고 그곳에서 우연히 어릴 적부터 알던 우학호를 만나게 된다. 덕립 서원에서 열리는 영어 대회를 앞두고 탈옥범 마용이 학교를 점거한 후 학생들을 인질로 금괴를 요구하자 학부모들은 당황해 어쩔 줄 모른다. 엽문은 탈옥범 일행 중에 우학호가 있으며, 자신의 선생님이었던 마용이 우두머리인 걸 알고 그들을 막기 위해 고군분투하는데...",
+      "popularity": 17.864,
+      "poster_path": "/iK6XuR7H5Gd1XajAxViA2zALuSB.jpg",
+      "release_date": "2023-06-08",
+      "title": "엽문의 시작",
+      "video": false,
+      "vote_average": 0,
+      "vote_count": 0
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/cJ0rlqYZNW2HaUoEWcFRMqr7XER.jpg",
+      "genre_ids": [
+        35,
+        10749
+      ],
+      "id": 892835,
+      "original_language": "en",
+      "original_title": "Book of Love",
+      "overview": "누구에게도 주목받지 못하던 영국의 로맨스 소설가 ‘헨리’ 어느 날 바다 건너 멕시코에서 자신의 소설이 베스트셀러가 되었다는 소식을 듣는다.  부푼 꿈을 안고 도착한 멕시코. ‘헨리’는 가이드를 자처한 번역가 ‘마리아’와 함께 북 콘서트에 나서는데,  이거. 제대로 통역하는 거 맞나요? 무언가 이상한 관객들의 반응!  ‘헨리’는 그의 로맨스 소설이 ‘마리아’로 인해 19금 야설로 번역되어 출간되었다는 사실을 알게 된다.  사사건건 으르렁, 하나부터 열까지 안 맞는 두 사람! 당장 영국으로 돌아가고 싶은 와중, ‘헨리’는 출판사로부터 ‘마리아’와 함께 신작을 써보라는 황당한 제안을 받게 되는데…  ISTJ 영국 남자 X ENFP 멕시코 여자 달라도 너무 다른 두 사람의 소설은 과연 어떤 장르가 될지? 예측불가! 소통불가! 로맨스",
+      "popularity": 11.157,
+      "poster_path": "/clUc0JWRfJM6U7OeY777lu3Eagd.jpg",
+      "release_date": "2023-06-21",
+      "title": "북 오브 러브",
+      "video": false,
+      "vote_average": 5.7,
+      "vote_count": 95
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/xKhnjQA5wrAUaopEKegdKD3Yi26.jpg",
+      "genre_ids": [
+        18
+      ],
+      "id": 8416,
+      "original_language": "it",
+      "original_title": "Il conformista",
+      "overview": "1937년 로마. 무솔리니 정권 하에 비밀요원으로 활동하게 된 마르첼로는 줄리아와 결혼을 앞두고 있다. 프랑스로 망명하여 반파시즘 운동을 이끌고 있는 대학시절 은사 콰드리 교수를 암살하라는 지령을 받은 마르첼로는 파리로 신혼 여행을 가서 콰드리 교수와 그의 아내 안나에게 접근한다. 하지만 안나에게 걷잡을 수 없이 끌리게 된 마르첼로는 자신의 본심과 임무 사이에서 혼란을 겪게 되는데…",
+      "popularity": 14.703,
+      "poster_path": "/nBJhFI9HJX2EAejk0ksNtwQTGFp.jpg",
+      "release_date": "2016-01-28",
+      "title": "순응자",
+      "video": false,
+      "vote_average": 7.7,
+      "vote_count": 556
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/a9tg4d2qbLcbt22UqtqTvz6VQWS.jpg",
+      "genre_ids": [
+        18,
+        36
+      ],
+      "id": 761851,
+      "original_language": "en",
+      "original_title": "His Only Son",
+      "overview": "어느 날 밤, 하나님이 아브라함을 찾아와 모리아 땅으로 가서 외아들 이삭을 번제로 바치라고 명령하신다. 아브라함은 다음 날 아내 사라를 뒤로 한 채 이삭과 3일간의 험난한 여정을 시작한다. “왜 하필 100살에 낳은 아들 이삭을 제물로 바치라고 하시는 걸까?” “왜 하필 3일이나 가야 하는 모리아에서 제사를 드리라고 하시는 걸까?” 탄식으로 가득한 질문은 여정 내내 계속되지만 마침내 예루살렘 모리아 산에서 그 해답을 찾게 되는데..",
+      "popularity": 9.791,
+      "poster_path": "/fiERIr3bGk3EfHgDlaRnqpEzYy9.jpg",
+      "release_date": "2023-06-28",
+      "title": "하나님의 마음",
+      "video": false,
+      "vote_average": 0,
+      "vote_count": 0
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/nwJfPmJGLEzTkMm67hjU2haDDVL.jpg",
+      "genre_ids": [
+        99
+      ],
+      "id": 543084,
+      "original_language": "en",
+      "original_title": "The Biggest Little Farm",
+      "overview": "LA 도심 속 아파트에 살던 신혼부부 감독 존과 요리사 몰리. 안락사 위기에서 구한 반려견 토드가 밤낮 없이 짖어 이웃들로부터 쫓겨날 위기에 처한다. 이들은 과감하게 도시를 떠나 자연과 함께하는 전통식 농장을 짓기로 결심하고, 축구장 100배 면적의 척박한 황무지를 변화시킬 무모한 도전을 시작한다!",
+      "popularity": 8.428,
+      "poster_path": "/fG1d9mtOSrRAe6xsh5mAbEdh4pW.jpg",
+      "release_date": "2023-06-14",
+      "title": "위대한 작은 농장",
+      "video": false,
+      "vote_average": 7.5,
+      "vote_count": 126
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/lgZsylqBfho6WmhkdxwVf12reRW.jpg",
+      "genre_ids": [
+        35,
+        18
+      ],
+      "id": 950565,
+      "original_language": "ja",
+      "original_title": "極主夫道 ザ・シネマ",
+      "overview": "전국을 주름 잡던 야쿠자 '타츠'. '미쿠'를 만나 결혼하면서 야쿠자 생활을 청산하고 전업주부가 되기로 한다. 겉으로는 무서워 보이지만 그 누구보다도 가족을 아끼고 사랑하는 츤데레 가정주부인 '타츠'와, 집안일은 꽝이지만 다정한 워킹맘 '미쿠', 나이에 비해 성숙한 딸 '히마와리' 세 명의 가족을 둘러싼, 다혈질 부하와 어설픈 순경, 알바생 등이 함께 펼치는 진지하고도 웃긴 일상 이야기.",
+      "popularity": 4.915,
+      "poster_path": "/AlDJqmwIuVgLTiFzwkubkXh59J8.jpg",
+      "release_date": "2023-06-16",
+      "title": "극장판 극주부도",
+      "video": false,
+      "vote_average": 8.2,
+      "vote_count": 17
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/jZbKqp6IhM3Jhzo5bQayKgCYuE4.jpg",
+      "genre_ids": [
+        18
+      ],
+      "id": 928730,
+      "original_language": "ja",
+      "original_title": "ケイコ 目を澄ませて",
+      "overview": "선천적 청각장애로 양쪽 귀가 들리지 않는 프로 복서 케이코. 재개발이 진행되고 있는 도쿄 도심의 작은 복싱 체육관에서 훈련을 거듭하며 다음 시합을 준비한다. 끊이지 않는 고민과 말로 표현할 수 없는 생각들이 마음에 쌓여만 가고, 체육관 회장에게 당분간 쉬고 싶다는 편지를 썼지만 끝내 보낼 수 없다. 그러던 어느 날, 케이코는 체육관이 문을 닫는다는 소식을 듣는다.",
+      "popularity": 4.959,
+      "poster_path": "/2chqkTqUJmQmPHfPo6iyNrWfZU0.jpg",
+      "release_date": "2023-06-14",
+      "title": "너의 눈을 들여다보면",
+      "video": false,
+      "vote_average": 6.9,
+      "vote_count": 10
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/qYLcdFq6MoAlfxgjz67mGTrLMgL.jpg",
+      "genre_ids": [
+        16,
+        10749
+      ],
+      "id": 1117291,
+      "original_language": "ko",
+      "original_title": "그 여름",
+      "overview": "갈색 눈동자를 가진 평범한 학생 '이경'  여름의 햇살을 닮은 고교 축구선수 '수이'  열여덟 살의 여름, 예기치 못한 사랑에 빠진  '이경'과 '수이'는 함께하는 미래를 그리며 스무살을 맞이한다.  대학에 진학한 '이경'과 달리 '수이'는 바로 사회에 뛰어들고, 낯선 행복과 사소한 오해 속에서 둘은 새로운 계절을 마주하게 된다.",
+      "popularity": 5.475,
+      "poster_path": "/7SaGmkrvjn2YsoFOCOvTIjUBHdc.jpg",
+      "release_date": "2023-06-07",
+      "title": "그 여름",
+      "video": false,
+      "vote_average": 0,
+      "vote_count": 0
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/awWppR6CmJ6gqM6UjMz5DJ4zZaP.jpg",
+      "genre_ids": [
+        36,
+        28,
+        18
+      ],
+      "id": 960481,
+      "original_language": "mn",
+      "original_title": "Хотулун гүнж: Алтан судрын эрэлд",
+      "overview": "역사상 가장 위대한 여전사의 실화 황금 경전을 되찾아 천하를 평정하라. 칭기즈칸의 후예 ‘쿠툴룬’ 공주 운명을 거스르고 여전사로 깨어난다. 공주는 제국의 영광을 위해, 잃어버린 황금 경전을 찾아 5인의 결사단과 험난한 전장으로 떠나는데…",
+      "popularity": 4.806,
+      "poster_path": "/ThOIxtUj4kNqsdkjMPPxLg3max.jpg",
+      "release_date": "2023-06-08",
+      "title": "쿠툴룬: 전쟁의 여신",
+      "video": false,
+      "vote_average": 7.2,
+      "vote_count": 25
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/kt2HMcA6EjzDp6JvuBb74MSvs7k.jpg",
+      "genre_ids": [
+        18
+      ],
+      "id": 782092,
+      "original_language": "en",
+      "original_title": "All My Puny Sorrows",
+      "overview": "인류 역사상 가장 당연한 사실 ‘우리 모두는 죽는다’  “그런데 왜 다들 죽으려고 난리지?”  언니가 ‘자살시도’를 했다는 엄마의 전화를 받았다. 작가라면서 글 한 줄 쓰는 것도 힘겹고, 이혼 위기로 엉망진창인 동생도 이렇게 잘 살고 있는데… 다정한 남편에 해외순회 공연까지 다니는 잘 나가는 피아니스트인 자기가 도대체 왜? 아빠처럼 그렇게, ‘똑같이’ 죽고 싶었던 거야? 그러고도 정신 못 차리고 엄마, 형부 몰래 ‘스위스’로 데려다 달라고?  언니는 왜 죽고 싶은 걸까? 자살할 사람은 정해져 있는 걸까? 언니는 자기가 가장 좋아하는 시처럼, ‘나의 사소한 슬픔’을 그 누구에게도, 나에게조차 토해낼 수 없었던 걸까?",
+      "popularity": 5.185,
+      "poster_path": "/i3wn7RO7l9sj7lO01lHx5LvWW1w.jpg",
+      "release_date": "2023-06-14",
+      "title": "나의 사소한 슬픔",
+      "video": false,
+      "vote_average": 0,
+      "vote_count": 0
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/wC5WJ0q45wxdARC1PwRgEzGA8se.jpg",
+      "genre_ids": [
+        99
+      ],
+      "id": 1106530,
+      "original_language": "ko",
+      "original_title": "자우림, 더 원더랜드",
+      "overview": "1997년 자우림의 데뷔가 가지는 의미를 전문가들에게 들어본다. 자우림 멤버들의 개인적 에피소드를 통해 음악적 세계관을 알아본다. 자우림 최대의 위기 순간과 극복 과정을 회상한다. 데뷔 25주년을 맞이해 멤버들은 팬들이 참여하는 특별한 앨범과 콘서트를 준비한다. 자우림 음악의 중심인 청춘에 대해 이야기하며 콘서트가 마무리된다.",
+      "popularity": 5.444,
+      "poster_path": "/dtVP5DPqN7vdDusR2J0bsAOhXdl.jpg",
+      "release_date": "2023-06-07",
+      "title": "자우림, 더 원더랜드",
+      "video": false,
+      "vote_average": 0,
+      "vote_count": 0
+    },
+    {
+      "adult": false,
+      "backdrop_path": null,
+      "genre_ids": [
+        35
+      ],
+      "id": 1121815,
+      "original_language": "ko",
+      "original_title": "익스트림 페스티벌",
+      "overview": "개최 일주일 전 갑자기 정종 문화제에서 연산군 문화제로 바뀐 망진의 지역 축제. 스타트업 대표 혜수는 축제를 무사히 진행시키기 위해 고군분투한다. 그런데 무늬만 이사 상민은 퇴사한 직원 래오를 알바로 데려오고, 축제 당일 현지에서 뽑은 인턴 은채는 과하게 열정적이다. 설상가상, 축제의 막이 오르기 직전 객석은 텅 비고, 초대가수는 펑크 나고, 지역 극단은 보이콧을 선언하는데…",
+      "popularity": 5.443,
+      "poster_path": "/jCOsmpPuCXVztpB1nYUyqrdTpmr.jpg",
+      "release_date": "2023-06-07",
+      "title": "익스트림 페스티벌",
+      "video": false,
+      "vote_average": 0,
+      "vote_count": 0
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/iPV1Qbwz14P4YlfOSZWEv1J9lw.jpg",
+      "genre_ids": [
+        35,
+        10749
+      ],
+      "id": 1099948,
+      "original_language": "ko",
+      "original_title": "안나푸르나",
+      "overview": "두 남성이 북악산을 오르며 과거의 연인들에 대한 이야기를 나누는 이야기",
+      "popularity": 4.668,
+      "poster_path": "/t6cuyejykRZRHLiIU88zARAU9uF.jpg",
+      "release_date": "2023-06-08",
+      "title": "안나푸르나",
+      "video": false,
+      "vote_average": 0,
+      "vote_count": 0
+    }
+  ],
+  "total_pages": 2,
+  "total_results": 32
+}

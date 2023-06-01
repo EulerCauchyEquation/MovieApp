@@ -7,7 +7,8 @@ import com.hwonchul.movie.domain.model.Movie
 class HomeContract {
 
     data class HomeData(
-        val popularMovieList: List<Movie> = listOf()
+        val popularMovieList: List<Movie> = listOf(),
+        val upComingMovieList: List<Movie> = listOf(),
     ) : UiData
 
     sealed class HomeState : UiState {

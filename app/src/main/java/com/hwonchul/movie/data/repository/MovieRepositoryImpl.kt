@@ -29,7 +29,7 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun refreshForMovieList(listType: MovieListType) {
-        val entities = api.getNowPlayingMovieList().map { it.toEntity(listType) }
+        val entities = api.getMovieList(listType).map { it.toEntity(listType) }
         movieDao.upsert(entities)
     }
 

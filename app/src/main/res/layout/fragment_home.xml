@@ -14,7 +14,7 @@
             type="com.hwonchul.movie.presentation.home.MovieAdapter.OnMovieDetailListener" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorPrimary"
@@ -26,108 +26,147 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
-            android:stateListAnimator="@null"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:stateListAnimator="@null">
 
-            <!-- Toolbar -->
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/tb_home"
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/collapsingToolbarLayout"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:theme="@style/HomeTheme.Toolbar"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:menu="@menu/fragment_home_menu">
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="true"
+                app:layout_scrollFlags="scroll|enterAlways">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <!-- Toolbar -->
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/tb_home"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="?attr/actionBarSize"
+                    android:theme="@style/HomeTheme.Toolbar"
+                    app:layout_collapseMode="pin"
+                    app:menu="@menu/fragment_home_menu">
 
-                    <!-- toolbar app icon -->
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_toolbar"
-                        android:layout_width="@dimen/toolbar_icon_size"
-                        android:layout_height="@dimen/toolbar_icon_size"
-                        android:src="@drawable/ic_app"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                    <!-- toolbar title -->
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_toolbar_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/space_s_large_12dp"
-                        android:letterSpacing="0.025"
-                        android:text="@string/app_name"
-                        android:textColor="@color/WHITE"
-                        android:textSize="@dimen/text_size_headline2_20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@id/iv_toolbar"
-                        app:layout_constraintStart_toEndOf="@id/iv_toolbar"
-                        app:layout_constraintTop_toTopOf="@id/iv_toolbar" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.appbar.MaterialToolbar>
+                        <!-- toolbar app icon -->
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/iv_toolbar"
+                            android:layout_width="@dimen/toolbar_icon_size"
+                            android:layout_height="@dimen/toolbar_icon_size"
+                            android:src="@drawable/ic_app"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <!-- toolbar title -->
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_toolbar_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/space_s_large_12dp"
+                            android:letterSpacing="0.025"
+                            android:text="@string/app_name"
+                            android:textColor="@color/WHITE"
+                            android:textSize="@dimen/text_size_headline2_20sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@id/iv_toolbar"
+                            app:layout_constraintStart_toEndOf="@id/iv_toolbar"
+                            app:layout_constraintTop_toTopOf="@id/iv_toolbar" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.appbar.MaterialToolbar>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <!-- 실시간 인기 영화 랭킹 title -->
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_popular_title"
-            style="@style/TextAppearance.MaterialComponents.Headline1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_large_16dp"
-            android:text="@string/all_posters"
-            android:textColor="@color/WHITE"
-            android:textSize="@dimen/text_size_headline2_20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@id/appBarLayout" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_popular"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_large_16dp"
-            app:layout_constraintEnd_toEndOf="@id/guideline_end"
-            app:layout_constraintStart_toStartOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@id/tv_popular_title"
-            app:listItem="@{viewModel.uiData.popularMovieList}"
-            app:onClick="@{listener}"
-            tools:itemCount="1"
-            tools:listitem="@layout/item_movie" />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- 실시간 인기 영화 랭킹 title -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_popular_title"
+                    style="@style/TextAppearance.MaterialComponents.Headline1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_large_16dp"
+                    android:text="@string/all_popular"
+                    android:textColor="@color/WHITE"
+                    android:textSize="@dimen/text_size_headline2_20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@id/guideline_start"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_popular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_large_16dp"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/tv_popular_title"
+                    app:listItem="@{viewModel.uiData.popularMovieList}"
+                    app:onClick="@{listener}"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/item_movie" />
+
+                <!-- 개봉예정 title -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_upcoming_title"
+                    style="@style/TextAppearance.MaterialComponents.Headline1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_x_large_32dp"
+                    android:text="@string/all_upcoming"
+                    android:textColor="@color/WHITE"
+                    android:textSize="@dimen/text_size_headline2_20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/rv_popular" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_upcoming"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/space_large_16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/tv_upcoming_title"
+                    app:listItem="@{viewModel.uiData.upComingMovieList}"
+                    app:onClick="@{listener}"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/item_movie" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="@dimen/space_large_16dp" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="@dimen/space_large_16dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
 
         <ProgressBar
             android:id="@+id/progress"
             style="@style/TextAppearance.AppCompat.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:indeterminate="true"
             android:indeterminateTint="@color/colorAccent"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             tools:visibility="visible" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="@dimen/space_large_16dp" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_end"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_end="@dimen/space_large_16dp" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

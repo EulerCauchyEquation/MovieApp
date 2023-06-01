@@ -13,7 +13,7 @@
         <action
             android:id="@+id/navigate_to_login_graph"
             app:destination="@id/login_graph"
-            app:popUpTo="@id/list_graph"
+            app:popUpTo="@id/home_graph"
             app:popUpToInclusive="true" />
 
         <action

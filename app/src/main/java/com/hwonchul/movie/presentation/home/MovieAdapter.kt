@@ -1,11 +1,11 @@
-package com.hwonchul.movie.presentation.listing
+package com.hwonchul.movie.presentation.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.hwonchul.movie.databinding.ItemMovieBinding
 import com.hwonchul.movie.domain.model.Movie
-import com.hwonchul.movie.presentation.listing.MovieAdapter.MovieViewHolder
+import com.hwonchul.movie.presentation.home.MovieAdapter.MovieViewHolder
 
 class MovieAdapter : RecyclerView.Adapter<MovieViewHolder>() {
 

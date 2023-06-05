@@ -3,6 +3,7 @@ package com.hwonchul.movie.util
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -14,9 +15,10 @@ import com.hwonchul.movie.domain.model.Movie
 import com.hwonchul.movie.domain.model.Video
 import com.hwonchul.movie.presentation.details.PosterThumbnailAdapter
 import com.hwonchul.movie.presentation.details.VideoAdapter
+import com.hwonchul.movie.presentation.details.poster.PosterAdapter
 import com.hwonchul.movie.presentation.home.MovieAdapter
 import com.hwonchul.movie.presentation.home.MovieAdapter.OnMovieDetailListener
-import com.hwonchul.movie.presentation.details.poster.PosterAdapter
+import com.hwonchul.movie.presentation.home.list.MovieDetailAdapter
 import timber.log.Timber
 import java.time.LocalDate
 
@@ -159,5 +161,31 @@ object BindingUtils {
                 Timber.d("PosterAdapter Current Pos : %s", it)
             }
         }
+    }
+
+    @JvmStatic
+    @BindingAdapter(value = ["gridListItem", "onClick"])
+    fun bindMovieDetailList(
+        listView: RecyclerView,
+        items: List<Movie>?,
+        listener: MovieDetailAdapter.OnClickListener
+    ) {
+        (listView.adapter as MovieDetailAdapter? ?: MovieDetailAdapter().also { adapter ->
+            // 한 행의 열 개수
+            val spanCount = 2
+
+            // layout Manager
+            listView.layoutManager = GridLayoutManager(listView.context, spanCount)
+
+            // 구분선 세팅
+            val spacing = listView.context
+                .resources
+                .getDimensionPixelSize(R.dimen.divider_large_16dp)
+            listView.addItemDecoration(GridRecyclerViewDecoration(spanCount, spacing))
+
+            // listener
+            adapter.setOnClickListener(listener)
+            listView.adapter = adapter
+        }).apply { items?.let { setItems(it) } }
     }
 }

@@ -41,7 +41,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:placeholder="@{@drawable/img_empty}"
-                tools:src="@drawable/ic_movie_sample" />
+                tools:src="@drawable/img_poster_sample" />
 
             <!-- 그라데이션 -->
             <androidx.appcompat.widget.AppCompatImageView

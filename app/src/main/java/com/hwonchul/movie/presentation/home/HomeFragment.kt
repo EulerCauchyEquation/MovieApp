@@ -18,6 +18,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.hwonchul.movie.R
 import com.hwonchul.movie.databinding.FragmentHomeBinding
 import com.hwonchul.movie.domain.model.Movie
+import com.hwonchul.movie.domain.model.MovieListType
 import com.hwonchul.movie.presentation.MainActivity
 import com.hwonchul.movie.presentation.home.HomeContract.HomeState
 import com.hwonchul.movie.presentation.home.MovieAdapter.OnMovieDetailListener
@@ -58,6 +59,9 @@ class HomeFragment : Fragment(), OnMenuItemClickListener {
         binding.lifecycleOwner = viewLifecycleOwner
 
         observeState()
+
+        setOnMorePopularListClickListener()
+        setOnMoreUpcomingListClickListener()
     }
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {
@@ -89,6 +93,20 @@ class HomeFragment : Fragment(), OnMenuItemClickListener {
                     binding.layout.visibility = View.GONE
                 }
             }
+        }
+    }
+
+    private fun setOnMorePopularListClickListener() {
+        binding.ivMorePopularList.setOnClickListener {
+            val directions = HomeFragmentDirections.navigateToListMore(MovieListType.NowPlaying)
+            navController.navigate(directions)
+        }
+    }
+
+    private fun setOnMoreUpcomingListClickListener() {
+        binding.ivMoreUpcomingList.setOnClickListener {
+            val directions = HomeFragmentDirections.navigateToListMore(MovieListType.UpComing)
+            navController.navigate(directions)
         }
     }
 

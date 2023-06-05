@@ -107,4 +107,8 @@
     <!-- array -->
     <string name="options_user_image_album">앨범에서 선택</string>
     <string name="options_user_image_delete">프로필 사진 삭제</string>
+
+    <!-- item -->
+    <string name="item_popular">실시간 인기순</string>
+    <string name="item_upcoming">개봉예정</string>
 </resources>

@@ -101,6 +101,19 @@
                     app:layout_constraintStart_toEndOf="@id/guideline_start"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <!-- 더보기 -->
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_more_popular_list"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="@dimen/space_small_4dp"
+                    android:clickable="true"
+                    android:foreground="@drawable/ripple_oval"
+                    android:src="@drawable/ic_more"
+                    app:layout_constraintBottom_toTopOf="@id/rv_popular"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_popular"
                     android:layout_width="match_parent"
@@ -127,6 +140,19 @@
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@id/guideline_start"
                     app:layout_constraintTop_toBottomOf="@id/rv_popular" />
+
+                <!-- 더보기 -->
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_more_upcoming_list"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="@dimen/space_small_4dp"
+                    android:clickable="true"
+                    android:foreground="@drawable/ripple_oval"
+                    android:src="@drawable/ic_more"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_upcoming_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_upcoming_title" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_upcoming"

@@ -91,4 +91,8 @@
     <style name="ConfirmDialog" parent="Theme.AppCompat.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
+
+    <style name="TabText">
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

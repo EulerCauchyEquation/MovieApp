@@ -10,10 +10,8 @@ import com.hwonchul.movie.domain.usecase.listing.RefreshMovieListUseCase
 import com.hwonchul.movie.presentation.home.HomeContract.HomeData
 import com.hwonchul.movie.presentation.home.HomeContract.HomeState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -27,13 +25,23 @@ class HomeViewModel @Inject constructor(
         loadData()
     }
 
-    private fun loadData() {
+    fun loadData() {
+        refresh()
+        loadMovieList()
+    }
+
+    fun loadMovieList() {
         MovieListType.values().forEach { type ->
             viewModelScope.launch {
-                withContext(Dispatchers.IO) {
-                    refreshMovieList(type)
-                    loadMovieListByListType(type)
-                }
+                loadMovieListByListType(type)
+            }
+        }
+    }
+
+    fun refresh() {
+        MovieListType.values().forEach { type ->
+            viewModelScope.launch {
+                refreshMovieList(type)
             }
         }
     }

@@ -68,7 +68,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:placeholder="@{@color/light_gray}"
-                        tools:background="@drawable/img_brackdrop_exmaple" />
+                        tools:background="@drawable/img_backdrop_sample" />
 
                     <!-- 그라이데션 -->
                     <androidx.appcompat.widget.AppCompatImageView
@@ -98,7 +98,7 @@
                             android:scaleType="centerCrop"
                             app:imageUrl="@{viewModel.uiData.movieDetail.mainPoster.url}"
                             app:placeholder="@{@color/light_gray}"
-                            tools:src="@drawable/ic_movie_sample" />
+                            tools:src="@drawable/img_poster_sample" />
                     </com.google.android.material.card.MaterialCardView>
 
                     <!-- 영화 제목 -->

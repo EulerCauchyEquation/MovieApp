@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.hwonchul.movie.domain.model.Movie" />
+
+        <variable
+            name="listener"
+            type="com.hwonchul.movie.presentation.home.list.MovieDetailAdapter.OnClickListener" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardCornerRadius="@dimen/space_median_8dp"
+        app:cardElevation="8dp"
+        app:rippleColor="@color/BLACK_30percent"
+        tools:background="@color/colorPrimary">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- 영화 포스터 -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_poster"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{item.poster.url}"
+                app:layout_constraintDimensionRatio="2:3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:placeholder="@{@drawable/img_empty}"
+                tools:src="@drawable/img_poster_sample" />
+
+            <!-- 영화 제목 -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_movie_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="6dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:paddingHorizontal="@dimen/space_median_8dp"
+                android:text="@{item.title}"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_headline6_14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/iv_poster"
+                app:layout_constraintStart_toStartOf="@+id/iv_poster"
+                app:layout_constraintTop_toBottomOf="@+id/iv_poster"
+                tools:text="군 도" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

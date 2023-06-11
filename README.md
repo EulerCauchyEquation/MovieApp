@@ -33,7 +33,7 @@ TMDB API 를 이용한 컨텐츠는 다양한 측면에서 실력을 향상시�
 * IDE Version : Flamingo 2022.2.1
 
 # 기술스택
-* Rx
+* Coroutine
 * Room
 * Hilt
 * MVVM Pattern

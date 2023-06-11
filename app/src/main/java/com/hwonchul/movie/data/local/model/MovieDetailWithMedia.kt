@@ -6,9 +6,9 @@ import com.hwonchul.movie.domain.model.Image
 import com.hwonchul.movie.domain.model.MovieDetail
 
 // 무비클립, 이미지 리스트까지 모두 가져온 영화 정보
-data class MovieWithMedia(
+data class MovieDetailWithMedia(
     @Embedded
-    val movie: MovieEntity,
+    val movie: MovieDetailEntity,
 
     @Relation(
         parentColumn = "id",
@@ -23,7 +23,7 @@ data class MovieWithMedia(
     val videos: List<VideoEntity>?,
 )
 
-fun MovieWithMedia.toDomain(): MovieDetail {
+fun MovieDetailWithMedia.toDomain(): MovieDetail {
     return MovieDetail(
         id = movie.id,
         title = movie.title,

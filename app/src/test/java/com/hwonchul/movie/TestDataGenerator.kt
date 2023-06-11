@@ -1,9 +1,10 @@
 package com.hwonchul.movie
 
 import com.hwonchul.movie.data.local.model.ImageEntity
+import com.hwonchul.movie.data.local.model.MovieDetailEntity
 import com.hwonchul.movie.data.local.model.MovieEntity
-import com.hwonchul.movie.data.local.model.MovieProjection
 import com.hwonchul.movie.data.local.model.VideoEntity
+import com.hwonchul.movie.domain.model.MovieListType
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 import java.util.UUID
@@ -11,8 +12,8 @@ import kotlin.random.Random
 
 object TestDataGenerator {
 
-    fun createMovieEntity(movieId: Int): MovieEntity {
-        return MovieEntity(
+    fun createMovieDetailEntity(movieId: Int): MovieDetailEntity {
+        return MovieDetailEntity(
             id = movieId,
             title = "Title",
             originalTitle = "Title",
@@ -28,9 +29,12 @@ object TestDataGenerator {
         )
     }
 
-    fun createMovieProjections(size: Int): List<MovieProjection> {
+    fun createMovieEntities(
+        size: Int,
+        listType: MovieListType = MovieListType.NowPlaying
+    ): List<MovieEntity> {
         return List(size) { i ->
-            MovieProjection(
+            MovieEntity(
                 id = UUID.randomUUID().hashCode(),
                 title = "Title",
                 originalTitle = "Title",
@@ -39,6 +43,7 @@ object TestDataGenerator {
                 popularity = Random.nextDouble(1000.0, 9999.0),
                 mainPosterPath = "",
                 mainBackdropPath = "",
+                listType = listType,
             )
         }
     }

@@ -2,7 +2,7 @@ package com.hwonchul.movie.data.local.dao
 
 import com.hwonchul.movie.TestDataGenerator
 import com.hwonchul.movie.data.local.MovieDatabase
-import com.hwonchul.movie.data.local.model.MovieEntity
+import com.hwonchul.movie.data.local.model.MovieDetailEntity
 import com.hwonchul.movie.di.database.DatabaseModule
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -37,18 +37,18 @@ class VideoDaoTest {
     @Inject
     lateinit var db: MovieDatabase
     private lateinit var videoDao: VideoDao
-    private lateinit var movieDao: MovieDao
+    private lateinit var movieDetailDao: MovieDetailDao
 
     @Before
     fun setUp() {
         hiltRule.inject()
         MockKAnnotations.init(this, relaxed = true)
 
-        movieDao = db.movieDao()
+        movieDetailDao = db.movieDetailDao()
         videoDao = db.videoDao()
 
         runBlocking {
-            movieDao.upsertMovie(MOVIE)
+            movieDetailDao.upsert(MOVIE)
         }
     }
 
@@ -99,7 +99,7 @@ class VideoDaoTest {
 
     companion object {
         private const val MOVIE_ID = 5
-        val MOVIE = mockk<MovieEntity>(relaxed = true) {
+        val MOVIE = mockk<MovieDetailEntity>(relaxed = true) {
             every { id } returns MOVIE_ID
         }
 

@@ -9,7 +9,7 @@ import com.hwonchul.movie.domain.model.Image
 @Entity(
     tableName = ImageEntity.TABLE_NAME,
     foreignKeys = [ForeignKey(
-        entity = MovieEntity::class,
+        entity = MovieDetailEntity::class,
         parentColumns = ["id"],
         childColumns = ["movie_id"],
         onDelete = ForeignKey.CASCADE,

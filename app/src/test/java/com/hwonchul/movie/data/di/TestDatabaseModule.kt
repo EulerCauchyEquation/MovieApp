@@ -6,6 +6,7 @@ import com.hwonchul.movie.data.local.MovieDatabase
 import com.hwonchul.movie.data.local.converter.LocalDateConverter
 import com.hwonchul.movie.data.local.dao.ImageDao
 import com.hwonchul.movie.data.local.dao.MovieDao
+import com.hwonchul.movie.data.local.dao.MovieDetailDao
 import com.hwonchul.movie.data.local.dao.VideoDao
 import com.hwonchul.movie.di.database.DatabaseModule
 import dagger.Module
@@ -34,6 +35,11 @@ object TestDatabaseModule {
     @Singleton
     @Provides
     fun provideMovieDao(movieDatabase: MovieDatabase): MovieDao = movieDatabase.movieDao()
+
+    @Singleton
+    @Provides
+    fun provideMovieDetailDao(movieDatabase: MovieDatabase): MovieDetailDao =
+        movieDatabase.movieDetailDao()
 
     @Singleton
     @Provides

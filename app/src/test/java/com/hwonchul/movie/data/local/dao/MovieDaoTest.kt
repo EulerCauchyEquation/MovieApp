@@ -3,6 +3,7 @@ package com.hwonchul.movie.data.local.dao
 import com.hwonchul.movie.TestDataGenerator
 import com.hwonchul.movie.data.local.MovieDatabase
 import com.hwonchul.movie.di.database.DatabaseModule
+import com.hwonchul.movie.domain.model.MovieListType
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
@@ -13,8 +14,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNull
-import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -35,8 +34,7 @@ class MovieDaoTest {
     @Inject
     lateinit var db: MovieDatabase
     private lateinit var movieDao: MovieDao
-    private lateinit var videoDao: VideoDao
-    private lateinit var imageDao: ImageDao
+    private lateinit var movieDetailDao: MovieDetailDao
 
     @Before
     fun setUp() {
@@ -44,107 +42,42 @@ class MovieDaoTest {
         MockKAnnotations.init(this, relaxed = true)
 
         movieDao = db.movieDao()
-        videoDao = db.videoDao()
-        imageDao = db.posterDao()
+        movieDetailDao = db.movieDetailDao()
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `findAllProjectionOrderByPopularity 테스트`() = runTest {
-        // given : movie 삽입
-        movieDao.upsertMovieProjection(INSERTED_MOVIE_PROJECTION)
+    fun `findAllMovieOrderByPopularity 테스트`() = runTest {
+        // given : movies 삽입
+        movieDao.upsert(INSERTED_MOVIES)
 
-        // when : findAllProjectionOrderByPopularity
-        val movie = movieDao.findAllProjectionOrderByPopularity().first()
+        // when : NowPlaying 타입인 findAllMovieOrderByPopularity
+        val targetListType = MovieListType.NowPlaying
+        val movies = movieDao.findAllMovieOrderByPopularity(targetListType).first()
 
-        // then : Popularity 를 내림차순으로 MovieProjection 타입인 아이템들을 반환
-        val expected = INSERTED_MOVIE_PROJECTION.sortedByDescending { it.popularity }
-        assertEquals(expected, movie)
+        // then : NowPlaying 타입인 영화 리스트를 반환
+        val expected = INSERTED_MOVIES.filter { it.listType == targetListType }
+            .sortedByDescending { it.popularity }
+        assertEquals(expected, movies)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `findMovieDetailById 테스트`() = runTest {
-        // given : movie, videos, images 삽입
-        movieDao.upsertMovie(INSERTED_MOVIE)
-        imageDao.upsert(INSERTED_IMAGES)
-        videoDao.upsert(INSERTED_VIDEOS)
-
-        // when : findMovieDetailById
-        val movie = movieDao.findMovieDetailById(MOVIE_ID).first()
-
-        // then : MOVIE_ID 의 MovieWithMedia 반환
-        assertEquals(MOVIE_ID, movie.movie.id)
-        assertEquals(INSERTED_IMAGES, movie.images)
-        assertEquals(INSERTED_VIDEOS, movie.videos)
-    }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    @Test
-    fun `존재하지 않는 movieId로 findMovieDetailById 테스트`() = runTest {
-        // given : movie, videos, images 삽입
-        movieDao.upsertMovie(INSERTED_MOVIE)
-        imageDao.upsert(INSERTED_IMAGES)
-        videoDao.upsert(INSERTED_VIDEOS)
-
-        // when : findMovieDetailById
-        val movie = movieDao.findMovieDetailById(9999).first()
-
-        // then : 빈 MovieWithMedia 반환
-        assertNull(movie)
-    }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    @Test
-    fun `영화 삭제시 관련된 컨텐츠 모두 삭제 테스트 `() = runTest {
-        // given : movie, videos, images 삽입
-        movieDao.upsertMovie(INSERTED_MOVIE)
-        imageDao.upsert(INSERTED_IMAGES)
-        videoDao.upsert(INSERTED_VIDEOS)
-
-        // when : delete
-        movieDao.delete(INSERTED_MOVIE)
-
-        // then : 해당 MOVIE 의 관련된 데이터까지 모두 삭제된다
-        val movie = movieDao.findMovieDetailById(INSERTED_MOVIE.id).first()
-        val videos = videoDao.findVideosByMovieId(INSERTED_MOVIE.id).first()
-        val images = imageDao.findImagesByMovieId(INSERTED_MOVIE.id).first()
-        assertNull(movie)
-        assertTrue(videos.isEmpty())
-        assertTrue(images.isEmpty())
-    }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    @Test
-    fun `기존과 새로운 MovieProjection들로 upsert 테스트`() = runTest {
-        // given : MovieProjection 삽입
-        movieDao.upsertMovieProjection(INSERTED_MOVIE_PROJECTION)
+    fun `기존과 새로운 MovieEntity 리스트로 upsert 테스트`() = runTest {
+        // given : movies 삽입
+        movieDao.upsert(INSERTED_MOVIES)
 
         // when : 추가 삽입
-        movieDao.upsertMovieProjection(FETCHED_MOVIE_PROJECTION)
+        movieDao.upsert(FETCHED_MOVIES)
 
-        // then : 추가 삽입까지 반영된 영화 리스트를 반환
-        val actual = movieDao.findAllProjectionOrderByPopularity().first()
-        val expected = FETCHED_MOVIE_PROJECTION.sortedByDescending { it.popularity }
-        assertEquals(expected, actual)
-    }
+        // then : 해당 타입인 리스트를 모두 가져오기
+        val nowPlayingTypeActual =
+            movieDao.findAllMovieOrderByPopularity(MovieListType.NowPlaying).first()
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    @Test
-    fun `기존과 새로운 MovieEntity로 upsert 테스트`() = runTest {
-        // given : MovieEntity 삽입
-        val movieId = INSERTED_MOVIE.id
-        movieDao.upsertMovie(INSERTED_MOVIE)
-
-        // when : 수정된 MovieEntity 삽입
-        val updatedTitle = "updatedTitle"
-        val updated = INSERTED_MOVIE.copy(title = updatedTitle)
-        movieDao.upsertMovie(updated)
-
-        // then : 수정된 영화를 반환
-        val actual = movieDao.findMovieDetailById(movieId).first()
-        assertEquals(movieId, actual.movie.id)
-        assertEquals(updatedTitle, actual.movie.title)
+        val expected = FETCHED_MOVIES
+            .filter { it.listType == MovieListType.NowPlaying }
+            .sortedByDescending { it.popularity }
+        assertEquals(expected, nowPlayingTypeActual)
     }
 
     @After
@@ -155,13 +88,8 @@ class MovieDaoTest {
     companion object {
 
         private const val MOVIE_ID = 1000
-        private val INSERTED_IMAGES = TestDataGenerator.createImageEntities(3, MOVIE_ID)
-        private val INSERTED_VIDEOS = TestDataGenerator.createVideoEntities(3, MOVIE_ID)
-            .sortedByDescending { it.publishedAt }
-        private val INSERTED_MOVIE = TestDataGenerator.createMovieEntity(MOVIE_ID)
-
-        private val INSERTED_MOVIE_PROJECTION = TestDataGenerator.createMovieProjections(2)
-        private val FETCHED_MOVIE_PROJECTION = INSERTED_MOVIE_PROJECTION +
-                TestDataGenerator.createMovieProjections(2)
+        private val INSERTED_MOVIES = TestDataGenerator.createMovieEntities(10)
+        private val FETCHED_MOVIES = INSERTED_MOVIES +
+                TestDataGenerator.createMovieEntities(10)
     }
 }

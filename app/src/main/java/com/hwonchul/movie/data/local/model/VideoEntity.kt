@@ -12,7 +12,7 @@ import java.time.LocalDate
 @Entity(
     tableName = VideoEntity.TABLE_NAME,
     foreignKeys = [ForeignKey(
-        entity = MovieEntity::class,
+        entity = MovieDetailEntity::class,
         parentColumns = ["id"],
         childColumns = ["movie_id"],
         onDelete = ForeignKey.CASCADE,

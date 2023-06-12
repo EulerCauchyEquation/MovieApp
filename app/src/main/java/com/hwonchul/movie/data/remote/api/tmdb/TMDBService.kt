@@ -16,14 +16,14 @@ interface TMDBService {
         @Query(QUERY_API_KEY) key: String = API_KEY,
         @Query(QUERY_LANGUAGE) language: String = LANGUAGE_KO,
         @Query(QUERY_REGION) region: String = REGION_KR,
-    ): List<MovieProjectionDto>
+    ): List<MovieDto>
 
     @GET(URI_GET_MOVIE)
     suspend fun getMovie(
         @Path(PATH_MOVIE_ID) movieId: Int,
         @Query(QUERY_API_KEY) key: String = API_KEY,
         @Query(QUERY_LANGUAGE) language: String = LANGUAGE_KO,
-    ): MovieDto
+    ): MovieDetailDto
 
     @GET(URI_GET_VIDEOS)
     suspend fun getVideoList(

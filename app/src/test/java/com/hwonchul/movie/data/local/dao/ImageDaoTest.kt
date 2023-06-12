@@ -3,7 +3,7 @@ package com.hwonchul.movie.data.local.dao
 import com.hwonchul.movie.TestDataGenerator
 import com.hwonchul.movie.data.local.MovieDatabase
 import com.hwonchul.movie.data.local.model.ImageEntity.Type
-import com.hwonchul.movie.data.local.model.MovieEntity
+import com.hwonchul.movie.data.local.model.MovieDetailEntity
 import com.hwonchul.movie.di.database.DatabaseModule
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -38,19 +38,19 @@ class ImageDaoTest {
     @Inject
     lateinit var db: MovieDatabase
     private lateinit var imageDao: ImageDao
-    private lateinit var movieDao: MovieDao
+    private lateinit var movieDetailDao: MovieDetailDao
 
     @Before
     fun setUp() {
         hiltRule.inject()
         MockKAnnotations.init(this, relaxed = true)
 
-        movieDao = db.movieDao()
+        movieDetailDao = db.movieDetailDao()
         imageDao = db.posterDao()
 
         // 테스트 스레드를 블로킹하고 완료될 때까지 대기
         runBlocking {
-            movieDao.upsertMovie(MOVIE)
+            movieDetailDao.upsert(MOVIE)
         }
     }
 
@@ -106,7 +106,7 @@ class ImageDaoTest {
         private val FETCHED_IMAGES = INSERTED_IMAGES.map { it.copy(imageType = Type.Poster) } +
                 TestDataGenerator.createImageEntities(1, MOVIE_ID)
 
-        val MOVIE = mockk<MovieEntity>(relaxed = true) {
+        val MOVIE = mockk<MovieDetailEntity>(relaxed = true) {
             every { id } returns MOVIE_ID
         }
     }

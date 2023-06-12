@@ -4,8 +4,8 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.hwonchul.movie.FileReader
 import com.hwonchul.movie.data.remote.model.ImageResponse
+import com.hwonchul.movie.data.remote.model.MovieDetailDto
 import com.hwonchul.movie.data.remote.model.MovieDto
-import com.hwonchul.movie.data.remote.model.MovieProjectionDto
 import com.hwonchul.movie.data.remote.model.VideoDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -64,9 +64,9 @@ class TmdbApiTest {
         server.enqueue(response)
 
         val result = service.getNowPlayingList()
-        val expected: MutableList<MovieProjectionDto> = Gson().fromJson(
+        val expected: MutableList<MovieDto> = Gson().fromJson(
             expectedJsonStringWithPopularPath,
-            object : TypeToken<MutableList<MovieProjectionDto>>() {}.type
+            object : TypeToken<MutableList<MovieDto>>() {}.type
         )
         assertEquals(expected, result)
     }
@@ -82,7 +82,7 @@ class TmdbApiTest {
         server.enqueue(response)
 
         val result = service.getMovie(testMovieId)
-        val expected = Gson().fromJson(expectedJsonStringWithMovieDetailPath, MovieDto::class.java)
+        val expected = Gson().fromJson(expectedJsonStringWithMovieDetailPath, MovieDetailDto::class.java)
         assertEquals(expected, result)
     }
 

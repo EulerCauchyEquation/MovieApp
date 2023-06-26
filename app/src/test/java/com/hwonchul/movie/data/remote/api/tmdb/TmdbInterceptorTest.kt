@@ -41,26 +41,6 @@ class TmdbInteceptorTest : BehaviorSpec({
         }
     }
 
-    given("응답 성공, path : \"/3/movie/{movie_id}\" 일 때") {
-        val url = TMDBService.URL + "/3/movie/550?api_key=${BuildConfig.TMDB_API_KEY}"
-
-        `when`("정상적인 result 면") {
-            val successResponseBody =
-                successJsonStringWithMovieDetailPath.toResponseBody("application/json;charset=UTF-8".toMediaType())
-            val successResponse = tempSuccessResponse.newBuilder().body(successResponseBody)
-                .request(Request.Builder().url(url).build()).build()
-            every { chain.proceed(any()) } returns successResponse
-
-            val actualResponse = interceptor.intercept(chain)
-            then("변형된 Json 으로 들어온다") {
-                assertEquals(
-                    toJson(expectedJsonStringWithMovieDetailPath),
-                    toJson(actualResponse.body!!.string())
-                )
-            }
-        }
-    }
-
     given("응답 성공, path : \"/3/movie/{movie_id}/videos\" 일 때") {
         val url = TMDBService.URL + "/3/movie/478187/videos?api_key=${BuildConfig.TMDB_API_KEY}"
 
@@ -121,18 +101,12 @@ class TmdbInteceptorTest : BehaviorSpec({
         private val successJsonStringWithPopularPath =
             FileReader.readStringFromFile("text_data/tmdb/movieList/success.json").trimIndent()
 
-        private val successJsonStringWithMovieDetailPath =
-            FileReader.readStringFromFile("text_data/tmdb/movie/success.json").trimIndent()
-
         private val successJsonStringWithVideosPath =
             FileReader.readStringFromFile("text_data/tmdb/videos/success.json").trimIndent()
 
         private val expectedJsonStringWithPopularPath =
             FileReader.readStringFromFile("text_data/tmdb/movieList/success_filtered.json")
                 .trimIndent()
-
-        private val expectedJsonStringWithMovieDetailPath =
-            FileReader.readStringFromFile("text_data/tmdb/movie/success_filtered.json").trimIndent()
 
         private val expectedJsonStringWithVideosPath =
             FileReader.readStringFromFile("text_data/tmdb/videos/success_filtered.json")

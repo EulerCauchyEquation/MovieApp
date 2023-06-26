@@ -38,8 +38,6 @@ class TMDBInterceptor : Interceptor {
             matches(Regex(REGEX_GET_VIDEOS)) -> getBodyToVideoResponse(body).toString()
             // TMDB API Get Popular 호출인 경우
             matches(Regex(REGEX_GET_NOW_PLAYING)) -> getBodyToNowPlayingListResponse(body).toString()
-            // TMDB API Get Movie Detail 호출인 경우
-            matches(Regex(REGEX_GET_DETAIL)) -> getBodyToMovieDetailResponse(body).toString()
             // 그 외
             else -> body.string()
         }
@@ -49,16 +47,6 @@ class TMDBInterceptor : Interceptor {
         return JsonParser.parseString(body.string())
             .asJsonObject
             .getAsJsonArray(KEY_RESULTS)
-    }
-
-    private fun getBodyToMovieDetailResponse(body: ResponseBody): JsonObject {
-        return JsonParser.parseString(body.string())
-            .asJsonObject
-            .apply {
-                remove(KEY_DETAIL_PRODUCTION_COMPANIES)
-                remove(KEY_DETAIL_PRODUCTION_COUNTRIES)
-                remove(KEY_DETAIL_SPOKEN_LANGUAGES)
-            }
     }
 
     private fun getBodyToVideoResponse(body: ResponseBody): JsonArray {
@@ -79,12 +67,7 @@ class TMDBInterceptor : Interceptor {
         private const val KEY_ID = "id"
         private const val KEY_RESULTS = "results"
 
-        private const val KEY_DETAIL_PRODUCTION_COMPANIES = "production_companies"
-        private const val KEY_DETAIL_PRODUCTION_COUNTRIES = "production_countries"
-        private const val KEY_DETAIL_SPOKEN_LANGUAGES = "spoken_languages"
-
         private const val REGEX_GET_VIDEOS = "^/3/movie/[0-9]+/videos\$"
         private const val REGEX_GET_NOW_PLAYING = "^/3/movie/now_playing\$"
-        private const val REGEX_GET_DETAIL = "^/3/movie/[0-9]+\$"
     }
 }

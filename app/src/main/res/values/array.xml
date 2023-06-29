@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="user_profile_image_options">
+        <item>@string/options_user_image_album</item>
+        <item>@string/options_user_image_delete</item>
+    </string-array>
+</resources>

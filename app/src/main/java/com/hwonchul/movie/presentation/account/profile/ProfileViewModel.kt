@@ -1,5 +1,6 @@
 package com.hwonchul.movie.presentation.account.profile
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.hwonchul.movie.R
 import com.hwonchul.movie.base.view.BaseViewModel
@@ -20,11 +21,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val getCurrentUserInfoUseCase: GetCurrentUserInfoUseCase,
     private val validateNickNameUseCase: ValidateNickNameUseCase,
     private val checkDuplicateNickNameUseCase: CheckDuplicateNickNameUseCase,
     private val updateUserUseCase: UpdateUserUseCase,
-) : BaseViewModel<ProfileData, ProfileState>(ProfileData(), ProfileState.Idle) {
+) : BaseViewModel<ProfileData, ProfileState>(
+    ProfileData(user = savedStateHandle[KEY_USER] ?: User.EMPTY),
+    ProfileState.Idle
+) {
 
     private val nickName: String
         get() = uiData.value!!.user.nickname ?: ""
@@ -86,5 +91,13 @@ class ProfileViewModel @Inject constructor(
                 }
             }
             .onFailure { setData { copy(nickNameFormState = TextFormState(R.string.nick_invalid)) } }
+    }
+
+    fun userImageChanged(imageUrl: String?) {
+        setData { copy(user = user.copy(userImage = imageUrl)) }
+    }
+
+    companion object {
+        private const val KEY_USER = "user"
     }
 }

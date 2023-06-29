@@ -10,6 +10,8 @@ import android.view.View
 import android.view.WindowInsetsController
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
@@ -17,18 +19,21 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.SnackbarLayout
 import com.hwonchul.movie.R
 import com.hwonchul.movie.databinding.ActivityMainBinding
+import com.hwonchul.movie.presentation.account.profile.ProfileFragment
 import com.hwonchul.movie.util.NetworkStatusHelper
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ProfileFragment.GalleryImagePicker {
 
     private lateinit var binding: ActivityMainBinding
 
     @JvmField
     @Inject
     var helper: NetworkStatusHelper? = null
+
+    private lateinit var galleryImageLauncher: ActivityResultLauncher<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setNetworkStatusHelper()
         setStatusBarAndNavigationBar()
+        setOnActivityResult()
     }
 
     private fun setNetworkStatusHelper() {
@@ -142,7 +148,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     fun showSnackbar(message: String) {
         val snackbar = Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG)
         // 시작위치 Top 으로 변경
@@ -159,5 +164,22 @@ class MainActivity : AppCompatActivity() {
         layout.addView(snackView)
         snackbar.setBackgroundTint(ContextCompat.getColor(application, R.color.WHITE))
         snackbar.show()
+    }
+
+    private fun setOnActivityResult() {
+        galleryImageLauncher =
+            registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+                // ActivityResultContracts : 요청 결과의 유형
+                val navHostFragment =
+                    supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+                val fragment = navHostFragment.childFragmentManager.fragments[0]
+                if (fragment is ProfileFragment) {
+                    fragment.updateProfileImage(uri)
+                }
+            }
+    }
+
+    override fun openGallery() {
+        galleryImageLauncher.launch("image/*")
     }
 }

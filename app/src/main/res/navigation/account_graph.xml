@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/account"
         android:name="com.hwonchul.movie.presentation.account.AccountFragment"
-        tools:layout="@layout/fragment_account" >
+        tools:layout="@layout/fragment_account">
 
         <action
             android:id="@+id/navigate_to_login_graph"
@@ -18,11 +18,21 @@
 
         <action
             android:id="@+id/navigate_to_profile_edit"
-            app:destination="@id/profile_edit" />
+            app:destination="@id/profile_edit">
+
+            <argument
+                android:name="user"
+                app:argType="com.hwonchul.movie.domain.model.User" />
+        </action>
     </fragment>
 
     <fragment
         android:id="@+id/profile_edit"
         android:name="com.hwonchul.movie.presentation.account.profile.ProfileFragment"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+
+        <argument
+            android:name="user"
+            app:argType="com.hwonchul.movie.domain.model.User" />
+    </fragment>
 </navigation>

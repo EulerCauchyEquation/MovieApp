@@ -1,34 +1,33 @@
 package com.hwonchul.movie.domain.model
 
 import android.os.Parcelable
+import com.hwonchul.movie.data.remote.model.UserDto
 import kotlinx.parcelize.Parcelize
+import java.time.LocalDateTime
 
 @Parcelize
 data class User(
     val uid: String = TEMP_UID,
     val phone: String,
-    val nickname: String? = "이름없음",
+    val nickname: String? = TEMP_NICK,
+    val userImage: String? = null,
+    val updatedAt: LocalDateTime? = LocalDateTime.now()
 ) : Parcelable {
-
-    fun isTemp(): Boolean = uid == TEMP_UID
-
-    fun toMap() : HashMap<String, Any?> {
-        return  hashMapOf(
-            FIELD_PHONE_NUMBER to phone,
-            FIELD_NICK_NAME to nickname,
-        )
-    }
 
     companion object {
         val EMPTY: User = User(
             phone = "0000000000"
         )
 
-        private const val TEMP_UID = "temp"
-
-        const val FIELD_PHONE_NUMBER = "phoneNumber"
-        const val FIELD_NICK_NAME = "nickName"
+        const val TEMP_UID = "temp"
+        const val TEMP_NICK = "이름없음"
     }
 }
 
-
+fun User.toDto() = UserDto(
+    uid = uid,
+    phone = phone,
+    nickname = nickname,
+    userImage = userImage,
+    updatedAt = updatedAt?.toString(),
+)

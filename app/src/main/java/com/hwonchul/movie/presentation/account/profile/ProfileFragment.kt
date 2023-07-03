@@ -1,6 +1,7 @@
 package com.hwonchul.movie.presentation.account.profile
 
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -29,7 +30,17 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private val viewModel: ProfileViewModel by viewModels()
     private lateinit var progressDialog: AlertDialog
 
+    private lateinit var galleryImagePicker: GalleryImagePicker
+
     private val binding get() = _binding!!
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        if (context is GalleryImagePicker) {
+            galleryImagePicker = context
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,11 +56,14 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         setProgressDialog()
 
         setEditNicknameAddTextChangedListener()
         setCompleteClickListener()
+        setUserImageClickListener()
 
         observeNickNameFormState()
         observeState()
@@ -82,6 +96,27 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 viewModel.nickNameChanged(s.toString())
             }
         })
+    }
+
+    private fun setUserImageClickListener() {
+        binding.ivUserImage.setOnClickListener {
+            val items = resources.getStringArray(R.array.user_profile_image_options)
+
+            AlertDialog.Builder(requireContext())
+                .setItems(items) { _, which ->
+                    when (items[which]) {
+                        // 앨범에서 선택
+                        getString(R.string.options_user_image_album) -> galleryImagePicker.openGallery()
+
+                        // 프로필 사진 삭제
+                        getString(R.string.options_user_image_delete) -> {
+                            updateProfileImage(null)
+                            binding.ivUserImage.setImageResource(R.drawable.ic_user_default)
+                        }
+                    }
+                }
+                .show()
+        }
     }
 
     private fun observeNickNameFormState() {
@@ -147,5 +182,14 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun updateProfileImage(imageUri: Uri?) {
+        viewModel.userImageChanged(imageUri?.toString())
+        binding.ivUserImage.setImageURI(imageUri)
+    }
+
+    interface GalleryImagePicker {
+        fun openGallery()
     }
 }

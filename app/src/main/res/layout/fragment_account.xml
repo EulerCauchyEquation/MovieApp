@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.hwonchul.movie.presentation.account.AccountViewModel" />
@@ -39,14 +40,16 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/space_large_16dp"
-            android:src="@drawable/ic_user_default"
             app:civ_border_color="@color/BLANK_COLOR"
             app:civ_border_width="2dp"
+            app:imageUrl="@{viewModel.uiData.user.userImage}"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintTop_toBottomOf="@id/appBarLayout"
-            app:layout_constraintWidth_percent="0.333" />
+            app:layout_constraintWidth_percent="0.333"
+            app:placeholder="@{@drawable/ic_user_default}"
+            tools:src="@drawable/ic_user_default" />
 
         <!-- 닉네임 -->
         <androidx.appcompat.widget.AppCompatTextView
@@ -59,10 +62,10 @@
             android:textColor="@android:color/black"
             android:textSize="26sp"
             android:textStyle="bold"
-            tools:text="그것만이내세상"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@id/iv_user_image" />
+            app:layout_constraintTop_toBottomOf="@id/iv_user_image"
+            tools:text="그것만이내세상" />
 
         <!-- 프로필 수정 버튼 -->
         <androidx.appcompat.widget.AppCompatButton
@@ -98,13 +101,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_median_8dp"
-            android:text="@{viewModel.uiData.user.phone}"
             android:maxLines="1"
+            android:text="@{viewModel.uiData.user.phone}"
             android:textColor="@android:color/darker_gray"
             android:textSize="@dimen/text_size_headline4_16sp"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintTop_toBottomOf="@id/tv_user_phone_title"
             tools:text="010 2222 3333" />
+
+        <!-- 최근 수정 일자 제목-->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_updated_at_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_large_24dp"
+            android:maxLines="1"
+            android:text="최근 수정 일자"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_size_headline3_18sp"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/tv_user_phone" />
+
+        <!-- 최근 수정 일자 -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_updated_at"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_median_8dp"
+            android:maxLines="1"
+            android:text="@{viewModel.uiData.user.updatedAt.toLocalDate().toString()}"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="@dimen/text_size_headline4_16sp"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/tv_updated_at_title"
+            tools:text="2023-05-21" />
 
         <View
             android:id="@+id/separator_line"
@@ -114,7 +144,7 @@
             android:background="@color/BLANK_COLOR"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_user_phone" />
+            app:layout_constraintTop_toBottomOf="@id/tv_updated_at" />
 
         <!-- 로그아웃 버튼 -->
         <androidx.appcompat.widget.AppCompatButton

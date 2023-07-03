@@ -1,16 +1,16 @@
 package com.hwonchul.movie.data.remote.source
 
-import com.hwonchul.movie.domain.model.User
+import com.hwonchul.movie.data.remote.model.UserDto
 
 interface UserRemoteDataSource {
 
-    suspend fun getUserByUid(uid: String): User
+    suspend fun getUserByUid(uid: String): UserDto
 
-    suspend fun getUserByPhoneNumber(phoneNumber: String): User
+    suspend fun getUserByPhoneNumber(phoneNumber: String): UserDto
 
-    suspend fun getUserByNickname(nickname: String): User
+    suspend fun getUserByNickname(nickname: String): UserDto
 
-    suspend fun insertOrUpdateUser(user: User): User
+    suspend fun insertOrUpdateUser(user: UserDto): UserDto
 
-    suspend fun deleteUser(user: User)
+    suspend fun deleteUser(user: UserDto)
 }

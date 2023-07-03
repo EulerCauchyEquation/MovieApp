@@ -1,5 +1,6 @@
 package com.hwonchul.movie.presentation.account.profile
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.hwonchul.movie.R
 import com.hwonchul.movie.base.view.BaseViewModel
@@ -16,18 +17,20 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val getCurrentUserInfoUseCase: GetCurrentUserInfoUseCase,
     private val validateNickNameUseCase: ValidateNickNameUseCase,
     private val checkDuplicateNickNameUseCase: CheckDuplicateNickNameUseCase,
     private val updateUserUseCase: UpdateUserUseCase,
-) : BaseViewModel<ProfileData, ProfileState>(ProfileData(), ProfileState.Idle) {
-
-    private val nickName: String
-        get() = uiData.value!!.user.nickname ?: ""
+) : BaseViewModel<ProfileData, ProfileState>(
+    ProfileData(user = savedStateHandle[KEY_USER] ?: User.EMPTY),
+    ProfileState.Idle
+) {
 
     init {
         viewModelScope.launch {
@@ -52,20 +55,32 @@ class ProfileViewModel @Inject constructor(
     fun updateUser() {
         viewModelScope.launch {
             setState { ProfileState.Loading }
-            checkDuplicateNickNameUseCase(nickName)
-                .onSuccess { doesExist ->
-                    if (doesExist) {
-                        // 중복된 닉네임 있음
-                        setState { ProfileState.Error(R.string.nick_unique_invalid) }
-                    } else {
-                        // 중복된 닉네임 없음
-                        val user = uiData.value!!.user
-                        withContext(Dispatchers.IO) {
-                            updateUserInternal(user.copy(nickname = nickName))
+            val user = uiData.value!!.user
+            val newNickname = uiData.value!!.newNickname
+
+            if (user.nickname == newNickname) {
+                // 기존 닉네임과 동일하면 중복 체크를 skip
+                updateUserInternal(user.copy(updatedAt = LocalDateTime.now()))
+            } else {
+                checkDuplicateNickNameUseCase(newNickname)
+                    .onSuccess { doesExist ->
+                        if (doesExist) {
+                            // 중복된 닉네임 있음
+                            setState { ProfileState.Error(R.string.nick_unique_invalid) }
+                        } else {
+                            // 중복된 닉네임 없음
+                            withContext(Dispatchers.IO) {
+                                updateUserInternal(
+                                    user.copy(
+                                        nickname = newNickname,
+                                        updatedAt = LocalDateTime.now()
+                                    )
+                                )
+                            }
                         }
                     }
-                }
-                .onFailure { setState { ProfileState.Error(R.string.nick_connect_failed) } }
+                    .onFailure { setState { ProfileState.Error(R.string.nick_connect_failed) } }
+            }
         }
     }
 
@@ -80,11 +95,19 @@ class ProfileViewModel @Inject constructor(
             .onSuccess {
                 setData {
                     copy(
-                        user = user.copy(nickname = nickName),
+                        newNickname = nickName,
                         nickNameFormState = TextFormState(true)
                     )
                 }
             }
             .onFailure { setData { copy(nickNameFormState = TextFormState(R.string.nick_invalid)) } }
+    }
+
+    fun userImageChanged(imageUrl: String?) {
+        setData { copy(user = user.copy(userImage = imageUrl)) }
+    }
+
+    companion object {
+        private const val KEY_USER = "user"
     }
 }

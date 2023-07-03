@@ -91,7 +91,8 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
 
     private fun setProfileEditClickListener() {
         binding.btnProfileEdit.setOnClickListener {
-            navController.navigate(AccountFragmentDirections.navigateToProfileEdit())
+            val user = viewModel.uiData.value!!.user
+            navController.navigate(AccountFragmentDirections.navigateToProfileEdit(user))
         }
     }
 

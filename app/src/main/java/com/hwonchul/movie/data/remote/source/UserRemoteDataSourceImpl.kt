@@ -6,7 +6,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageException
 import com.google.firebase.storage.ktx.storage
-import com.hwonchul.movie.domain.model.User
+import com.hwonchul.movie.data.remote.model.UserDto
 import com.hwonchul.movie.exception.UserNotFoundException
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -19,7 +19,7 @@ class UserRemoteDataSourceImpl @Inject constructor() : UserRemoteDataSource {
     private val db = FirebaseFirestore.getInstance()
     private val storageRef = Firebase.storage.reference
 
-    override suspend fun getUserByUid(uid: String): User =
+    override suspend fun getUserByUid(uid: String): UserDto =
         suspendCancellableCoroutine { continuation ->
             // CancellableContinuation은 코루틴이 취소될 수 있는 상태
             // suspendCancellableCoroutine 은 코루틴이 일시 중단되고 나중에 resume 할 수 있도록 도와주는 함수로,
@@ -45,10 +45,10 @@ class UserRemoteDataSourceImpl @Inject constructor() : UserRemoteDataSource {
                 }
         }
 
-    override suspend fun getUserByPhoneNumber(phoneNumber: String): User =
+    override suspend fun getUserByPhoneNumber(phoneNumber: String): UserDto =
         suspendCancellableCoroutine { continuation ->
             db.collection(COLLECTION_USER)
-                .whereEqualTo(User.FIELD_PHONE_NUMBER, phoneNumber)
+                .whereEqualTo(UserDto.FIELD_PHONE_NUMBER, phoneNumber)
                 .get()
                 .addOnSuccessListener { query ->
                     if (query.isEmpty) {
@@ -70,10 +70,10 @@ class UserRemoteDataSourceImpl @Inject constructor() : UserRemoteDataSource {
         }
 
 
-    override suspend fun getUserByNickname(nickname: String): User =
+    override suspend fun getUserByNickname(nickname: String): UserDto =
         suspendCancellableCoroutine { continuation ->
             db.collection(COLLECTION_USER)
-                .whereEqualTo(User.FIELD_NICK_NAME, nickname)
+                .whereEqualTo(UserDto.FIELD_NICK_NAME, nickname)
                 .get()
                 .addOnSuccessListener { query ->
                     if (query.isEmpty) {
@@ -94,14 +94,15 @@ class UserRemoteDataSourceImpl @Inject constructor() : UserRemoteDataSource {
                 }
         }
 
-    private fun createUserFromDocument(document: DocumentSnapshot) = User(
+    private fun createUserFromDocument(document: DocumentSnapshot) = UserDto(
         uid = document.id,
-        phone = document.getString(User.FIELD_PHONE_NUMBER) ?: "",
-        nickname = document.getString(User.FIELD_NICK_NAME),
-        userImage = document.getString(User.FIELD_USER_IMAGE),
+        phone = document.getString(UserDto.FIELD_PHONE_NUMBER) ?: "",
+        nickname = document.getString(UserDto.FIELD_NICK_NAME),
+        userImage = document.getString(UserDto.FIELD_USER_IMAGE),
+        updatedAt = document.getString(UserDto.FIELD_UPDATED_AT),
     )
 
-    override suspend fun insertOrUpdateUser(user: User): User =
+    override suspend fun insertOrUpdateUser(user: UserDto): UserDto =
         suspendCancellableCoroutine { continuation ->
             if (user.userImage != null) {
                 // 사용자 프로필 사진이 있다면
@@ -137,8 +138,8 @@ class UserRemoteDataSourceImpl @Inject constructor() : UserRemoteDataSource {
         }
 
     private fun updateUserInDB(
-        user: User,
-        continuation: CancellableContinuation<User>
+        user: UserDto,
+        continuation: CancellableContinuation<UserDto>
     ) {
         val document = if (user.isTemp()) {
             db.collection(COLLECTION_USER).document()
@@ -157,7 +158,7 @@ class UserRemoteDataSourceImpl @Inject constructor() : UserRemoteDataSource {
             }
     }
 
-    override suspend fun deleteUser(user: User) = suspendCancellableCoroutine { continuation ->
+    override suspend fun deleteUser(user: UserDto) = suspendCancellableCoroutine { continuation ->
         // 이미지 삭제 완료 후 사용자 정보 삭제
         storageRef.child("user/${user.uid}/user_profile.jpg")
             .delete()
@@ -173,7 +174,7 @@ class UserRemoteDataSourceImpl @Inject constructor() : UserRemoteDataSource {
             }
     }
 
-    private fun deleteUserInDB(user: User, continuation: CancellableContinuation<Unit>) {
+    private fun deleteUserInDB(user: UserDto, continuation: CancellableContinuation<Unit>) {
         db.collection(COLLECTION_USER)
             .document(user.uid)
             .delete()

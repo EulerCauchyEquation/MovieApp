@@ -17,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -66,7 +67,12 @@ class ProfileViewModel @Inject constructor(
                         // 중복된 닉네임 없음
                         val user = uiData.value!!.user
                         withContext(Dispatchers.IO) {
-                            updateUserInternal(user.copy(nickname = nickName))
+                            updateUserInternal(
+                                user.copy(
+                                    nickname = nickName,
+                                    updatedAt = LocalDateTime.now()
+                                )
+                            )
                         }
                     }
                 }

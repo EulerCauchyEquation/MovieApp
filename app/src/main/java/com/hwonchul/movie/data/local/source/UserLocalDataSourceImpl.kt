@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.google.gson.Gson
-import com.hwonchul.movie.domain.model.User
+import com.hwonchul.movie.data.local.model.UserEntity
 import com.hwonchul.movie.exception.UserNotFoundException
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.channels.awaitClose
@@ -19,7 +19,7 @@ class UserLocalDataSourceImpl @Inject constructor(
     private val sharedPreferences = context.getSharedPreferences(NAME, Context.MODE_PRIVATE)
     private val gson = Gson()
 
-    override fun getUser(): Flow<User> = callbackFlow {
+    override fun getUser(): Flow<UserEntity> = callbackFlow {
         // 일반 비동기 API를 Flow 스타일로 변환 시 callbackFlow가 유용
         // 콜백 해제할 때도 유용
         val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
@@ -50,13 +50,13 @@ class UserLocalDataSourceImpl @Inject constructor(
         awaitClose { sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener) }
     }
 
-    private fun getUserInternal(): User {
+    private fun getUserInternal(): UserEntity {
         val jsonString = sharedPreferences.getString(USER_KEY, null)
-        return gson.fromJson(jsonString, User::class.java)
+        return gson.fromJson(jsonString, UserEntity::class.java)
             .also { Timber.d("사용자 정보를 가져왔습니다. : [user=${it.uid}]") }
     }
 
-    override suspend fun insertOrUpdate(user: User) {
+    override suspend fun insertOrUpdate(user: UserEntity) {
         val jsonString = gson.toJson(user)
         sharedPreferences.edit {
             putString(USER_KEY, jsonString)

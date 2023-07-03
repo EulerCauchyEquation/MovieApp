@@ -9,6 +9,7 @@ class ProfileContract {
 
     data class ProfileData(
         val user: User = User.EMPTY,
+        val newNickname: String = "",
         val nickNameFormState: TextFormState = TextFormState(false),
     ) : UiData
 

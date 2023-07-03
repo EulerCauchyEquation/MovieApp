@@ -106,7 +106,8 @@
                 android:id="@+id/edit_nickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLength="14" />
+                android:maxLength="14"
+                android:text="@{viewModel.uiData.user.nickname}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.constraintlayout.widget.Guideline

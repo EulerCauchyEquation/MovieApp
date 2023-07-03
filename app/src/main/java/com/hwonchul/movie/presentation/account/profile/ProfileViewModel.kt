@@ -32,9 +32,6 @@ class ProfileViewModel @Inject constructor(
     ProfileState.Idle
 ) {
 
-    private val nickName: String
-        get() = uiData.value!!.user.nickname ?: ""
-
     init {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -58,25 +55,32 @@ class ProfileViewModel @Inject constructor(
     fun updateUser() {
         viewModelScope.launch {
             setState { ProfileState.Loading }
-            checkDuplicateNickNameUseCase(nickName)
-                .onSuccess { doesExist ->
-                    if (doesExist) {
-                        // 중복된 닉네임 있음
-                        setState { ProfileState.Error(R.string.nick_unique_invalid) }
-                    } else {
-                        // 중복된 닉네임 없음
-                        val user = uiData.value!!.user
-                        withContext(Dispatchers.IO) {
-                            updateUserInternal(
-                                user.copy(
-                                    nickname = nickName,
-                                    updatedAt = LocalDateTime.now()
+            val user = uiData.value!!.user
+            val newNickname = uiData.value!!.newNickname
+
+            if (user.nickname == newNickname) {
+                // 기존 닉네임과 동일하면 중복 체크를 skip
+                updateUserInternal(user.copy(updatedAt = LocalDateTime.now()))
+            } else {
+                checkDuplicateNickNameUseCase(newNickname)
+                    .onSuccess { doesExist ->
+                        if (doesExist) {
+                            // 중복된 닉네임 있음
+                            setState { ProfileState.Error(R.string.nick_unique_invalid) }
+                        } else {
+                            // 중복된 닉네임 없음
+                            withContext(Dispatchers.IO) {
+                                updateUserInternal(
+                                    user.copy(
+                                        nickname = newNickname,
+                                        updatedAt = LocalDateTime.now()
+                                    )
                                 )
-                            )
+                            }
                         }
                     }
-                }
-                .onFailure { setState { ProfileState.Error(R.string.nick_connect_failed) } }
+                    .onFailure { setState { ProfileState.Error(R.string.nick_connect_failed) } }
+            }
         }
     }
 
@@ -91,7 +95,7 @@ class ProfileViewModel @Inject constructor(
             .onSuccess {
                 setData {
                     copy(
-                        user = user.copy(nickname = nickName),
+                        newNickname = nickName,
                         nickNameFormState = TextFormState(true)
                     )
                 }

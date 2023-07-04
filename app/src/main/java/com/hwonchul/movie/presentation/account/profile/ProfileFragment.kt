@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.Snackbar
@@ -28,6 +29,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private var _binding: FragmentProfileBinding? = null
     private lateinit var navController: NavController
     private val viewModel: ProfileViewModel by viewModels()
+    private val args: ProfileFragmentArgs by navArgs()
     private lateinit var progressDialog: AlertDialog
 
     private lateinit var galleryImagePicker: GalleryImagePicker
@@ -56,7 +58,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
-        binding.viewModel = viewModel
+        binding.user = args.user
         binding.lifecycleOwner = viewLifecycleOwner
 
         setProgressDialog()

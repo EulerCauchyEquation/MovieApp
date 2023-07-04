@@ -1,6 +1,7 @@
 package com.hwonchul.movie.base.view
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hwonchul.movie.util.SingleLiveEvent
@@ -11,7 +12,7 @@ abstract class BaseViewModel<D : UiData, S : UiState>(
     initialState: S,
 ) : ViewModel() {
 
-    private val _uiData = SingleLiveEvent(initUiData)
+    private val _uiData = MutableLiveData(initUiData)
     val uiData: LiveData<D> = _uiData
 
     private val _uiState = SingleLiveEvent(initialState)

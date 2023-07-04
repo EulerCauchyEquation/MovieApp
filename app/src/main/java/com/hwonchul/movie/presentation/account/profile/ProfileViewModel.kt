@@ -23,7 +23,6 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val getCurrentUserInfoUseCase: GetCurrentUserInfoUseCase,
     private val validateNickNameUseCase: ValidateNickNameUseCase,
     private val checkDuplicateNickNameUseCase: CheckDuplicateNickNameUseCase,
     private val updateUserUseCase: UpdateUserUseCase,
@@ -31,26 +30,6 @@ class ProfileViewModel @Inject constructor(
     ProfileData(user = savedStateHandle[KEY_USER] ?: User.EMPTY),
     ProfileState.Idle
 ) {
-
-    init {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                getUser()
-            }
-        }
-    }
-
-    private suspend fun getUser() {
-        setState { ProfileState.Loading }
-        getCurrentUserInfoUseCase().collectLatest { result ->
-            result
-                .onSuccess { user ->
-                    setData { copy(user = user) }
-                    setState { ProfileState.Idle }
-                }
-                .onFailure { setState { ProfileState.Error(R.string.user_info_get_failed) } }
-        }
-    }
 
     fun updateUser() {
         viewModelScope.launch {

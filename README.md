@@ -19,8 +19,8 @@ TMDB API 를 이용한 컨텐츠는 다양한 측면에서 실력을 향상시�
 </p>
 
 <p alight="left">
-  <img src="https://github.com/EulerCauchyEquation/MovieApp/assets/46746599/bec92649-03cd-42db-bf6d-f996840d9afa" width="24.5%" />
-  <img src="https://github.com/EulerCauchyEquation/MovieApp/assets/46746599/0664451a-9928-4d5e-a062-4e97b065638f" width="24.5%" />
+  <img src="https://github.com/EulerCauchyEquation/MovieApp/assets/46746599/ea148e86-4394-4ad1-ab31-8d8c56ac545f" width="24.5%" />
+  <img src="https://github.com/EulerCauchyEquation/MovieApp/assets/46746599/81036641-a1e2-4526-8192-fe544c1089cb" width="24.5%" />
 </p>
 
 
@@ -38,11 +38,16 @@ TMDB API 를 이용한 컨텐츠는 다양한 측면에서 실력을 향상시�
 * Hilt
 * MVVM Pattern
 * Navigation
-* Firebase (Authentication, Firestore)
+* Firebase (Authentication, Firestore, Storage)
 
 # Open API
 * TMDB API
 
 # Firestore
-![Firestore](https://github.com/EulerCauchyEquation/MovieApp/assets/46746599/26ef0566-c354-4fbf-bbca-bbf345e3c362)
+![Firestore](https://github.com/EulerCauchyEquation/MovieApp/assets/46746599/f3922d28-4448-45c6-acce-06a1e770a1a7)
+<br>
 
+# Firebase Storage 
+<p alight="left">
+  <img src="https://github.com/EulerCauchyEquation/MovieApp/assets/46746599/75fbccef-b624-43ab-b883-150fc0935398" width="45%" />
+</p>

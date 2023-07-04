@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="viewModel"
-            type="com.hwonchul.movie.presentation.account.profile.ProfileViewModel" />
+            name="user"
+            type="com.hwonchul.movie.domain.model.User" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -53,7 +53,7 @@
             android:layout_marginTop="@dimen/space_large_16dp"
             app:civ_border_color="@color/BLANK_COLOR"
             app:civ_border_width="2dp"
-            app:imageUrl="@{viewModel.uiData.user.userImage}"
+            app:imageUrl="@{user.userImage}"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
@@ -107,7 +107,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="14"
-                android:text="@{viewModel.uiData.user.nickname}" />
+                android:text="@{user.nickname}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.constraintlayout.widget.Guideline

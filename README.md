@@ -13,7 +13,8 @@ TMDB API 를 이용한 컨텐츠는 다양한 측면에서 실력을 향상시�
 </p>
 
 <p alight="left">
-  <img src="https://github.com/EulerCauchyEquation/MovieApp/assets/46746599/bbb6eebd-33ea-4de8-973b-f2e95ef42daa" width="24.5%" />
+  <img src="https://github.com/EulerCauchyEquation/new/assets/46746599/dcfe7483-209a-4634-ad64-246c8b215105" width="24.5%" />
+  <img src="https://github.com/EulerCauchyEquation/new/assets/46746599/bfb7a892-750e-48da-a809-1b73d873aaed" width="24.5%" />
   <img src="https://github.com/EulerCauchyEquation/MovieApp/assets/46746599/8af1279d-24c0-46b7-8c2a-949f091afc26" width="24.5%" />
   <img src="https://github.com/EulerCauchyEquation/MovieApp/assets/46746599/3a83c4ec-a48b-44f8-a18e-feceb27867af" width="24.5%" />
 </p>
@@ -25,7 +26,7 @@ TMDB API 를 이용한 컨텐츠는 다양한 측면에서 실력을 향상시�
 
 
 #
-![navi_graph](https://github.com/EulerCauchyEquation/MovieApp/assets/46746599/bd356a53-4cb1-4f54-8530-b09c6a4b02f9)
+![navi_graph](https://github.com/EulerCauchyEquation/new/assets/46746599/a8e9c928-8fed-4f41-8698-27c66d2dd538)
 
 # 환경
 * min sdk : 26

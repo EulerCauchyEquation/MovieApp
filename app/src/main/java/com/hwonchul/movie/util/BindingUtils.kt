@@ -14,9 +14,9 @@ import com.hwonchul.movie.domain.model.Movie
 import com.hwonchul.movie.domain.model.Video
 import com.hwonchul.movie.presentation.details.PosterThumbnailAdapter
 import com.hwonchul.movie.presentation.details.VideoAdapter
-import com.hwonchul.movie.presentation.listing.MovieAdapter
-import com.hwonchul.movie.presentation.listing.MovieAdapter.OnMovieDetailListener
 import com.hwonchul.movie.presentation.details.poster.PosterAdapter
+import com.hwonchul.movie.presentation.home.MovieAdapter
+import com.hwonchul.movie.presentation.home.MovieAdapter.OnMovieDetailListener
 import timber.log.Timber
 import java.time.LocalDate
 
@@ -49,15 +49,17 @@ object BindingUtils {
         (listView.adapter as MovieAdapter? ?: MovieAdapter().also { adapter ->
             // layout Manager
             listView.layoutManager = LinearLayoutManager(
-                listView.context, LinearLayoutManager.VERTICAL, false
+                listView.context, LinearLayoutManager.HORIZONTAL, false
             )
 
             // 구분선 세팅
-            val outSideSpace = 0
+            val outSideSpace = listView.context
+                .resources
+                .getDimensionPixelSize(R.dimen.divider_large_16dp)
             val divHeight = listView.context
                 .resources
                 .getDimensionPixelSize(R.dimen.divider_large_16dp)
-            listView.addItemDecoration(VerticalRecyclerViewDecoration(outSideSpace, divHeight))
+            listView.addItemDecoration(HorizontalRecyclerViewDecoration(outSideSpace, divHeight))
 
             // listener
             adapter.setOnMovieDetailListener(listener)

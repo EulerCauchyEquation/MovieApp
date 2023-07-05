@@ -99,13 +99,13 @@ class TmdbInteceptorTest : BehaviorSpec({
             FileReader.readStringFromFile("text_data/tmdb/videos/empty_result.json").trimIndent()
 
         private val successJsonStringWithPopularPath =
-            FileReader.readStringFromFile("text_data/tmdb/movieList/success.json").trimIndent()
+            FileReader.readStringFromFile("text_data/tmdb/movieList/nowPlaying/success.json").trimIndent()
 
         private val successJsonStringWithVideosPath =
             FileReader.readStringFromFile("text_data/tmdb/videos/success.json").trimIndent()
 
         private val expectedJsonStringWithPopularPath =
-            FileReader.readStringFromFile("text_data/tmdb/movieList/success_filtered.json")
+            FileReader.readStringFromFile("text_data/tmdb/movieList/nowPlaying/success_filtered.json")
                 .trimIndent()
 
         private val expectedJsonStringWithVideosPath =

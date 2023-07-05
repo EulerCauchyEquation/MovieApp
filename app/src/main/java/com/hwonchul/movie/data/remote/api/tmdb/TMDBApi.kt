@@ -4,12 +4,20 @@ import com.hwonchul.movie.data.remote.model.ImageResponse
 import com.hwonchul.movie.data.remote.model.MovieDetailDto
 import com.hwonchul.movie.data.remote.model.MovieDto
 import com.hwonchul.movie.data.remote.model.VideoDto
+import com.hwonchul.movie.domain.model.MovieListType
 import javax.inject.Inject
 
 class TMDBApi @Inject constructor(private val service: TMDBService) {
 
-    suspend fun getNowPlayingMovieList(): List<MovieDto> {
-        return service.getNowPlayingList()
+    suspend fun getMovieList(
+        type: MovieListType,
+        page: Int = TMDBService.INITIAL_PAGE_INDEX
+    ): List<MovieDto> {
+        val response = when (type) {
+            MovieListType.NowPlaying -> service.getNowPlayingList(page = page)
+            MovieListType.UpComing -> service.getUpComingList(page = page)
+        }
+        return response.results
     }
 
     suspend fun getMovie(movieId: Int): MovieDetailDto {

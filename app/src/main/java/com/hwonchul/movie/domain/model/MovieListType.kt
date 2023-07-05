@@ -1,5 +1,5 @@
 package com.hwonchul.movie.domain.model
 
 enum class MovieListType {
-    NowPlaying
+    NowPlaying, UpComing
 }

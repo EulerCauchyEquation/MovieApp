@@ -16,22 +16,23 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/layout_poster"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/colorPrimaryDark"
         app:cardCornerRadius="@dimen/space_median_8dp"
         app:cardElevation="8dp"
-        app:rippleColor="@color/BLACK_30percent">
+        app:rippleColor="@color/BLACK_30percent"
+        tools:background="@color/colorPrimary">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <!-- 영화 포스터 -->
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_poster"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_width="0dp"
+                android:layout_height="390dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 app:imageUrl="@{item.poster.url}"
@@ -40,7 +41,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:placeholder="@{@drawable/img_empty}"
-                tools:src="@drawable/ic_movie_sample" />
+                tools:src="@drawable/img_poster_sample" />
 
             <!-- 그라데이션 -->
             <androidx.appcompat.widget.AppCompatImageView

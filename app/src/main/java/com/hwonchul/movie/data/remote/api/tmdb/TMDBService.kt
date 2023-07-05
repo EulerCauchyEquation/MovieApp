@@ -15,8 +15,17 @@ interface TMDBService {
     suspend fun getNowPlayingList(
         @Query(QUERY_API_KEY) key: String = API_KEY,
         @Query(QUERY_LANGUAGE) language: String = LANGUAGE_KO,
+        @Query(QUERY_PAGE) page: Int = INITIAL_PAGE_INDEX,
         @Query(QUERY_REGION) region: String = REGION_KR,
-    ): List<MovieDto>
+    ): MovieListResponse
+
+    @GET(URI_GET_UPCOMING_LIST)
+    suspend fun getUpComingList(
+        @Query(QUERY_API_KEY) key: String = API_KEY,
+        @Query(QUERY_LANGUAGE) language: String = LANGUAGE_KO,
+        @Query(QUERY_PAGE) page: Int = INITIAL_PAGE_INDEX,
+        @Query(QUERY_REGION) region: String = REGION_KR,
+    ): MovieListResponse
 
     @GET(URI_GET_MOVIE)
     suspend fun getMovie(
@@ -42,6 +51,7 @@ interface TMDBService {
         const val URL = "https://api.themoviedb.org"
 
         private const val URI_GET_NOW_PLAYING_LIST = "/3/movie/now_playing"
+        private const val URI_GET_UPCOMING_LIST = "/3/movie/upcoming"
         private const val URI_GET_MOVIE = "/3/movie/{movie_id}"
         private const val URI_GET_VIDEOS = "/3/movie/{movie_id}/videos"
         private const val URI_GET_IMAGES = "/3/movie/{movie_id}/images"
@@ -51,9 +61,12 @@ interface TMDBService {
         private const val QUERY_LANGUAGE = "language"
         private const val QUERY_API_KEY = "api_key"
         private const val QUERY_REGION = "region"
+        private const val QUERY_PAGE = "page"
 
         private const val API_KEY = BuildConfig.TMDB_API_KEY
         private const val LANGUAGE_KO = "ko-KR"
         private const val REGION_KR = "KR"
+
+        const val INITIAL_PAGE_INDEX = 1
     }
 }

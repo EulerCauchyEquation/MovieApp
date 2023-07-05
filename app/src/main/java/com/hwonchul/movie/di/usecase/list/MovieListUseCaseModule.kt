@@ -1,5 +1,7 @@
 package com.hwonchul.movie.di.usecase.list
 
+import com.hwonchul.movie.domain.usecase.listing.GetMovieListAsPagedUseCase
+import com.hwonchul.movie.domain.usecase.listing.GetMovieListAsPagedUseCaseImpl
 import com.hwonchul.movie.domain.usecase.listing.GetMovieListUseCase
 import com.hwonchul.movie.domain.usecase.listing.GetMovieListUseCaseImpl
 import com.hwonchul.movie.domain.usecase.listing.RefreshMovieListUseCase
@@ -17,6 +19,10 @@ abstract class MovieListUseCaseModule {
     @Singleton
     @Binds
     abstract fun bindGetMovieListUseCase(useCase: GetMovieListUseCaseImpl): GetMovieListUseCase
+
+    @Singleton
+    @Binds
+    abstract fun bindGetMovieListAsPagedUseCase(useCase: GetMovieListAsPagedUseCaseImpl): GetMovieListAsPagedUseCase
 
     @Singleton
     @Binds

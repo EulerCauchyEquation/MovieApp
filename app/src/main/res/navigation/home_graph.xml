@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_graph"
+    app:startDestination="@id/home">
+
+    <fragment
+        android:id="@+id/home"
+        android:name="com.hwonchul.movie.presentation.home.HomeFragment"
+        tools:layout="@layout/fragment_home">
+
+        <action
+            android:id="@+id/navigate_to_account"
+            app:destination="@id/account_graph"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+        <action
+            android:id="@+id/navigate_to_list_more"
+            app:destination="@id/movie_list">
+
+            <argument
+                android:name="movie_list_type"
+                app:argType="com.hwonchul.movie.domain.model.MovieListType" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/movie_list"
+        android:name="com.hwonchul.movie.presentation.home.list.MovieListFragment"
+        tools:layout="@layout/fragment_movie_list">
+
+        <argument
+            android:name="movie_list_type"
+            app:argType="com.hwonchul.movie.domain.model.MovieListType" />
+    </fragment>
+
+    <include
+        android:id="@id/detail_graph"
+        app:graph="@navigation/detail_graph" />
+
+    <include
+        android:id="@id/account_graph"
+        app:graph="@navigation/account_graph" />
+
+    <action
+        android:id="@+id/navigate_to_detail_graph"
+        app:destination="@id/detail_graph">
+        <argument
+            android:name="movie"
+            app:argType="com.hwonchul.movie.domain.model.Movie" />
+    </action>
+</navigation>

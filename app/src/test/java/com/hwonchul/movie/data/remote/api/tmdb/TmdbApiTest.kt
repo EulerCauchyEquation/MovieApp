@@ -73,6 +73,24 @@ class TmdbApiTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
+    fun `getUpComingList 테스트`() = runTest {
+        val response = MockResponse()
+            .setResponseCode(200)
+            .addHeader("Content-Type", "application/json; charset=utf-8")
+            .setBody(successJsonStringWithUpComingPath)
+
+        server.enqueue(response)
+
+        val result = service.getUpComingList()
+        val expected: MutableList<MovieProjectionDto> = Gson().fromJson(
+            expectedJsonStringWithUpComingPath,
+            object : TypeToken<MutableList<MovieProjectionDto>>() {}.type
+        )
+        assertEquals(expected, result)
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
     fun `getMovie 테스트`() = runTest {
         val response = MockResponse()
             .setResponseCode(200)
@@ -128,7 +146,10 @@ class TmdbApiTest {
         const val testMovieId = 1
 
         private val successJsonStringWithPopularPath =
-            FileReader.readStringFromFile("text_data/tmdb/movieList/success.json").trimIndent()
+            FileReader.readStringFromFile("text_data/tmdb/movieList/nowPlaying/success.json").trimIndent()
+
+        private val successJsonStringWithUpComingPath =
+            FileReader.readStringFromFile("text_data/tmdb/movieList/upComing/success.json").trimIndent()
 
         private val successJsonStringWithMovieDetailPath =
             FileReader.readStringFromFile("text_data/tmdb/movie/success.json").trimIndent()
@@ -140,7 +161,11 @@ class TmdbApiTest {
             FileReader.readStringFromFile("text_data/tmdb/image/success.json").trimIndent()
 
         private val expectedJsonStringWithPopularPath =
-            FileReader.readStringFromFile("text_data/tmdb/movieList/success_filtered.json")
+            FileReader.readStringFromFile("text_data/tmdb/movieList/nowPlaying/success_filtered.json")
+                .trimIndent()
+
+        private val expectedJsonStringWithUpComingPath =
+            FileReader.readStringFromFile("text_data/tmdb/movieList/upComing/success_filtered.json")
                 .trimIndent()
 
         private val expectedJsonStringWithMovieDetailPath =

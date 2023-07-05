@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity(), ProfileFragment.GalleryImagePicker {
                     )
 
                 R.id.splash -> updateSystemBarColor(blueColor, whiteColor)
-                R.id.movie_list -> updateSystemBarColor(blue700Color, blue700Color)
+                R.id.home, R.id.movie_list -> updateSystemBarColor(blue700Color, blue700Color)
                 R.id.movie_detail -> updateSystemBarColor(
                     blue700Color,
                     whiteColor,

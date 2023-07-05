@@ -1,5 +1,6 @@
 package com.hwonchul.movie.domain.repository
 
+import androidx.paging.PagingData
 import com.hwonchul.movie.domain.model.Movie
 import com.hwonchul.movie.domain.model.MovieDetail
 import com.hwonchul.movie.domain.model.MovieListType
@@ -13,6 +14,9 @@ interface MovieRepository {
 
     // 영화 리스트 가져오기
     fun getAllMoviesByListType(listType: MovieListType): Flow<List<Movie>>
+
+    // 영화 리스트 가져오기
+    fun getAllMoviesByListTypeAsPaged(listType: MovieListType): Flow<PagingData<Movie>>
 
     // 영화 리스트를 최신 데이터로
     suspend fun refreshForMovieList(listType: MovieListType)

@@ -8,5 +8,10 @@ enum class MovieListTabItem(
     val type: MovieListType,
 ) {
     NOW_PLAYING(R.string.item_popular, MovieListType.NowPlaying),
-    UPCOMING(R.string.item_upcoming, MovieListType.UpComing),
+    UPCOMING(R.string.item_upcoming, MovieListType.UpComing);
+
+    companion object {
+
+        fun getTabItemByType(listType: MovieListType) = values().first { it.type == listType }
+    }
 }

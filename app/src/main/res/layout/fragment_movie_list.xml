@@ -5,15 +5,7 @@
 
     <data>
 
-        <variable
-            name="data"
-            type="java.util.List&lt;com.hwonchul.movie.domain.model.Movie&gt;" />
-
-        <variable
-            name="listener"
-            type="com.hwonchul.movie.presentation.home.list.MovieDetailAdapter.OnClickListener" />
     </data>
-
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
@@ -81,21 +73,32 @@
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipeLayout"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_movie"
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipeLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:gridListItem="@{data}"
-                app:onClick="@{listener}"
-                tools:itemCount="1"
-                tools:listitem="@layout/item_movie_detail" />
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_movie"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/item_movie_detail" />
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+            <include
+                android:id="@+id/layout_error"
+                layout="@layout/layout_data_fetch_error"
+                android:layout_width="match_parent"
+                android:layout_height="600dp"
+                android:visibility="gone" />
+        </LinearLayout>
 
         <ProgressBar
             android:id="@+id/progress"
@@ -106,6 +109,10 @@
             android:indeterminate="true"
             android:indeterminateTint="@color/colorAccent"
             android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:visibility="visible" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

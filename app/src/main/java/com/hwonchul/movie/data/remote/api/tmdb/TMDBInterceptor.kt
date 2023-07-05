@@ -1,7 +1,6 @@
 package com.hwonchul.movie.data.remote.api.tmdb
 
 import com.google.gson.JsonArray
-import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -37,7 +36,7 @@ class TMDBInterceptor : Interceptor {
             //TMDB API Get Videos 호출일 때
             matches(Regex(REGEX_GET_VIDEOS)) -> getBodyToVideoResponse(body).toString()
             // TMDB API Get Movie List 호출인 경우
-            matches(Regex(REGEX_GET_LIST)) -> getBodyToListResponse(body).toString()
+            //matches(Regex(REGEX_GET_LIST)) -> getBodyToListResponse(body).toString()
             // 그 외
             else -> body.string()
         }

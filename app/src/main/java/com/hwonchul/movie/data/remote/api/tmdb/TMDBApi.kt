@@ -9,11 +9,15 @@ import javax.inject.Inject
 
 class TMDBApi @Inject constructor(private val service: TMDBService) {
 
-    suspend fun getMovieList(listType: MovieListType): List<MovieDto> {
-        return when (listType) {
-            MovieListType.NowPlaying -> service.getNowPlayingList()
-            MovieListType.UpComing -> service.getUpComingList()
+    suspend fun getMovieList(
+        type: MovieListType,
+        page: Int = TMDBService.INITIAL_PAGE_INDEX
+    ): List<MovieDto> {
+        val response = when (type) {
+            MovieListType.NowPlaying -> service.getNowPlayingList(page = page)
+            MovieListType.UpComing -> service.getUpComingList(page = page)
         }
+        return response.results
     }
 
     suspend fun getMovie(movieId: Int): MovieDetailDto {

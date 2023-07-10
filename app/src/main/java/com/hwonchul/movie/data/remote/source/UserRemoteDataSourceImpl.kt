@@ -8,19 +8,19 @@ import com.google.firebase.storage.StorageException
 import com.google.firebase.storage.ktx.storage
 import com.hwonchul.movie.data.remote.model.UserDto
 import com.hwonchul.movie.exception.UserNotFoundException
-import kotlinx.coroutines.CancellableContinuation
-import kotlinx.coroutines.suspendCancellableCoroutine
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 class UserRemoteDataSourceImpl @Inject constructor() : UserRemoteDataSource {
     private val db = FirebaseFirestore.getInstance()
     private val storageRef = Firebase.storage.reference
 
     override suspend fun getUserByUid(uid: String): UserDto =
-        suspendCancellableCoroutine { continuation ->
+        suspendCoroutine { continuation ->
             // CancellableContinuation은 코루틴이 취소될 수 있는 상태
             // suspendCancellableCoroutine 은 코루틴이 일시 중단되고 나중에 resume 할 수 있도록 도와주는 함수로,
             // 일반 콜백 기반의 비동기 API 를 코루틴 스타일로 변환하는데 유용
@@ -46,7 +46,7 @@ class UserRemoteDataSourceImpl @Inject constructor() : UserRemoteDataSource {
         }
 
     override suspend fun getUserByPhoneNumber(phoneNumber: String): UserDto =
-        suspendCancellableCoroutine { continuation ->
+        suspendCoroutine { continuation ->
             db.collection(COLLECTION_USER)
                 .whereEqualTo(UserDto.FIELD_PHONE_NUMBER, phoneNumber)
                 .get()
@@ -71,7 +71,7 @@ class UserRemoteDataSourceImpl @Inject constructor() : UserRemoteDataSource {
 
 
     override suspend fun getUserByNickname(nickname: String): UserDto =
-        suspendCancellableCoroutine { continuation ->
+        suspendCoroutine { continuation ->
             db.collection(COLLECTION_USER)
                 .whereEqualTo(UserDto.FIELD_NICK_NAME, nickname)
                 .get()
@@ -103,7 +103,7 @@ class UserRemoteDataSourceImpl @Inject constructor() : UserRemoteDataSource {
     )
 
     override suspend fun insertOrUpdateUser(user: UserDto): UserDto =
-        suspendCancellableCoroutine { continuation ->
+        suspendCoroutine { continuation ->
             if (user.userImage != null) {
                 // 사용자 프로필 사진이 있다면
                 // 사진을 먼저 업로드
@@ -139,7 +139,7 @@ class UserRemoteDataSourceImpl @Inject constructor() : UserRemoteDataSource {
 
     private fun updateUserInDB(
         user: UserDto,
-        continuation: CancellableContinuation<UserDto>
+        continuation: Continuation<UserDto>
     ) {
         val document = if (user.isTemp()) {
             db.collection(COLLECTION_USER).document()
@@ -158,7 +158,7 @@ class UserRemoteDataSourceImpl @Inject constructor() : UserRemoteDataSource {
             }
     }
 
-    override suspend fun deleteUser(user: UserDto) = suspendCancellableCoroutine { continuation ->
+    override suspend fun deleteUser(user: UserDto) = suspendCoroutine { continuation ->
         // 이미지 삭제 완료 후 사용자 정보 삭제
         storageRef.child("user/${user.uid}/user_profile.jpg")
             .delete()
@@ -174,7 +174,7 @@ class UserRemoteDataSourceImpl @Inject constructor() : UserRemoteDataSource {
             }
     }
 
-    private fun deleteUserInDB(user: UserDto, continuation: CancellableContinuation<Unit>) {
+    private fun deleteUserInDB(user: UserDto, continuation: Continuation<Unit>) {
         db.collection(COLLECTION_USER)
             .document(user.uid)
             .delete()

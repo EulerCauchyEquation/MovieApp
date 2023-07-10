@@ -11,12 +11,12 @@ import com.hwonchul.movie.domain.model.PhoneAuthResult
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.suspendCancellableCoroutine
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 class FirebaseAuth @Inject constructor() {
     private val auth = Firebase.auth
@@ -80,7 +80,7 @@ class FirebaseAuth @Inject constructor() {
         }
 
     suspend fun signInWithPhoneAuth(credential: PhoneAuthCredential) =
-        suspendCancellableCoroutine { continuation ->
+        suspendCoroutine { continuation ->
             auth.signInWithCredential(credential)  /* 로그인 처리 */
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -102,7 +102,7 @@ class FirebaseAuth @Inject constructor() {
     }
 
     suspend fun deletePhoneAuthAccount() =
-        suspendCancellableCoroutine { continuation ->
+        suspendCoroutine { continuation ->
             auth.currentUser?.let {
                 it.delete().addOnCompleteListener { task ->
                     if (task.isSuccessful) {

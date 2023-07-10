@@ -4,19 +4,13 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowInsetsController
-import android.widget.FrameLayout
-import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.snackbar.Snackbar.SnackbarLayout
 import com.hwonchul.movie.R
 import com.hwonchul.movie.databinding.ActivityMainBinding
 import com.hwonchul.movie.presentation.account.profile.ProfileFragment
@@ -146,24 +140,6 @@ class MainActivity : AppCompatActivity(), ProfileFragment.GalleryImagePicker {
             }
             window.decorView.systemUiVisibility = uiVisibility
         }
-    }
-
-    fun showSnackbar(message: String) {
-        val snackbar = Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG)
-        // 시작위치 Top 으로 변경
-        val view = snackbar.view
-        val params = view.layoutParams as FrameLayout.LayoutParams
-        params.gravity = Gravity.TOP
-        view.layoutParams = params
-
-        // custom layout 으로 변경
-        val layout = snackbar.view as SnackbarLayout
-        val snackView = LayoutInflater.from(this).inflate(R.layout.snackbar, null)
-        val tvMessage = snackView.findViewById<TextView>(R.id.tv_message)
-        tvMessage.text = message
-        layout.addView(snackView)
-        snackbar.setBackgroundTint(ContextCompat.getColor(application, R.color.WHITE))
-        snackbar.show()
     }
 
     private fun setOnActivityResult() {

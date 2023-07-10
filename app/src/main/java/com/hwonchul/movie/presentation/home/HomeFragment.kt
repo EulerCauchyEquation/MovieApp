@@ -2,20 +2,16 @@ package com.hwonchul.movie.presentation.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.widget.Toolbar.OnMenuItemClickListener
-import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
-import androidx.navigation.NavController
 import androidx.navigation.NavDirections
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.hwonchul.movie.R
+import com.hwonchul.movie.base.view.BaseFragment
 import com.hwonchul.movie.databinding.FragmentHomeBinding
 import com.hwonchul.movie.domain.model.Movie
 import com.hwonchul.movie.domain.model.MovieListType
@@ -25,23 +21,13 @@ import com.hwonchul.movie.presentation.home.MovieAdapter.OnMovieDetailListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(), OnMenuItemClickListener {
-    private var _binding: FragmentHomeBinding? = null
-    private lateinit var navController: NavController
+class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
+    OnMenuItemClickListener {
     private val viewModel: HomeViewModel by hiltNavGraphViewModels(R.id.home_graph)
-
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     @SuppressLint("ResourceType")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        navController = NavHostFragment.findNavController(this)
+        super.onViewCreated(view, savedInstanceState)
 
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.home))
         binding.tbHome.setupWithNavController(navController, appBarConfiguration)
@@ -57,9 +43,13 @@ class HomeFragment : Fragment(), OnMenuItemClickListener {
             }
         }
         binding.lifecycleOwner = viewLifecycleOwner
+    }
 
+    override fun setObserve() {
         observeState()
+    }
 
+    override fun setupView() {
         setOnMorePopularListClickListener()
         setOnMoreUpcomingListClickListener()
     }
@@ -85,7 +75,7 @@ class HomeFragment : Fragment(), OnMenuItemClickListener {
                 is HomeState.Idle -> {}
                 is HomeState.Error -> {
                     val error = getString(state.message)
-                    showSnackbarMessage(error)
+                    showSnackBarMessage(error)
                 }
 
                 is HomeState.Loading -> {
@@ -113,14 +103,5 @@ class HomeFragment : Fragment(), OnMenuItemClickListener {
     private fun navigateToMovieDetail(movie: Movie) {
         val directions = HomeFragmentDirections.navigateToDetailGraph(movie) as NavDirections
         navController.navigate(directions)
-    }
-
-    private fun showSnackbarMessage(message: String) {
-        (activity as MainActivity).showSnackbar(message)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

@@ -5,36 +5,27 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.snackbar.Snackbar
 import com.hwonchul.movie.R
+import com.hwonchul.movie.base.view.BaseFragment
 import com.hwonchul.movie.databinding.FragmentProfileBinding
 import com.hwonchul.movie.presentation.account.profile.ProfileContract.ProfileState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProfileFragment : Fragment(R.layout.fragment_profile) {
-    private var _binding: FragmentProfileBinding? = null
-    private lateinit var navController: NavController
+class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_profile) {
     private val viewModel: ProfileViewModel by viewModels()
     private val args: ProfileFragmentArgs by navArgs()
+
     private lateinit var progressDialog: AlertDialog
-
     private lateinit var galleryImagePicker: GalleryImagePicker
-
-    private val binding get() = _binding!!
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -44,31 +35,26 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentProfileBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        navController = findNavController()
+        super.onViewCreated(view, savedInstanceState)
 
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
         binding.user = args.user
         binding.lifecycleOwner = viewLifecycleOwner
+    }
 
+    override fun setObserve() {
+        observeNickNameFormState()
+        observeState()
+    }
+
+    override fun setupView() {
         setProgressDialog()
 
         setEditNicknameAddTextChangedListener()
         setCompleteClickListener()
         setUserImageClickListener()
-
-        observeNickNameFormState()
-        observeState()
     }
 
     private fun setCompleteClickListener() {
@@ -175,15 +161,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         val inputMethodManager =
             requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(binding.editNickname.windowToken, 0)
-    }
-
-    private fun showSnackBarMessage(message: String) {
-        Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG).show()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     fun updateProfileImage(imageUri: Uri?) {

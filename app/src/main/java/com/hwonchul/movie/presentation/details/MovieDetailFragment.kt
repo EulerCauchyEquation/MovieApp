@@ -3,38 +3,24 @@ package com.hwonchul.movie.presentation.details
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.hwonchul.movie.R
+import com.hwonchul.movie.base.view.BaseFragment
 import com.hwonchul.movie.databinding.FragmentMovieDetailBinding
 import com.hwonchul.movie.presentation.MainActivity
 import com.hwonchul.movie.presentation.details.MovieDetailContract.MovieDetailState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MovieDetailFragment : Fragment() {
-    private var _binding: FragmentMovieDetailBinding? = null
-    private lateinit var navController: NavController
+class MovieDetailFragment :
+    BaseFragment<FragmentMovieDetailBinding>(R.layout.fragment_movie_detail) {
     private val viewModel: MovieDetailViewModel by hiltNavGraphViewModels(R.id.detail_graph)
 
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        navController = NavHostFragment.findNavController(this)
+        super.onViewCreated(view, savedInstanceState)
 
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.tbMovieDetail.setupWithNavController(navController, appBarConfiguration)
@@ -55,7 +41,9 @@ class MovieDetailFragment : Fragment() {
         }
         // LiveData Lifecycleower 명시
         binding.lifecycleOwner = viewLifecycleOwner
+    }
 
+    override fun setObserve() {
         observeState()
     }
 
@@ -103,14 +91,5 @@ class MovieDetailFragment : Fragment() {
         binding.layoutLoading.visibility = View.VISIBLE
         binding.appBarLayout.visibility = View.GONE
         binding.layoutMain.visibility = View.GONE
-    }
-
-    private fun showSnackBarMessage(message: String) {
-        (activity as MainActivity).showSnackbar(message)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

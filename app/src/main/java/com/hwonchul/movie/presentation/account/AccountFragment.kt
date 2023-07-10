@@ -1,58 +1,44 @@
 package com.hwonchul.movie.presentation.account
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
-import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.snackbar.Snackbar
 import com.hwonchul.movie.R
+import com.hwonchul.movie.base.view.BaseFragment
 import com.hwonchul.movie.databinding.DialogConfirmBinding
 import com.hwonchul.movie.databinding.FragmentAccountBinding
 import com.hwonchul.movie.presentation.account.AccountContract.AccountState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AccountFragment : Fragment(R.layout.fragment_account) {
-    private var _binding: FragmentAccountBinding? = null
-    private lateinit var navController: NavController
+class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_account) {
     private val viewModel: AccountViewModel by hiltNavGraphViewModels(R.id.account_graph)
     private lateinit var progressDialog: AlertDialog
     private lateinit var confirmDialog: AlertDialog
 
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentAccountBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        navController = findNavController()
+        super.onViewCreated(view, savedInstanceState)
 
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+    }
 
+    override fun setObserve() {
+        observeUiState()
+    }
+
+    override fun setupView() {
         setProgressDialog()
         setWithdrawalConfirmDialog()
 
         setLogoutClickListener()
         setUserWithdrawalClickListener()
         setProfileEditClickListener()
-
-        observeUiState()
     }
 
     private fun setProgressDialog() {
@@ -121,14 +107,5 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
                 is AccountState.Error -> showSnackBarMessage(getString(uiState.message))
             }
         }
-    }
-
-    private fun showSnackBarMessage(message: String) {
-        Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG).show()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

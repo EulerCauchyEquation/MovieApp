@@ -1,23 +1,18 @@
 package com.hwonchul.movie.presentation.home.list
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.hwonchul.movie.R
+import com.hwonchul.movie.base.view.BaseFragment
 import com.hwonchul.movie.databinding.FragmentMovieListBinding
 import com.hwonchul.movie.domain.model.Movie
 import com.hwonchul.movie.domain.model.MovieListType
@@ -27,36 +22,27 @@ import com.hwonchul.movie.util.GridRecyclerViewDecoration
 import com.hwonchul.movie.util.NetworkStatusHelper
 import kotlinx.coroutines.launch
 
-class MovieListFragment : Fragment() {
-    private var _binding: FragmentMovieListBinding? = null
-    private lateinit var navController: NavController
+class MovieListFragment : BaseFragment<FragmentMovieListBinding>(R.layout.fragment_movie_list) {
     private val viewModel: HomeViewModel by hiltNavGraphViewModels(R.id.home_graph)
     private val args: MovieListFragmentArgs by navArgs()
 
     private lateinit var adapter: MovieDetailAdapter
-    private lateinit var popularAdapter: MovieDetailAdapter
-    private lateinit var upcomingAdapter: MovieDetailAdapter
     private lateinit var currentTab: MovieListTabItem
 
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentMovieListBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        navController = NavHostFragment.findNavController(this)
+        super.onViewCreated(view, savedInstanceState)
 
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.tbList.setupWithNavController(navController, appBarConfiguration)
+    }
 
+    override fun setObserve() {
         observeUIData()
         observeNetworkStatusHelper()
         observeState()
+    }
 
+    override fun setupView() {
         setMovieDetailAdapter()
         setTabLayout()
         setOnRefreshListener()
@@ -95,7 +81,7 @@ class MovieListFragment : Fragment() {
                 is HomeContract.HomeState.Idle -> {}
                 is HomeContract.HomeState.Error -> {
                     val error = getString(state.message)
-                    showSnackbar(error)
+                    showSnackBarMessage(error)
                 }
 
                 is HomeContract.HomeState.Loading -> {
@@ -146,7 +132,7 @@ class MovieListFragment : Fragment() {
 
             // 다음 Page 가져오기 실패 시 처리
             if (loadStates.append is LoadState.Error) {
-                showSnackbar(getString(R.string.all_response_failed))
+                showSnackBarMessage(getString(R.string.all_response_failed))
             }
         }
 
@@ -201,14 +187,5 @@ class MovieListFragment : Fragment() {
         lifecycleScope.launch {
             adapter.submitData(items)
         }
-    }
-
-    private fun showSnackbar(message: String) {
-        Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG).show()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

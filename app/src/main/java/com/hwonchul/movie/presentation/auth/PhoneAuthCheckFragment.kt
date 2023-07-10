@@ -4,59 +4,46 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
-import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.snackbar.Snackbar
 import com.hwonchul.movie.R
+import com.hwonchul.movie.base.view.BaseFragment
 import com.hwonchul.movie.databinding.FragmentPhoneAuthCheckBinding
 import com.hwonchul.movie.presentation.login.LoginContract.LoginState
 import com.hwonchul.movie.presentation.login.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PhoneAuthCheckFragment : Fragment(R.layout.fragment_phone_auth_check) {
-    private var _binding: FragmentPhoneAuthCheckBinding? = null
-    private lateinit var navController: NavController
+class PhoneAuthCheckFragment :
+    BaseFragment<FragmentPhoneAuthCheckBinding>(R.layout.fragment_phone_auth_check) {
     private val viewModel: LoginViewModel by hiltNavGraphViewModels(R.id.login_graph)
     private lateinit var progressDialog: AlertDialog
 
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentPhoneAuthCheckBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        navController = findNavController()
+        super.onViewCreated(view, savedInstanceState)
 
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+    }
 
+    override fun setObserve() {
+        observeState()
+        observeSmsCodeFormState()
+    }
+
+    override fun setupView() {
         setProgressDialog()
 
         setRequestSmsCodeAgainClickListener()
         setSmsCodeClearClickListener()
         setEditSmsCodeAddTextChangedListener()
         setVerifyClickListener()
-
-        observeState()
-        observeSmsCodeFormState()
     }
 
     private fun setProgressDialog() {
@@ -154,14 +141,4 @@ class PhoneAuthCheckFragment : Fragment(R.layout.fragment_phone_auth_check) {
             requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(binding.editSmsCode.windowToken, 0)
     }
-
-    private fun showSnackBarMessage(message: String) {
-        Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG).show()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }
-

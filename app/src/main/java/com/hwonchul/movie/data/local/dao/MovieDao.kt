@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MovieDao : BaseDao<MovieEntity> {
+
     @Query("SELECT * FROM ${MovieEntity.TABLE_NAME} WHERE type =:listType ORDER BY popularity DESC")
     fun findAllMovieOrderByPopularity(listType: MovieListType): Flow<List<MovieEntity>>
 
@@ -33,4 +34,7 @@ interface MovieDao : BaseDao<MovieEntity> {
             }
         }
     }
+
+    @Query("DELETE FROM ${MovieEntity.TABLE_NAME}")
+    suspend fun deleteAll()
 }

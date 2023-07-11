@@ -16,6 +16,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieViewHolder>() {
     }
 
     private lateinit var listener: OnMovieDetailListener
+    private var limit = Integer.MAX_VALUE
 
     fun setOnMovieDetailListener(listener: OnMovieDetailListener) {
         this.listener = listener
@@ -25,6 +26,10 @@ class MovieAdapter : RecyclerView.Adapter<MovieViewHolder>() {
         items.clear()
         items.addAll(newItems)
         notifyDataSetChanged()
+    }
+
+    fun setLimit(limit: Int) {
+        this.limit = limit
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -40,7 +45,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return items.size
+        return Math.min(items.size, limit)
     }
 
     inner class MovieViewHolder(

@@ -63,6 +63,9 @@ object BindingUtils {
 
             // listener
             adapter.setOnMovieDetailListener(listener)
+
+            // limit
+            adapter.setLimit(10)
             listView.adapter = adapter
         }).apply { items?.let { setItems(it) } }
     }

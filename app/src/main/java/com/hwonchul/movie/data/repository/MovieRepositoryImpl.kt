@@ -46,6 +46,7 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun refreshForMovieList(listType: MovieListType) {
+        movieDao.deleteAll()
         val entities = api.getMovieList(listType).map { it.toEntity(listType) }
         movieDao.upsert(entities)
     }

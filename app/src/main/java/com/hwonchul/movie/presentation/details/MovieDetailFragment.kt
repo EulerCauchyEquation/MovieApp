@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -42,6 +43,12 @@ class MovieDetailFragment :
         // LiveData Lifecycleower 명시
         binding.lifecycleOwner = viewLifecycleOwner
     }
+
+    override fun getSystemBar() = SystemBar(
+        ContextCompat.getColor(requireActivity(), R.color.colorPrimary),
+        ContextCompat.getColor(requireActivity(), android.R.color.white),
+        isLightNavigationBar = true
+    )
 
     override fun setObserve() {
         observeState()

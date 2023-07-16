@@ -1,6 +1,7 @@
 package com.hwonchul.movie.presentation.splash
 
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.hwonchul.movie.R
@@ -14,6 +15,12 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_splash) {
     private val viewModel: SplashViewModel by viewModels()
+    override fun getSystemBar() = SystemBar(
+        ContextCompat.getColor(requireActivity(), R.color.blue),
+        ContextCompat.getColor(requireActivity(), android.R.color.white),
+        isLightStatusBar = true,
+        isLightNavigationBar = true,
+    )
 
     override fun setObserve() {
         observeState()

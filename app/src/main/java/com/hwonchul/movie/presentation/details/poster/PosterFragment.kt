@@ -2,6 +2,7 @@ package com.hwonchul.movie.presentation.details.poster
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
@@ -30,6 +31,11 @@ class PosterFragment : BaseFragment<FragmentPosterBinding>(R.layout.fragment_pos
         binding.currentPos = args.posterCurrentPos
         binding.lifecycleOwner = viewLifecycleOwner
     }
+
+    override fun getSystemBar() = SystemBar(
+        ContextCompat.getColor(requireActivity(), android.R.color.black),
+        ContextCompat.getColor(requireActivity(), android.R.color.black),
+    )
 
     override fun setObserve() {
         viewModel.uiData.observe(viewLifecycleOwner) { data ->

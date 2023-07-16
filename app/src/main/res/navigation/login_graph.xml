@@ -19,16 +19,6 @@
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/splash"
             app:popUpToInclusive="true" />
-
-        <action
-            android:id="@+id/navigate_to_main"
-            app:destination="@id/home_graph"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/splash"
-            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -43,16 +33,6 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
-
-        <action
-            android:id="@+id/navigate_to_main"
-            app:destination="@id/home_graph"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/login"
-            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -78,16 +58,6 @@
         tools:layout="@layout/fragment_phone_auth_check">
 
         <action
-            android:id="@+id/navigate_to_main"
-            app:destination="@id/home_graph"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/login"
-            app:popUpToInclusive="true" />
-
-        <action
             android:id="@+id/navigate_to_nick"
             app:destination="@id/nick"
             app:enterAnim="@anim/slide_in_right"
@@ -101,20 +71,15 @@
     <fragment
         android:id="@+id/nick"
         android:name="com.hwonchul.movie.presentation.login.signUp.InputNickFragment"
-        tools:layout="@layout/fragment_input_nick">
-
-        <action
-            android:id="@+id/navigate_to_main"
-            app:destination="@id/home_graph"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/login"
-            app:popUpToInclusive="true" />
-    </fragment>
+        tools:layout="@layout/fragment_input_nick" />
 
     <include
         android:id="@id/home_graph"
         app:graph="@navigation/home_graph" />
+
+    <action
+        android:id="@+id/navigate_to_main"
+        app:destination="@id/home_graph"
+        app:popUpTo="@id/login_graph"
+        app:popUpToInclusive="true" />
 </navigation>

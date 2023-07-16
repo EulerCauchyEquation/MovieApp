@@ -2,6 +2,7 @@ package com.hwonchul.movie.presentation.home.list
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -35,6 +36,11 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(R.layout.fragme
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.tbList.setupWithNavController(navController, appBarConfiguration)
     }
+
+    override fun getSystemBar() = SystemBar(
+        ContextCompat.getColor(requireActivity(), R.color.colorPrimary),
+        ContextCompat.getColor(requireActivity(), R.color.colorPrimary),
+    )
 
     override fun setObserve() {
         observeUIData()

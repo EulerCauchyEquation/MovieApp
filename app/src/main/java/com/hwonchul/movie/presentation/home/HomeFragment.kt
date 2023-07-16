@@ -1,11 +1,10 @@
 package com.hwonchul.movie.presentation.home
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.*
 import androidx.appcompat.widget.Toolbar.OnMenuItemClickListener
+import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.ui.AppBarConfiguration
@@ -15,7 +14,6 @@ import com.hwonchul.movie.base.view.BaseFragment
 import com.hwonchul.movie.databinding.FragmentHomeBinding
 import com.hwonchul.movie.domain.model.Movie
 import com.hwonchul.movie.domain.model.MovieListType
-import com.hwonchul.movie.presentation.MainActivity
 import com.hwonchul.movie.presentation.home.HomeContract.HomeState
 import com.hwonchul.movie.presentation.home.MovieAdapter.OnMovieDetailListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,7 +23,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
     OnMenuItemClickListener {
     private val viewModel: HomeViewModel by hiltNavGraphViewModels(R.id.home_graph)
 
-    @SuppressLint("ResourceType")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -44,6 +41,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
         }
         binding.lifecycleOwner = viewLifecycleOwner
     }
+
+    override fun getSystemBar() = SystemBar(
+        ContextCompat.getColor(requireActivity(), R.color.colorPrimary),
+        ContextCompat.getColor(requireActivity(), R.color.colorPrimary),
+    )
 
     override fun setObserve() {
         observeState()

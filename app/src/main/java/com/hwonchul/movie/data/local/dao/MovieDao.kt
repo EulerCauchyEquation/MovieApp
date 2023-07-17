@@ -5,14 +5,17 @@ import androidx.room.Dao
 import androidx.room.Query
 import com.hwonchul.movie.base.data.dao.BaseDao
 import com.hwonchul.movie.data.local.model.MovieEntity
-import com.hwonchul.movie.domain.model.MovieListType
 import kotlinx.coroutines.flow.Flow
+import java.time.LocalDate
 
 @Dao
 interface MovieDao : BaseDao<MovieEntity> {
 
-    @Query("SELECT * FROM ${MovieEntity.TABLE_NAME} WHERE type =:listType ORDER BY popularity DESC")
-    fun findAllMovieOrderByPopularity(listType: MovieListType): Flow<List<MovieEntity>>
+    @Query("SELECT * FROM ${MovieEntity.TABLE_NAME} WHERE release_date > :today ORDER BY popularity DESC")
+    fun findAllUnreleasedMoviesOrderByPopularity(today: LocalDate = LocalDate.now()): Flow<List<MovieEntity>>
+
+    @Query("SELECT * FROM ${MovieEntity.TABLE_NAME} WHERE release_date <= :today ORDER BY popularity DESC")
+    fun findAllReleasedMoviesOrderByPopularity(today: LocalDate = LocalDate.now()): Flow<List<MovieEntity>>
 
     @Query("SELECT * FROM ${MovieEntity.TABLE_NAME} WHERE id =:id")
     fun findMovieById(id: Int): Flow<List<MovieEntity>>

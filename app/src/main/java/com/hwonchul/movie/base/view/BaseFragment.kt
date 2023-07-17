@@ -65,7 +65,7 @@ abstract class BaseFragment<B : ViewBinding>(@LayoutRes private val layoutId: In
 
     protected open fun setupView() {}
 
-    protected fun setSystemBar(
+    private fun setSystemBar(
         statusBarColor: Int,
         navigationBarColor: Int,
         isLightStatusBar: Boolean = false,

@@ -35,7 +35,7 @@ fun MovieDetailDto.toEntity(): MovieDetailEntity {
         id = id,
         title = title,
         originalTitle = originalTitle,
-        releaseDate = releaseDate?.let { dateFormat(it) },
+        releaseDate = releaseDate?.takeIf { it.isNotBlank() }?.let { dateFormat(it) },
         voteAverage = voteAverage,
         popularity = popularity,
         mainPosterPath = posterPath,

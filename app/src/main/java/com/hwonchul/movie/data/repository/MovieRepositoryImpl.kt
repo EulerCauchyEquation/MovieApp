@@ -9,6 +9,7 @@ import com.hwonchul.movie.data.local.dao.MovieDetailDao
 import com.hwonchul.movie.data.local.model.toDomain
 import com.hwonchul.movie.data.local.model.toDomains
 import com.hwonchul.movie.data.paging.MovieListPagingSource
+import com.hwonchul.movie.data.paging.MovieSearchPagingSource
 import com.hwonchul.movie.data.remote.api.tmdb.TMDBApi
 import com.hwonchul.movie.data.remote.api.tmdb.TMDBService
 import com.hwonchul.movie.data.remote.model.toEntity
@@ -32,7 +33,13 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override fun getAllMoviesByListType(listType: MovieListType): Flow<List<Movie>> {
-        return movieDao.findAllMovieOrderByPopularity(listType).map { it.toDomains() }
+        return when (listType) {
+            MovieListType.NowPlaying ->
+                movieDao.findAllReleasedMoviesOrderByPopularity().map { it.toDomains() }
+
+            MovieListType.UpComing ->
+                movieDao.findAllUnreleasedMoviesOrderByPopularity().map { it.toDomains() }
+        }
     }
 
     override fun getAllMoviesByListTypeAsPaged(listType: MovieListType): Flow<PagingData<Movie>> {
@@ -47,13 +54,23 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun refreshForMovieList(listType: MovieListType) {
         movieDao.deleteAll()
-        val entities = api.getMovieList(listType).map { it.toEntity(listType) }
+        val entities = api.getMovieList(listType).map { it.toEntity() }
         movieDao.upsert(entities)
     }
 
     override suspend fun refreshForMovie(movieId: Int) {
         val entity = api.getMovie(movieId).toEntity()
         movieDetailDao.upsert(entity)
+    }
+
+    override fun searchMovieByKeyword(keyword: String): Flow<PagingData<Movie>> {
+        val flow = Pager(
+            config = PagingConfig(pageSize = PAGE_SIZE)
+        ) { MovieSearchPagingSource(service, keyword) }.flow
+
+        return flow.map { pagingData ->
+            pagingData.map { entity -> entity.toDomain() }
+        }
     }
 
     companion object {

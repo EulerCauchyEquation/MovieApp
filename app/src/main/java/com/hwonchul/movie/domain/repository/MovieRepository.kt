@@ -23,4 +23,6 @@ interface MovieRepository {
 
     // 영화 정보를 최신 데이터로
     suspend fun refreshForMovie(movieId: Int)
+
+     fun searchMovieByKeyword(keyword : String) : Flow<PagingData<Movie>>
 }

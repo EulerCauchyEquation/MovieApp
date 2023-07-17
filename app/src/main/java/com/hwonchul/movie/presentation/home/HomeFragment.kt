@@ -58,9 +58,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.tb_profile -> {
-                navController.navigate(HomeFragmentDirections.navigateToAccount())
-            }
+            R.id.item_profile -> navController.navigate(HomeFragmentDirections.navigateToAccount())
+            R.id.item_search -> navController.navigate(HomeFragmentDirections.navigateToSearch())
         }
         return false
     }

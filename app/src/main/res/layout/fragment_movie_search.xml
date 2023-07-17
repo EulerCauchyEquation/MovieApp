@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:theme="@style/HomeTheme"
+        tools:context=".presentation.search.MovieSearchFragment">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stateListAnimator="@null">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/tb_search"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:theme="@style/HomeTheme.Toolbar">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/edit_search"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="@dimen/space_large_16dp"
+                        android:background="@drawable/bg_rect_dark_blue_rounded_4dp"
+                        android:foreground="@drawable/ripple_rectangle_radius_4dp"
+                        android:hint="영화 제목을 검색"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:focusableInTouchMode="true"
+                        android:paddingStart="@dimen/space_s_large_12dp"
+                        android:paddingEnd="44dp"
+                        android:textColor="@android:color/white"
+                        android:textColorHint="@android:color/darker_gray"
+                        android:textSize="@dimen/text_size_headline4_16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/btn_edit_clear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/space_s_large_12dp"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_cancel"
+                        android:visibility="invisible"
+                        app:layout_constraintBottom_toBottomOf="@id/edit_search"
+                        app:layout_constraintEnd_toEndOf="@id/edit_search"
+                        app:layout_constraintTop_toTopOf="@id/edit_search"
+                        tools:visibility="visible" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.appbar.MaterialToolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_movie"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+
+        <include
+            android:id="@+id/layout_empty"
+            layout="@layout/layout_data_empty"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:visibility="gone"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+
+        <include
+            android:id="@+id/layout_error"
+            layout="@layout/layout_data_fetch_error"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:visibility="gone"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

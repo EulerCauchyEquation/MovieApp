@@ -31,4 +31,11 @@ class TMDBApi @Inject constructor(private val service: TMDBService) {
     suspend fun getImageList(movieId: Int): ImageResponse {
         return service.getImageList(movieId)
     }
+
+    suspend fun searchMovieByKeyword(
+        keyword: String,
+        page: Int = TMDBService.INITIAL_PAGE_INDEX
+    ): List<MovieDto> {
+        return service.searchMoviesByKeyword(query = keyword, page = page).results
+    }
 }

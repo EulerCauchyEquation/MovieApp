@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/search_graph"
+    app:startDestination="@id/movie_search">
+
+    <fragment
+        android:id="@+id/movie_search"
+        android:name="com.hwonchul.movie.presentation.search.MovieSearchFragment"
+        tools:layout="@layout/fragment_movie_search" >
+
+        <action
+            android:id="@+id/navigate_to_detail"
+            app:restoreState="true"
+            app:popUpToSaveState="true"
+            app:launchSingleTop="true"
+            app:destination="@id/detail_graph">
+
+            <argument
+                android:name="movie"
+                app:argType="com.hwonchul.movie.domain.model.Movie" />
+        </action>
+    </fragment>
+
+    <include
+        android:id="@id/detail_graph"
+        app:graph="@navigation/detail_graph" />
+</navigation>

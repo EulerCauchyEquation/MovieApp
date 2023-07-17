@@ -1,12 +1,12 @@
 package com.hwonchul.movie.presentation.details
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.hwonchul.movie.R
-import com.hwonchul.movie.databinding.ItemEmptyListBinding
 import com.hwonchul.movie.databinding.ItemPosterThumbnailBinding
+import com.hwonchul.movie.databinding.LayoutDataEmptyBinding
 import com.hwonchul.movie.domain.model.Image
 
 /**
@@ -25,7 +25,7 @@ class PosterThumbnailAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         when (viewType) {
             VIEW_TYPE_EMPTY -> {
-                val binding = ItemEmptyListBinding.inflate(
+                val binding = LayoutDataEmptyBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 )
                 return EmptyViewHolder(binding)
@@ -85,15 +85,12 @@ class PosterThumbnailAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     inner class EmptyViewHolder(
-        private val binding: ItemEmptyListBinding
+        private val binding: LayoutDataEmptyBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind() {
-            binding.tvEmptyList.setText(R.string.all_empty_photos)
-            val whiteColor = ContextCompat.getColor(
-                binding.root.context, R.color.WHITE
-            )
-            binding.tvEmptyList.setTextColor(whiteColor)
+            binding.tvEmpty.setText(R.string.all_empty_photos)
+            binding.imageview.visibility = View.GONE
         }
     }
 

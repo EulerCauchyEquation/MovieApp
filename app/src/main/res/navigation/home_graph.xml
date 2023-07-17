@@ -22,6 +22,10 @@
                 android:name="movie_list_type"
                 app:argType="com.hwonchul.movie.domain.model.MovieListType" />
         </action>
+
+        <action
+            android:id="@+id/navigate_to_search"
+            app:destination="@id/search_graph" />
     </fragment>
 
     <fragment
@@ -42,9 +46,14 @@
         android:id="@id/account_graph"
         app:graph="@navigation/account_graph" />
 
+    <include
+        android:id="@id/search_graph"
+        app:graph="@navigation/search_graph" />
+
     <action
         android:id="@+id/navigate_to_detail_graph"
         app:destination="@id/detail_graph">
+
         <argument
             android:name="movie"
             app:argType="com.hwonchul.movie.domain.model.Movie" />

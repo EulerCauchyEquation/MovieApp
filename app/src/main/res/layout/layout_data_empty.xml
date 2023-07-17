@@ -1,35 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_marginTop="40dp"
     android:layout_marginBottom="40dp">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/space_median_8dp"
-        app:layout_constraintBottom_toTopOf="@id/tv_empty_list"
+        android:layout_marginBottom="@dimen/space_large_16dp"
+        android:paddingHorizontal="@dimen/space_s_large_12dp"
+        android:src="@drawable/ic_empty_display"
+        app:layout_constraintBottom_toTopOf="@id/tv_empty"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="spread"
-        tools:src="@drawable/ic_empty_display" />
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_empty_list"
+        android:id="@+id/tv_empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:lineSpacingExtra="@dimen/lineSpacingExtra_textView_5dp"
+        android:text="@string/all_empty_search_movie"
+        android:textColor="@android:color/white"
         android:textSize="@dimen/text_size_headline5_15sp"
         android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        tools:text="@string/all_empty_review_list" />
+        app:layout_constraintTop_toBottomOf="@+id/imageview" />
 </androidx.constraintlayout.widget.ConstraintLayout>

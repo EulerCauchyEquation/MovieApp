@@ -47,6 +47,16 @@ interface TMDBService {
         @Query(QUERY_API_KEY) key: String = API_KEY,
     ): ImageResponse
 
+    @GET(URI_SEARCH_MOVIES)
+    suspend fun searchMoviesByKeyword(
+        @Query(QUERY_API_KEY) key: String = API_KEY,
+        @Query(QUERY_LANGUAGE) language: String = LANGUAGE_KO,
+        @Query(QUERY_PAGE) page: Int = INITIAL_PAGE_INDEX,
+        @Query(QUERY_REGION) region: String = REGION_KR,
+        @Query(QUERY_INCLUDE_ADULT) include_adult: Boolean = false,
+        @Query(QUERY_QUERY) query: String = "영화",
+    ): MovieListResponse
+
     companion object {
         const val URL = "https://api.themoviedb.org"
 
@@ -55,6 +65,7 @@ interface TMDBService {
         private const val URI_GET_MOVIE = "/3/movie/{movie_id}"
         private const val URI_GET_VIDEOS = "/3/movie/{movie_id}/videos"
         private const val URI_GET_IMAGES = "/3/movie/{movie_id}/images"
+        private const val URI_SEARCH_MOVIES = "/3/search/movie"
 
         private const val PATH_MOVIE_ID = "movie_id"
 
@@ -62,6 +73,8 @@ interface TMDBService {
         private const val QUERY_API_KEY = "api_key"
         private const val QUERY_REGION = "region"
         private const val QUERY_PAGE = "page"
+        private const val QUERY_INCLUDE_ADULT = "include_adult"
+        private const val QUERY_QUERY = "query"
 
         private const val API_KEY = BuildConfig.TMDB_API_KEY
         private const val LANGUAGE_KO = "ko-KR"

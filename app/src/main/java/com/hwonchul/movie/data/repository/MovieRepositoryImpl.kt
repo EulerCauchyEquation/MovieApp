@@ -9,6 +9,7 @@ import com.hwonchul.movie.data.local.dao.MovieDetailDao
 import com.hwonchul.movie.data.local.model.toDomain
 import com.hwonchul.movie.data.local.model.toDomains
 import com.hwonchul.movie.data.paging.MovieListPagingSource
+import com.hwonchul.movie.data.paging.MovieSearchPagingSource
 import com.hwonchul.movie.data.remote.api.tmdb.TMDBApi
 import com.hwonchul.movie.data.remote.api.tmdb.TMDBService
 import com.hwonchul.movie.data.remote.model.toEntity
@@ -18,6 +19,7 @@ import com.hwonchul.movie.domain.model.MovieListType
 import com.hwonchul.movie.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import timber.log.Timber
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
@@ -54,6 +56,16 @@ class MovieRepositoryImpl @Inject constructor(
     override suspend fun refreshForMovie(movieId: Int) {
         val entity = api.getMovie(movieId).toEntity()
         movieDetailDao.upsert(entity)
+    }
+
+    override fun searchMovieByKeyword(keyword: String): Flow<PagingData<Movie>> {
+        val flow = Pager(
+            config = PagingConfig(pageSize = PAGE_SIZE)
+        ) { MovieSearchPagingSource(service, keyword) }.flow
+
+        return flow.map { pagingData ->
+            pagingData.map { entity -> entity.toDomain() }
+        }
     }
 
     companion object {

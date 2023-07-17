@@ -48,6 +48,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="all_empty_review_list">리뷰가 없습니다.\n 첫번째 리뷰를 남겨주세요.</string>
+    <string name="all_empty_search_movie">검색 결과가 없습니다.\n 영화 제목을 검색해보세요.</string>
     <string name="all_empty_photos">포토가 없습니다.</string>
     <string name="all_empty_videos">무비 클립이 없습니다.</string>
     <string name="all_movie_video">무비클립</string>

@@ -20,13 +20,18 @@ TMDB API 를 이용한 컨텐츠는 다양한 측면에서 실력을 향상시�
 </p>
 
 <p alight="left">
+  <img src="https://github.com/EulerCauchyEquation/MovieApp/assets/46746599/2e049114-2955-46a0-b3c4-97d0d4db170d" width="24.5%" />
+  <img src="https://github.com/EulerCauchyEquation/MovieApp/assets/46746599/e49fd603-2ba5-419d-ac86-e83a784b4fe9" width="24.5%" />
+</p>
+
+<p alight="left">
   <img src="https://github.com/EulerCauchyEquation/MovieApp/assets/46746599/ea148e86-4394-4ad1-ab31-8d8c56ac545f" width="24.5%" />
   <img src="https://github.com/EulerCauchyEquation/MovieApp/assets/46746599/81036641-a1e2-4526-8192-fe544c1089cb" width="24.5%" />
 </p>
 
 
 #
-![navi_graph](https://github.com/EulerCauchyEquation/new/assets/46746599/a8e9c928-8fed-4f41-8698-27c66d2dd538)
+![navi_graph](https://github.com/EulerCauchyEquation/MovieApp/assets/46746599/12655c27-7b98-4129-b5d7-43def1f720c3)
 
 # 환경
 * min sdk : 26
@@ -48,7 +53,9 @@ TMDB API 를 이용한 컨텐츠는 다양한 측면에서 실력을 향상시�
 ![Firestore](https://github.com/EulerCauchyEquation/MovieApp/assets/46746599/f3922d28-4448-45c6-acce-06a1e770a1a7)
 <br>
 
-# Firebase Storage 
+# Firebase Storage
+
 <p alight="left">
   <img src="https://github.com/EulerCauchyEquation/MovieApp/assets/46746599/75fbccef-b624-43ab-b883-150fc0935398" width="45%" />
 </p>
+

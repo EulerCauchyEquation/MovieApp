@@ -6,7 +6,6 @@ import com.hwonchul.movie.data.local.model.MovieEntity
 import com.hwonchul.movie.data.remote.api.tmdb.TMDBService
 import com.hwonchul.movie.data.remote.model.toEntity
 import com.hwonchul.movie.domain.model.MovieListType
-import timber.log.Timber
 
 class MovieListPagingSource(
     private val service: TMDBService,
@@ -19,7 +18,7 @@ class MovieListPagingSource(
                 MovieListType.NowPlaying -> service.getNowPlayingList(page = nextKey)
                 MovieListType.UpComing -> service.getUpComingList(page = nextKey)
             }
-            val entities = response.results.map { it.toEntity(listType) }
+            val entities = response.results.map { it.toEntity() }
             LoadResult.Page(
                 data = entities,
                 prevKey = if (nextKey == 1) null else nextKey - 1,

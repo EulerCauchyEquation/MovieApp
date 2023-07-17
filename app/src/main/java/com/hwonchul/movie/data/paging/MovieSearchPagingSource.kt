@@ -5,7 +5,6 @@ import androidx.paging.PagingState
 import com.hwonchul.movie.data.local.model.MovieEntity
 import com.hwonchul.movie.data.remote.api.tmdb.TMDBService
 import com.hwonchul.movie.data.remote.model.toEntity
-import com.hwonchul.movie.domain.model.MovieListType
 
 class MovieSearchPagingSource(
     private val service: TMDBService,
@@ -15,7 +14,7 @@ class MovieSearchPagingSource(
         return try {
             val nextKey = params.key ?: TMDBService.INITIAL_PAGE_INDEX
             val response = service.searchMoviesByKeyword(query = keyword, page = nextKey)
-            val entities = response.results.map { it.toEntity(MovieListType.NowPlaying) }
+            val entities = response.results.map { it.toEntity() }
             LoadResult.Page(
                 data = entities,
                 prevKey = if (nextKey == 1) null else nextKey - 1,

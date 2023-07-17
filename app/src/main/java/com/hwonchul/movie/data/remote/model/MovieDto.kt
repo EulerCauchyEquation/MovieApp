@@ -2,7 +2,6 @@ package com.hwonchul.movie.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 import com.hwonchul.movie.data.local.model.MovieEntity
-import com.hwonchul.movie.domain.model.MovieListType
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -23,7 +22,7 @@ data class MovieDto(
     @SerializedName("vote_average") val voteAverage: Double,
 )
 
-fun MovieDto.toEntity(listType: MovieListType): MovieEntity {
+fun MovieDto.toEntity(): MovieEntity {
     return MovieEntity(
         id = id,
         title = title,
@@ -33,7 +32,6 @@ fun MovieDto.toEntity(listType: MovieListType): MovieEntity {
         popularity = popularity,
         mainPosterPath = posterPath,
         mainBackdropPath = backdropPath,
-        listType = listType,
     )
 }
 

@@ -19,7 +19,6 @@ import com.hwonchul.movie.domain.model.MovieListType
 import com.hwonchul.movie.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import timber.log.Timber
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
@@ -34,7 +33,13 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override fun getAllMoviesByListType(listType: MovieListType): Flow<List<Movie>> {
-        return movieDao.findAllMovieOrderByPopularity(listType).map { it.toDomains() }
+        return when (listType) {
+            MovieListType.NowPlaying ->
+                movieDao.findAllReleasedMoviesOrderByPopularity().map { it.toDomains() }
+
+            MovieListType.UpComing ->
+                movieDao.findAllUnreleasedMoviesOrderByPopularity().map { it.toDomains() }
+        }
     }
 
     override fun getAllMoviesByListTypeAsPaged(listType: MovieListType): Flow<PagingData<Movie>> {
@@ -49,7 +54,7 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun refreshForMovieList(listType: MovieListType) {
         movieDao.deleteAll()
-        val entities = api.getMovieList(listType).map { it.toEntity(listType) }
+        val entities = api.getMovieList(listType).map { it.toEntity() }
         movieDao.upsert(entities)
     }
 

@@ -24,6 +24,7 @@ data class MovieEntity(
     @ColumnInfo(name = "popularity") val popularity: Double,
     @ColumnInfo(name = "main_poster_path") val mainPosterPath: String?,
     @ColumnInfo(name = "main_backdrop_path") val mainBackdropPath: String?,
+    @ColumnInfo(name = "keyword", collate = ColumnInfo.NOCASE) val keyword: String? = null,
 ) {
     companion object {
         const val TABLE_NAME = "movie"

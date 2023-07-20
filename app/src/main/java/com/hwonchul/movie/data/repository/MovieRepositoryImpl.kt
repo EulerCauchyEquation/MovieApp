@@ -1,15 +1,17 @@
 package com.hwonchul.movie.data.repository
 
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
+import com.hwonchul.movie.data.local.MovieDatabase
 import com.hwonchul.movie.data.local.dao.MovieDao
 import com.hwonchul.movie.data.local.dao.MovieDetailDao
 import com.hwonchul.movie.data.local.model.toDomain
 import com.hwonchul.movie.data.local.model.toDomains
-import com.hwonchul.movie.data.paging.MovieListPagingSource
-import com.hwonchul.movie.data.paging.MovieSearchPagingSource
+import com.hwonchul.movie.data.paging.MovieListRemoteMediator
+import com.hwonchul.movie.data.paging.MovieSearchRemoteMediator
 import com.hwonchul.movie.data.remote.api.tmdb.TMDBApi
 import com.hwonchul.movie.data.remote.api.tmdb.TMDBService
 import com.hwonchul.movie.data.remote.model.toEntity
@@ -24,6 +26,7 @@ import javax.inject.Inject
 class MovieRepositoryImpl @Inject constructor(
     private val service: TMDBService,
     private val api: TMDBApi,
+    private val db: MovieDatabase,
     private val movieDao: MovieDao,
     private val movieDetailDao: MovieDetailDao,
 ) : MovieRepository {
@@ -42,10 +45,23 @@ class MovieRepositoryImpl @Inject constructor(
         }
     }
 
+    @OptIn(ExperimentalPagingApi::class)
     override fun getAllMoviesByListTypeAsPaged(listType: MovieListType): Flow<PagingData<Movie>> {
-        val flow = Pager(
-            config = PagingConfig(pageSize = PAGE_SIZE)
-        ) { MovieListPagingSource(service, listType) }.flow
+        val flow = when (listType) {
+            MovieListType.NowPlaying -> {
+                Pager(
+                    config = PagingConfig(pageSize = PAGE_SIZE),
+                    remoteMediator = MovieListRemoteMediator(service, db, listType)
+                ) { movieDao.findAllPagedReleasedMoviesOrderByPopularity() }.flow
+            }
+
+            MovieListType.UpComing -> {
+                Pager(
+                    config = PagingConfig(pageSize = PAGE_SIZE),
+                    remoteMediator = MovieListRemoteMediator(service, db, listType)
+                ) { movieDao.findAllPagedUnreleasedMoviesOrderByPopularity() }.flow
+            }
+        }
 
         return flow.map { pagingData ->
             pagingData.map { entity -> entity.toDomain() }
@@ -53,7 +69,10 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun refreshForMovieList(listType: MovieListType) {
-        movieDao.deleteAll()
+        when (listType) {
+            MovieListType.NowPlaying -> movieDao.deleteByReleased()
+            MovieListType.UpComing -> movieDao.deleteByUnreleased()
+        }
         val entities = api.getMovieList(listType).map { it.toEntity() }
         movieDao.upsert(entities)
     }
@@ -63,10 +82,12 @@ class MovieRepositoryImpl @Inject constructor(
         movieDetailDao.upsert(entity)
     }
 
+    @OptIn(ExperimentalPagingApi::class)
     override fun searchMovieByKeyword(keyword: String): Flow<PagingData<Movie>> {
         val flow = Pager(
-            config = PagingConfig(pageSize = PAGE_SIZE)
-        ) { MovieSearchPagingSource(service, keyword) }.flow
+            config = PagingConfig(pageSize = PAGE_SIZE),
+            remoteMediator = MovieSearchRemoteMediator(db, service, keyword)
+        ) { movieDao.findAllPagedMoviesByKeyword(keyword) }.flow
 
         return flow.map { pagingData ->
             pagingData.map { entity -> entity.toDomain() }

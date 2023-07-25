@@ -6,6 +6,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageException
 import com.google.firebase.storage.ktx.storage
+import com.hwonchul.movie.data.remote.model.FavoritesDto
 import com.hwonchul.movie.data.remote.model.UserDto
 import com.hwonchul.movie.exception.UserNotFoundException
 import timber.log.Timber
@@ -188,7 +189,61 @@ class UserRemoteDataSourceImpl @Inject constructor() : UserRemoteDataSource {
             }
     }
 
+    override suspend fun getUserFavorites(user: UserDto): List<FavoritesDto> =
+        suspendCoroutine { continuation ->
+            db.collection(COLLECTION_USER).document(user.uid).collection(COLLECTION_FAVORITES)
+                .get()
+                .addOnSuccessListener { documents ->
+                    val results = documents.map { document ->
+                        FavoritesDto(
+                            movieId = document.id,
+                            userId = user.uid,
+                        )
+                    }
+                    Timber.d("Firebase 에서 사용자의 찜한 정보를 가져왔습니다. 찜수 : ${documents.size()}")
+                    continuation.resume(results)
+                }
+                .addOnFailureListener { exception ->
+                    Timber.d("사용자의 찜한 정보를 가져오는데 실패하였습니다. : $exception")
+                    continuation.resumeWithException(exception)
+                }
+        }
+
+
+    override suspend fun insertUserFavorites(favorites: FavoritesDto): FavoritesDto =
+        suspendCoroutine { continuation ->
+            db.collection(COLLECTION_USER).document(favorites.userId)
+                .collection(COLLECTION_FAVORITES).document(favorites.movieId)
+                .set(mapOf<String, Any>())
+                .addOnSuccessListener {
+                    Timber.d("찜한 영화를 Firebase에 추가하였습니다. $favorites")
+                    continuation.resume(favorites)
+                }
+                .addOnFailureListener { exception ->
+                    Timber.d("찜한 영화를 Firebase에 추가하는데 실패하였습니다. : $exception")
+                    continuation.resumeWithException(exception)
+                }
+        }
+
+
+    override suspend fun deleteUserFavorites(favorites: FavoritesDto): FavoritesDto =
+        suspendCoroutine { continuation ->
+            db.collection(COLLECTION_USER).document(favorites.userId)
+                .collection(COLLECTION_FAVORITES).document(favorites.movieId)
+                .delete()
+                .addOnSuccessListener {
+                    Timber.d("찜한 영화를 Firebase에서 삭제하였습니다. $favorites")
+                    continuation.resume(favorites)
+                }
+                .addOnFailureListener { exception ->
+                    Timber.d("찜한 영화를 Firebase에서 삭제하는데 실패하였습니다. : $exception")
+                    continuation.resumeWithException(exception)
+                }
+        }
+
+
     companion object {
         private const val COLLECTION_USER = "users"
+        private const val COLLECTION_FAVORITES = "favorites"
     }
 }

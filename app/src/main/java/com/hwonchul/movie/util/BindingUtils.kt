@@ -16,7 +16,7 @@ import com.hwonchul.movie.presentation.details.PosterThumbnailAdapter
 import com.hwonchul.movie.presentation.details.VideoAdapter
 import com.hwonchul.movie.presentation.details.poster.PosterAdapter
 import com.hwonchul.movie.presentation.home.MovieAdapter
-import com.hwonchul.movie.presentation.home.MovieAdapter.OnMovieDetailListener
+import com.hwonchul.movie.presentation.home.MovieAdapter.MovieClickListener
 import timber.log.Timber
 import java.time.LocalDate
 
@@ -40,11 +40,12 @@ object BindingUtils {
     }
 
     @JvmStatic
-    @BindingAdapter(value = ["listItem", "onClick"])
+    @BindingAdapter(value = ["listItem", "onClickMovie", "onClickFavorites"])
     fun bindMovieListItems(
         listView: RecyclerView,
         items: List<Movie>?,
-        listener: OnMovieDetailListener
+        movieClickListener: MovieClickListener,
+        favoritesClickListener: MovieAdapter.FavoritesClickListener,
     ) {
         (listView.adapter as MovieAdapter? ?: MovieAdapter().also { adapter ->
             // layout Manager
@@ -62,7 +63,8 @@ object BindingUtils {
             listView.addItemDecoration(HorizontalRecyclerViewDecoration(outSideSpace, divHeight))
 
             // listener
-            adapter.setOnMovieDetailListener(listener)
+            adapter.setOnMovieListener(movieClickListener)
+            adapter.setFavoritesClickListener(favoritesClickListener)
 
             // limit
             adapter.setLimit(10)

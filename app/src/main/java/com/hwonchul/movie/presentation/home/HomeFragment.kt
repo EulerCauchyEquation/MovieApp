@@ -15,7 +15,7 @@ import com.hwonchul.movie.databinding.FragmentHomeBinding
 import com.hwonchul.movie.domain.model.Movie
 import com.hwonchul.movie.domain.model.MovieListType
 import com.hwonchul.movie.presentation.home.HomeContract.HomeState
-import com.hwonchul.movie.presentation.home.MovieAdapter.OnMovieDetailListener
+import com.hwonchul.movie.presentation.home.MovieAdapter.MovieClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,9 +34,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
         binding.tbHome.setOnMenuItemClickListener(this)
 
         binding.viewModel = viewModel
-        binding.listener = object : OnMovieDetailListener {
+        binding.movieListener = object : MovieClickListener {
             override fun onClick(movie: Movie) {
                 navigateToMovieDetail(movie)
+            }
+        }
+        binding.favoritesListener = object : MovieAdapter.FavoritesClickListener {
+            override fun onClick(movie: Movie, isFavorite: Boolean) {
+                if (isFavorite) viewModel.removeFavorites(movie) else viewModel.addFavorites(movie)
             }
         }
         binding.lifecycleOwner = viewLifecycleOwner

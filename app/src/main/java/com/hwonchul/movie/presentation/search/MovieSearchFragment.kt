@@ -81,7 +81,7 @@ class MovieSearchFragment :
         binding.rvMovie.addItemDecoration(GridRecyclerViewDecoration(spanCount, spacing))
 
         // listener
-        val listener = object : MovieDetailAdapter.OnClickListener {
+        val movieClickListener = object : MovieDetailAdapter.MovieClickListener {
             override fun onClick(movie: Movie) {
                 hideKeyboard()
 
@@ -89,7 +89,14 @@ class MovieSearchFragment :
                 navController.navigate(directions)
             }
         }
-        adapter.setOnClickListener(listener)
+        adapter.setMovieClickListener(movieClickListener)
+
+        val favoritesClickListener = object : MovieDetailAdapter.FavoritesClickListener {
+            override fun onClick(movie: Movie, isFavorite: Boolean) {
+                if (isFavorite) viewModel.removeFavorites(movie) else viewModel.addFavorites(movie)
+            }
+        }
+        adapter.setFavoritesClickListener(favoritesClickListener)
 
         binding.rvMovie.adapter = adapter
 

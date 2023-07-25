@@ -9,7 +9,6 @@ import com.hwonchul.movie.data.local.MovieDatabase
 import com.hwonchul.movie.data.local.dao.MovieDao
 import com.hwonchul.movie.data.local.dao.MovieDetailDao
 import com.hwonchul.movie.data.local.model.toDomain
-import com.hwonchul.movie.data.local.model.toDomains
 import com.hwonchul.movie.data.paging.MovieListRemoteMediator
 import com.hwonchul.movie.data.paging.MovieSearchRemoteMediator
 import com.hwonchul.movie.data.remote.api.tmdb.TMDBApi
@@ -38,10 +37,10 @@ class MovieRepositoryImpl @Inject constructor(
     override fun getAllMoviesByListType(listType: MovieListType): Flow<List<Movie>> {
         return when (listType) {
             MovieListType.NowPlaying ->
-                movieDao.findAllReleasedMoviesOrderByPopularity().map { it.toDomains() }
+                movieDao.findAllReleasedMoviesOrderByPopularity().map { it.toDomain() }
 
             MovieListType.UpComing ->
-                movieDao.findAllUnreleasedMoviesOrderByPopularity().map { it.toDomains() }
+                movieDao.findAllUnreleasedMoviesOrderByPopularity().map { it.toDomain() }
         }
     }
 

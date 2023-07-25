@@ -45,4 +45,9 @@ object DatabaseModule {
     @Provides
     fun providePosterDao(movieDatabase: MovieDatabase): ImageDao =
         movieDatabase.posterDao()
+
+    @Singleton
+    @Provides
+    fun provideFavoritesDao(movieDatabase: MovieDatabase): FavoritesDao =
+        movieDatabase.favoritesDao()
 }

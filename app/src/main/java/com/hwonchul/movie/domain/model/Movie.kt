@@ -14,4 +14,5 @@ data class Movie(
     val popularity: Double,
     val backdrop: Image?,
     val poster: Image?,
+    val isFavorite: Boolean = false,
 ) : Parcelable

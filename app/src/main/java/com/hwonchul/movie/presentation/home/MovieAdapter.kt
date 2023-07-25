@@ -3,6 +3,7 @@ package com.hwonchul.movie.presentation.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.hwonchul.movie.R
 import com.hwonchul.movie.databinding.ItemMovieBinding
 import com.hwonchul.movie.domain.model.Movie
 import com.hwonchul.movie.presentation.home.MovieAdapter.MovieViewHolder
@@ -11,15 +12,25 @@ class MovieAdapter : RecyclerView.Adapter<MovieViewHolder>() {
 
     private val items: MutableList<Movie> = ArrayList()
 
-    interface OnMovieDetailListener {
+    interface MovieClickListener {
         fun onClick(movie: Movie)
     }
 
-    private lateinit var listener: OnMovieDetailListener
+    private lateinit var movieClickListener: MovieClickListener
     private var limit = Integer.MAX_VALUE
 
-    fun setOnMovieDetailListener(listener: OnMovieDetailListener) {
-        this.listener = listener
+    fun setOnMovieListener(movieClickListener: MovieClickListener) {
+        this.movieClickListener = movieClickListener
+    }
+
+    interface FavoritesClickListener {
+        fun onClick(movie: Movie, isFavorite: Boolean)
+    }
+
+    private lateinit var favoritesClickListener: FavoritesClickListener
+
+    fun setFavoritesClickListener(favoritesClickListener: FavoritesClickListener) {
+        this.favoritesClickListener = favoritesClickListener
     }
 
     fun setItems(newItems: List<Movie>) {
@@ -55,7 +66,19 @@ class MovieAdapter : RecyclerView.Adapter<MovieViewHolder>() {
         fun bind(movie: Movie) {
             binding.item = movie
             binding.rank = bindingAdapterPosition
-            binding.layoutPoster.setOnClickListener { listener.onClick(movie) }
+            binding.layoutPoster.setOnClickListener { movieClickListener.onClick(movie) }
+
+            if (movie.isFavorite) {
+                binding.btnFavorites.setImageResource(R.drawable.ic_favorites)
+            } else {
+                binding.btnFavorites.setImageResource(R.drawable.ic_unfavorites)
+            }
+            binding.btnFavorites.setOnClickListener {
+                favoritesClickListener.onClick(
+                    movie,
+                    movie.isFavorite
+                )
+            }
         }
     }
 }

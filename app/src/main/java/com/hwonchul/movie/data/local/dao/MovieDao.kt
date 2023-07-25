@@ -6,26 +6,57 @@ import androidx.room.Dao
 import androidx.room.Query
 import com.hwonchul.movie.base.data.dao.BaseDao
 import com.hwonchul.movie.data.local.model.MovieEntity
+import com.hwonchul.movie.data.local.model.MovieWithFavorites
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 
 @Dao
 interface MovieDao : BaseDao<MovieEntity> {
 
-    @Query("SELECT * FROM ${MovieEntity.TABLE_NAME} WHERE release_date > :today ORDER BY popularity DESC")
-    fun findAllUnreleasedMoviesOrderByPopularity(today: LocalDate = LocalDate.now()): Flow<List<MovieEntity>>
+    @Query(
+        "SELECT movie.*, favorites.movie_id IS NOT NULL as favorites " +
+                "FROM movie " +
+                "LEFT JOIN favorites ON movie.id = favorites.movie_id " +
+                "WHERE release_date > :today " +
+                "ORDER BY popularity DESC "
+    )
+    fun findAllUnreleasedMoviesOrderByPopularity(today: LocalDate = LocalDate.now()): Flow<List<MovieWithFavorites>>
 
-    @Query("SELECT * FROM ${MovieEntity.TABLE_NAME} WHERE release_date <= :today ORDER BY popularity DESC")
-    fun findAllReleasedMoviesOrderByPopularity(today: LocalDate = LocalDate.now()): Flow<List<MovieEntity>>
+    @Query(
+        "SELECT movie.*, favorites.movie_id IS NOT NULL as favorites " +
+                "FROM movie " +
+                "LEFT JOIN favorites ON movie.id = favorites.movie_id " +
+                "WHERE release_date <= :today " +
+                "ORDER BY popularity DESC "
+    )
+    fun findAllReleasedMoviesOrderByPopularity(today: LocalDate = LocalDate.now()): Flow<List<MovieWithFavorites>>
 
-    @Query("SELECT * FROM ${MovieEntity.TABLE_NAME} WHERE release_date > :today ORDER BY popularity DESC")
-    fun findAllPagedUnreleasedMoviesOrderByPopularity(today: LocalDate = LocalDate.now()): PagingSource<Int, MovieEntity>
+    @Query(
+        "SELECT movie.*, favorites.movie_id IS NOT NULL as favorites " +
+                "FROM movie " +
+                "LEFT JOIN favorites ON movie.id = favorites.movie_id " +
+                "WHERE release_date > :today " +
+                "ORDER BY popularity DESC "
+    )
+    fun findAllPagedUnreleasedMoviesOrderByPopularity(today: LocalDate = LocalDate.now()): PagingSource<Int, MovieWithFavorites>
 
-    @Query("SELECT * FROM ${MovieEntity.TABLE_NAME} WHERE release_date <= :today ORDER BY popularity DESC")
-    fun findAllPagedReleasedMoviesOrderByPopularity(today: LocalDate = LocalDate.now()): PagingSource<Int, MovieEntity>
+    @Query(
+        "SELECT movie.*, favorites.movie_id IS NOT NULL as favorites " +
+                "FROM movie " +
+                "LEFT JOIN favorites ON movie.id = favorites.movie_id " +
+                "WHERE release_date <= :today " +
+                "ORDER BY popularity DESC "
+    )
+    fun findAllPagedReleasedMoviesOrderByPopularity(today: LocalDate = LocalDate.now()): PagingSource<Int, MovieWithFavorites>
 
-    @Query("SELECT * FROM ${MovieEntity.TABLE_NAME} WHERE keyword = :keyword ORDER BY popularity DESC")
-    fun findAllPagedMoviesByKeyword(keyword: String): PagingSource<Int, MovieEntity>
+    @Query(
+        "SELECT movie.*, favorites.movie_id IS NOT NULL as favorites " +
+                "FROM movie " +
+                "LEFT JOIN favorites ON movie.id = favorites.movie_id " +
+                "WHERE keyword = :keyword " +
+                "ORDER BY popularity DESC"
+    )
+    fun findAllPagedMoviesByKeyword(keyword: String): PagingSource<Int, MovieWithFavorites>
 
     @Query("SELECT * FROM ${MovieEntity.TABLE_NAME} WHERE id =:id")
     fun findMovieById(id: Int): Flow<List<MovieEntity>>

@@ -1,11 +1,14 @@
 package com.hwonchul.movie.data.repository
 
+import com.hwonchul.movie.data.local.dao.FavoritesDao
 import com.hwonchul.movie.data.local.model.toDomain
+import com.hwonchul.movie.data.local.model.toDomains
 import com.hwonchul.movie.data.local.model.toDto
 import com.hwonchul.movie.data.local.source.UserLocalDataSource
 import com.hwonchul.movie.data.remote.api.firebase.FirebaseAuth
 import com.hwonchul.movie.data.remote.model.toEntity
 import com.hwonchul.movie.data.remote.source.UserRemoteDataSource
+import com.hwonchul.movie.domain.model.Favorites
 import com.hwonchul.movie.domain.model.User
 import com.hwonchul.movie.domain.model.toDto
 import com.hwonchul.movie.domain.repository.UserRepository
@@ -19,6 +22,7 @@ class UserRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val remoteDataSource: UserRemoteDataSource,
     private val localDataSource: UserLocalDataSource,
+    private val favoritesDao: FavoritesDao,
 ) : UserRepository {
 
     override fun getUserInfo(): Flow<User> {
@@ -53,6 +57,7 @@ class UserRepositoryImpl @Inject constructor(
         deleteDBUserData()
         firebaseAuth.deletePhoneAuthAccount()
         localDataSource.deleteUser()
+        favoritesDao.deleteAll()
     }
 
     private suspend fun deleteDBUserData() {
@@ -80,6 +85,27 @@ class UserRepositoryImpl @Inject constructor(
             false
         } catch (e: Exception) {
             throw e
+        }
+    }
+
+    override fun getUserAllFavorites(): Flow<List<Favorites>> =
+        favoritesDao.getAllFavorites().map { it.toDomains() }
+
+    override suspend fun refreshFavorites(user: User) {
+        favoritesDao.deleteAll()
+        val entities = remoteDataSource.getUserFavorites(user.toDto()).map { it.toEntity() }
+        favoritesDao.upsert(entities)
+    }
+
+    override suspend fun insertFavorites(favorites: Favorites) {
+        remoteDataSource.insertUserFavorites(favorites.toDto()).also { dto ->
+            favoritesDao.upsert(dto.toEntity())
+        }
+    }
+
+    override suspend fun deleteFavorites(favorites: Favorites) {
+        remoteDataSource.deleteUserFavorites(favorites.toDto()).also { dto ->
+            favoritesDao.delete(dto.toEntity())
         }
     }
 }

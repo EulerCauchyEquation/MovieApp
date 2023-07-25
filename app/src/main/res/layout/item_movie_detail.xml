@@ -11,7 +11,7 @@
 
         <variable
             name="listener"
-            type="com.hwonchul.movie.presentation.home.list.MovieDetailAdapter.OnClickListener" />
+            type="com.hwonchul.movie.presentation.home.list.MovieDetailAdapter.MovieClickListener" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -62,6 +62,17 @@
                 app:layout_constraintStart_toStartOf="@+id/iv_poster"
                 app:layout_constraintTop_toBottomOf="@+id/iv_poster"
                 tools:text="군 도" />
+
+            <!-- 영화 찜하기 -->
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btn_favorites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/space_median_8dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_unfavorites"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/iv_poster" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

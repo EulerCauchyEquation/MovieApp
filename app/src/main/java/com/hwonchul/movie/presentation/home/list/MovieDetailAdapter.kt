@@ -5,21 +5,31 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.hwonchul.movie.R
 import com.hwonchul.movie.databinding.ItemMovieDetailBinding
 import com.hwonchul.movie.domain.model.Movie
-import timber.log.Timber
 
 class MovieDetailAdapter :
     PagingDataAdapter<Movie, MovieDetailAdapter.MovieDetailViewHolder>(DIFF_CALLBACK) {
 
-    interface OnClickListener {
+    interface MovieClickListener {
         fun onClick(movie: Movie)
     }
 
-    private lateinit var listener: OnClickListener
+    private lateinit var movieClickListener: MovieClickListener
 
-    fun setOnClickListener(listener: OnClickListener) {
-        this.listener = listener
+    fun setMovieClickListener(movieClickListener: MovieClickListener) {
+        this.movieClickListener = movieClickListener
+    }
+
+    interface FavoritesClickListener {
+        fun onClick(movie: Movie, isFavorite: Boolean)
+    }
+
+    private lateinit var favoritesClickListener: FavoritesClickListener
+
+    fun setFavoritesClickListener(favoritesClickListener: FavoritesClickListener) {
+        this.favoritesClickListener = favoritesClickListener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieDetailViewHolder {
@@ -40,7 +50,20 @@ class MovieDetailAdapter :
 
         fun bind(movie: Movie) {
             binding.item = movie
-            binding.layout.setOnClickListener { listener.onClick(movie) }
+
+            if (movie.isFavorite) {
+                binding.btnFavorites.setImageResource(R.drawable.ic_favorites)
+            } else {
+                binding.btnFavorites.setImageResource(R.drawable.ic_unfavorites)
+            }
+            binding.btnFavorites.setOnClickListener {
+                favoritesClickListener.onClick(
+                    movie,
+                    movie.isFavorite
+                )
+            }
+
+            binding.layout.setOnClickListener { movieClickListener.onClick(movie) }
         }
     }
 

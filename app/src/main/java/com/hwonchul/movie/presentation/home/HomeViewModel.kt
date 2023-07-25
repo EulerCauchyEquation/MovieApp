@@ -4,8 +4,14 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.hwonchul.movie.R
 import com.hwonchul.movie.base.view.BaseViewModel
+import com.hwonchul.movie.domain.model.Favorites
 import com.hwonchul.movie.domain.model.Movie
 import com.hwonchul.movie.domain.model.MovieListType
+import com.hwonchul.movie.domain.model.User
+import com.hwonchul.movie.domain.usecase.account.GetCurrentUserInfoUseCase
+import com.hwonchul.movie.domain.usecase.favorites.AddFavoritesUseCase
+import com.hwonchul.movie.domain.usecase.favorites.RefreshFavoritesUseCase
+import com.hwonchul.movie.domain.usecase.favorites.RemoveFavoritesUseCase
 import com.hwonchul.movie.domain.usecase.listing.GetMovieListAsPagedUseCase
 import com.hwonchul.movie.domain.usecase.listing.GetMovieListUseCase
 import com.hwonchul.movie.domain.usecase.listing.RefreshMovieListUseCase
@@ -24,29 +30,42 @@ class HomeViewModel @Inject constructor(
     private val getMovieListUseCase: GetMovieListUseCase,
     private val getMovieListAsPagedUseCase: GetMovieListAsPagedUseCase,
     private val refreshMovieListUseCase: RefreshMovieListUseCase,
+    private val getCurrentUserInfoUseCase: GetCurrentUserInfoUseCase,
+    private val refreshFavoritesUseCase: RefreshFavoritesUseCase,
+    private val addFavoritesUseCase: AddFavoritesUseCase,
+    private val removeFavoritesUseCase: RemoveFavoritesUseCase,
 ) : BaseViewModel<HomeData, HomeState>(HomeData(), HomeState.Idle) {
 
     init {
-        loadData()
-    }
-
-    fun loadData() {
         refresh()
         loadMovieList()
         loadMovieListAsPaged()
+        loadUserAndRefreshFavorites()
     }
 
-    fun loadMovieList() {
-        MovieListType.values().forEach { type ->
+    private fun loadMovieList() {
+        MovieListType.values().forEach { listType ->
             viewModelScope.launch {
-                loadMovieListByListType(type)
+                setState { HomeState.Loading }
+                getMovieListUseCase(listType)
+                    .collectLatest { result ->
+                        result
+                            .onSuccess {
+                                setState { HomeState.Idle }
+                                setData { setHomeData(listType, it) }
+                            }
+                            .onFailure {
+                                setState { HomeState.Error(R.string.all_response_failed) }
+                                Timber.d(it)
+                            }
+                    }
             }
         }
     }
 
     fun refresh() {
-        MovieListType.values().forEach { type ->
-            viewModelScope.launch {
+        viewModelScope.launch {
+            MovieListType.values().forEach { type ->
                 refreshMovieList(type)
             }
         }
@@ -68,22 +87,6 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    suspend fun loadMovieListByListType(listType: MovieListType) {
-        setState { HomeState.Loading }
-        getMovieListUseCase(listType)
-            .collectLatest { result ->
-                result
-                    .onSuccess {
-                        setState { HomeState.Idle }
-                        setData { setHomeData(listType, it) }
-                    }
-                    .onFailure {
-                        setState { HomeState.Error(R.string.all_response_failed) }
-                        Timber.d(it)
-                    }
-            }
-    }
-
     private suspend fun refreshMovieList(listType: MovieListType) {
         setState { HomeState.Loading }
         refreshMovieListUseCase(listType)
@@ -92,6 +95,48 @@ class HomeViewModel @Inject constructor(
                 setState { HomeState.Error(R.string.all_response_failed) }
                 Timber.d(it)
             }
+    }
+
+    private fun loadUserAndRefreshFavorites() {
+        viewModelScope.launch {
+            setState { HomeState.Loading }
+            getCurrentUserInfoUseCase().collectLatest { result ->
+                result
+                    .onSuccess { user ->
+                        setData { copy(user = user) }
+                        setState { HomeState.Idle }
+
+                        // 가져온 사용자 ID로 찜 정보 동기화
+                        refreshFavorites(user)
+                    }
+                    .onFailure { setState { HomeState.Error(R.string.user_info_get_failed) } }
+            }
+        }
+    }
+
+    private suspend fun refreshFavorites(user: User) {
+        setState { HomeState.Loading }
+        refreshFavoritesUseCase(user)
+            .onSuccess { setState { HomeState.Idle } }
+            .onFailure { HomeState.Error(R.string.user_refresh_failed) }
+    }
+
+    fun addFavorites(movie: Movie) {
+        viewModelScope.launch {
+            val favorites = Favorites(movieId = movie.id, userId = uiData.value!!.user.uid)
+            addFavoritesUseCase(favorites)
+                .onSuccess { setState { HomeState.Idle } }
+                .onFailure { setState { HomeState.Error(R.string.favorites_add_failure) } }
+        }
+    }
+
+    fun removeFavorites(movie: Movie) {
+        viewModelScope.launch {
+            val favorites = Favorites(movieId = movie.id, userId = uiData.value!!.user.uid)
+            removeFavoritesUseCase(favorites)
+                .onSuccess { setState { HomeState.Idle } }
+                .onFailure { setState { HomeState.Error(R.string.favorites_remove_failure) } }
+        }
     }
 }
 

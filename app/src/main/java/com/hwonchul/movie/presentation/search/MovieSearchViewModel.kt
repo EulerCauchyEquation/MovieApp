@@ -3,7 +3,15 @@ package com.hwonchul.movie.presentation.search
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import com.hwonchul.movie.R
 import com.hwonchul.movie.base.view.BaseViewModel
+import com.hwonchul.movie.domain.model.Favorites
+import com.hwonchul.movie.domain.model.Movie
+import com.hwonchul.movie.domain.model.User
+import com.hwonchul.movie.domain.usecase.account.GetCurrentUserInfoUseCase
+import com.hwonchul.movie.domain.usecase.favorites.AddFavoritesUseCase
+import com.hwonchul.movie.domain.usecase.favorites.RefreshFavoritesUseCase
+import com.hwonchul.movie.domain.usecase.favorites.RemoveFavoritesUseCase
 import com.hwonchul.movie.domain.usecase.search.SearchMovieWithKeywordUseCase
 import com.hwonchul.movie.presentation.search.MovieSearchContract.MovieSearchData
 import com.hwonchul.movie.presentation.search.MovieSearchContract.MovieSearchState
@@ -24,6 +32,10 @@ import javax.inject.Inject
 class MovieSearchViewModel @Inject constructor(
     val networkStatusHelper: NetworkStatusHelper,
     private val searchMovieWithKeywordUseCase: SearchMovieWithKeywordUseCase,
+    private val getCurrentUserInfoUseCase: GetCurrentUserInfoUseCase,
+    private val refreshFavoritesUseCase: RefreshFavoritesUseCase,
+    private val addFavoritesUseCase: AddFavoritesUseCase,
+    private val removeFavoritesUseCase: RemoveFavoritesUseCase,
 ) : BaseViewModel<MovieSearchData, MovieSearchState>(MovieSearchData(), MovieSearchState.Idle) {
 
     init {
@@ -40,9 +52,53 @@ class MovieSearchViewModel @Inject constructor(
                     setData { copy(pagedMovieList = pagingData) }
                 }
         }
+
+        loadUserAndRefreshFavorites()
     }
 
     fun search(keyword: String) {
         setData { copy(keyword = keyword) }
+    }
+
+    private fun loadUserAndRefreshFavorites() {
+        viewModelScope.launch {
+            setState { MovieSearchState.Loading }
+            getCurrentUserInfoUseCase().collectLatest { result ->
+                result
+                    .onSuccess { user ->
+                        setData { copy(user = user) }
+                        setState { MovieSearchState.Idle }
+
+                        // 가져온 사용자 ID로 찜 정보 동기화
+                        refreshFavorites(user)
+                    }
+                    .onFailure { setState { MovieSearchState.Error(R.string.user_info_get_failed) } }
+            }
+        }
+    }
+
+    private suspend fun refreshFavorites(user: User) {
+        setState { MovieSearchState.Loading }
+        refreshFavoritesUseCase(user)
+            .onSuccess { setState { MovieSearchState.Idle } }
+            .onFailure { MovieSearchState.Error(R.string.user_refresh_failed) }
+    }
+
+    fun addFavorites(movie: Movie) {
+        viewModelScope.launch {
+            val favorites = Favorites(movieId = movie.id, userId = uiData.value!!.user.uid)
+            addFavoritesUseCase(favorites)
+                .onSuccess { setState { MovieSearchState.Idle } }
+                .onFailure { setState { MovieSearchState.Error(R.string.favorites_add_failure) } }
+        }
+    }
+
+    fun removeFavorites(movie: Movie) {
+        viewModelScope.launch {
+            val favorites = Favorites(movieId = movie.id, userId = uiData.value!!.user.uid)
+            removeFavoritesUseCase(favorites)
+                .onSuccess { setState { MovieSearchState.Idle } }
+                .onFailure { setState { MovieSearchState.Error(R.string.favorites_remove_failure) } }
+        }
     }
 }

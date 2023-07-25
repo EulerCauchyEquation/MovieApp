@@ -5,8 +5,8 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import com.hwonchul.movie.data.local.MovieDatabase
-import com.hwonchul.movie.data.local.model.MovieEntity
 import com.hwonchul.movie.data.local.model.MovieSearchRemoteKeyEntity
+import com.hwonchul.movie.data.local.model.MovieWithFavorites
 import com.hwonchul.movie.data.remote.api.tmdb.TMDBService
 import com.hwonchul.movie.data.remote.model.toEntity
 
@@ -15,13 +15,13 @@ class MovieSearchRemoteMediator(
     private val db: MovieDatabase,
     private val api: TMDBService,
     private val keyword: String,
-) : RemoteMediator<Int, MovieEntity>() {
+) : RemoteMediator<Int, MovieWithFavorites>() {
     private val movieDao = db.movieDao()
     private val remoteKeyDao = db.movieSearchRemoteKeyDao()
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, MovieEntity>,
+        state: PagingState<Int, MovieWithFavorites>,
     ): MediatorResult {
         return try {
             val loadKey = when (loadType) {

@@ -4,6 +4,7 @@ import androidx.paging.PagingData
 import com.hwonchul.movie.base.view.UiData
 import com.hwonchul.movie.base.view.UiState
 import com.hwonchul.movie.domain.model.Movie
+import com.hwonchul.movie.domain.model.User
 
 class HomeContract {
 
@@ -12,6 +13,7 @@ class HomeContract {
         val upComingMovieList: List<Movie> = listOf(),
         val pagedPopularMovieList: PagingData<Movie> = PagingData.empty(),
         val pagedUpComingMovieList: PagingData<Movie> = PagingData.empty(),
+        val user: User = User.EMPTY
     ) : UiData
 
     sealed class HomeState : UiState {

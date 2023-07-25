@@ -84,6 +84,8 @@
     <string name="profile_update_success">프로필 수정 완료</string>
     <string name="profile_edit_form_error">3 ~ 14자 내, 띄어쓰기 없이 한글, 영문, 숫자</string>
     <string name="check_user_registration_failure">유저 등록 정보를 검색에 실패하였습니다.</string>
+    <string name="favorites_add_failure">찜하기에 실패하였습니다.</string>
+    <string name="favorites_remove_failure">찜하기를 취소하는데 실패하였습니다.</string>
 
     <!-- format -->
     <string name="movie_popularity_rate_format">%.0f</string>
